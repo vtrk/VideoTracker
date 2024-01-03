@@ -38,7 +38,7 @@ public abstract class API {
         @param method request method
         @param properties request properties
         @return JSON response
-        @throws IOException
+        @throws IOException if connection fails
      */
     protected String makeRequest(String request, String method, HashMap<String, String> properties) throws IOException {
         URL url = new URL(BASE_URL + request);
