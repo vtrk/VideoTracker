@@ -19,7 +19,7 @@ class VideoTrackerApplicationTests {
         assertEquals("Kitsu", Kitsu.getInstance().getApiName());
         try {
             System.out.println("Testing searchAnime\nJSON API Response: " + Kitsu.getInstance().searchAnime("bleach"));
-            System.out.println("Testing getAnimeById\nJSON API Response: " + Kitsu.getInstance().getAnimeById("1"));
+            System.out.println("Testing getAnimeById\nJSON API Response: " + Kitsu.getInstance().getAnimeById("244"));
             System.out.println("Testing trendingAnime\nJSON API Response: " + Kitsu.getInstance().getTrendingAnime());
             System.out.println("Testing searchAnimeFilters\nJSON API Response: " + Kitsu.getInstance().searchAnimeFilters(new java.util.HashMap<>() {{
                 put("text", "bleach");
