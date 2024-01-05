@@ -83,7 +83,7 @@ public class Kitsu extends API {
         @throws IOException if connection fails
      */
     public String searchAnime(String query) throws IOException {
-        return makeRequest("/anime?filter%5Btext%5D=" + query + "&fields%5Banime%5D=" + String.join(",", searchResultsFields), "GET", new java.util.HashMap<>() {{
+        return makeRequest("/anime?filter%5Btext%5D=" + query.replaceAll(" ", "%20") + "&fields%5Banime%5D=" + String.join(",", searchResultsFields), "GET", new java.util.HashMap<>() {{
             put("Accept", "application/vnd.api+json");
             put("Content-Type", "application/vnd.api+json");
             put("User-Agent", "VideoTracker/" + Properties.getInstance().getProperty("VERSION"));
@@ -93,14 +93,14 @@ public class Kitsu extends API {
     /**
         Search anime by queries and filters <br>
         Gets only the fields in {@link Kitsu#searchResultsFields}
-        @param filtersQueries map of filters and queries
+        @param queryFilters map of query and filters 
         @return JSON response
         @throws IOException if connection fails
      */
-    public String searchAnimeFilters(Map<String, String> filtersQueries) throws IOException {
+    public String searchAnimeFilters(Map<String, String> queryFilters) throws IOException {
         StringBuilder query = new StringBuilder();
-        for(String key : filtersQueries.keySet())
-            query.append("filter%5B").append(key).append("%5D=").append(filtersQueries.get(key)).append("&");
+        for(String key : queryFilters.keySet())
+            query.append("filter%5B").append(key).append("%5D=").append(queryFilters.get(key)).append("&");
         query.append("fields%5Banime%5D=").append(String.join(",", searchResultsFields));
         return makeRequest("/anime?" + query, "GET", new java.util.HashMap<>() {{
             put("Accept", "application/vnd.api+json");
