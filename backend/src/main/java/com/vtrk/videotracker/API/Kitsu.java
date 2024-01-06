@@ -93,7 +93,7 @@ public class Kitsu extends API {
     /**
         Search anime by queries and filters <br>
         Gets only the fields in {@link Kitsu#searchResultsFields}
-        @param queryFilters map of query and filters 
+        @param queryFilters map of query and filters
         @return JSON response
         @throws IOException if connection fails
      */
