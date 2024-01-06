@@ -14,7 +14,7 @@
 ### Response
 JSON (API dependent)
 
-To test this endpoint, one of the following curl commands:
+To test this endpoint, use one of the following curl commands:
 ## Kitsu (Anime)
 With args:
 ```bash
