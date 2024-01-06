@@ -44,8 +44,9 @@ public abstract class API {
         URL url = new URL(BASE_URL + request);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(method);
-        for(String key : properties.keySet())
-            connection.setRequestProperty(key, properties.get(key));
+        if(properties != null)
+            for(String key : properties.keySet())
+                connection.setRequestProperty(key, properties.get(key));
         if(connection.getResponseCode() == 200) {
             java.util.Scanner s = new java.util.Scanner(connection.getInputStream()).useDelimiter("\\A");
             return s.hasNext() ? s.next() : "";
