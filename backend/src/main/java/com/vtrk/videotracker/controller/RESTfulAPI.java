@@ -3,6 +3,8 @@ package com.vtrk.videotracker.controller;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.HashMap;
  * RESTful API
  */
 @RestController
+@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class RESTfulAPI {
 
     /**
@@ -85,5 +88,10 @@ public class RESTfulAPI {
         return VideoTrackerApplication.API_MANAGER.search(query, type, argsMap);
     }
     //***** End of endpoints that use data from external APIs *****
+
+    @RequestMapping("/error")
+    public String error(HttpServletRequest request) {
+        return request.getAttribute("javax.servlet.error.status_code").toString();
+    }
 
 }
