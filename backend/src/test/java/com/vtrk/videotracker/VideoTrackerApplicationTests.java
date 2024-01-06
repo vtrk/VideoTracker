@@ -36,7 +36,7 @@ class VideoTrackerApplicationTests {
     @Test
     void TMDBAPITest() {
         System.out.println("TMDB API Test");
-        if(Properties.getInstance().getProperty("TMDB_API_KEY").equals(""))
+        if(Properties.getInstance().getProperty("TMDB_API_KEY").isEmpty())
             fail("TMDB_API_KEY not found in application.properties");
         assertEquals("TMDB", com.vtrk.videotracker.API.TMDB.getInstance().getApiName());
         try {
