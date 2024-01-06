@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class TMDB extends API{
     private static TMDB instance = null;
-    private String apiKey;
+    private final String apiKey;
 
     /**
      * Constructor
