@@ -2,8 +2,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { ContentComponent } from './content/content.component';
+import { SettingsComponent } from './settings/settings.component';
 import {UserListComponent} from "./user-list/user-list.component";
+import {AboutComponent} from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
 
 
@@ -11,7 +12,8 @@ import { LoginComponent } from "./login/login.component";
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'content', component: ContentComponent },
+  { path: 'settings', component: SettingsComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'user-list', component: UserListComponent },
   { path: 'login', component: LoginComponent }
 ];
