@@ -8,8 +8,6 @@ import {AboutComponent} from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
 import { SigninComponent } from "./signin/signin.component";
 
-
-
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
