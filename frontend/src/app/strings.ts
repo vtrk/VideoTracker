@@ -1,6 +1,9 @@
 export const strings = {
+    about_serverVersion: "Server Version: ",
+    about_serverAPI: "Server API: ",
     KITSU: "Kitsu",
     TMDB: "TMDB",
+    API_ERROR: "Error fetching API data.",
     TRENDING_ERROR: "Error loading trending content.",
     SEARCH_ERROR: "Error loading search results.",
     SEARCH_NO_RESULTS: "No results found.",
