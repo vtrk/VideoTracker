@@ -69,8 +69,27 @@ export class ServerApiService {
    * Gets the server info.
    * @returns An observable of the response from the server.
    */
-  getServerInfo(){
+  getServerInfoObservable(){
     return this.client.get<ServerAPIResponse>(environment.API_URL + '/api');
   }
 
+  /**
+   * Gets the server info.
+   * @param info map to add info to
+   */
+  getServerInfo(info: Map<string, string>){
+    this.client.get<ServerAPIResponse>(environment.API_URL + '/api').subscribe({
+      next: data => {
+        info.set("API", data.API);
+        info.set("Version", data.Version);
+        return;
+      },
+      error: error => {
+        console.log(error);
+        info.set("API", strings.API_ERROR);
+        info.set("Version", strings.API_ERROR);
+        return;
+      }
+    });
+  }
 }

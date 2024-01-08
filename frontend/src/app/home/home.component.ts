@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit{
    */
   ngOnInit(): void{
     // First, get the server info to determine the API.
-    this.api.getServerInfo().subscribe({
+    this.api.getServerInfoObservable().subscribe({
       next: data => {
         switch(data.API){// Based on the API, get the trending content.
           case strings.KITSU: // Kitsu gets trending anime.
