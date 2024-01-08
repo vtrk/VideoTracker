@@ -1,4 +1,8 @@
 <p (ngOnInit)="ngOnInit()">trendings</p>
+<div *ngFor="let item of items">
+    <img id="{{item.id}}" title="{{item.type}}" src="{{item.image}}" alt="404" width="200" height="auto" (click)="goto($event)"/><br>
+    <label id="{{item.id}}" title="{{item.type}}" for="{{item.id}}" (click)="goto($event)">{{item.name}}</label>
+</div>
 <p>Solo se si ha fatto l'accesso</p>
 <p>recently viewed</p>
 <p>recently searched</p>
