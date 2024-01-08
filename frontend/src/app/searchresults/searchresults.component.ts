@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-searchresults',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './searchresults.component.css'
 })
 export class SearchresultsComponent {
-
+  title = 'searchresults';
+  
 }
