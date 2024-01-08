@@ -1,22 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { SearchBody, ServerAPIResponse } from './data-structures';
-import { ItemAssigner, ItemList } from './item';
-import { strings } from './strings';
+import { environment } from '../../environments/environment';
+import { SearchBody, ServerAPIResponse } from '../data-structures';
+import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../item';
+import { strings } from '../strings';
 
 
 /**
  * Service for interacting with the server API.
 */
-
 @Injectable({
   providedIn: 'root'
 })
 export class ServerApiService {
+  assigner: ItemAssigner;
 
-  constructor(private client: HttpClient) { }
-
+  constructor(private client: HttpClient) {
+    // Get the server info to initialize the ItemAssigner.
+    this.getServerInfoObservable().subscribe({
+      next: data => {
+        switch(data.API){
+          case strings.KITSU:
+            this.assigner = new KitsuItemAssigner();
+            break;
+          case strings.TMDB:
+            this.assigner = new TMDBItemAssigner();
+            break;
+          default:
+            break;
+        }
+      },
+      error: error => {
+        console.log(error);
+      },
+    });
+  }
 
   /**
    * Sends a search query to the server.
@@ -36,12 +54,14 @@ export class ServerApiService {
   }
 
   /**
-   * Gets the trending items from the server.
+   * Fetches the trending items from the server.
    * @param type content type
    * @param itemList list to add items to
    * @param trendingString string to set to trending
+   * 
+   * This function has a wrapper @see {@link getTrending}
    */
-  getTrending(type: string, itemList: ItemList, assigner: ItemAssigner){
+  private fetchTrending(type: string, itemList: ItemList){
     let url = environment.API_URL + '/trending?type=' + type;
     let options = {
       headers: {
@@ -53,7 +73,7 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         json.data.forEach((element: any) => {
-          assigner.assign(itemList, element);
+          this.assigner.assign(itemList, element);
         });
         return;
       },
@@ -63,6 +83,36 @@ export class ServerApiService {
         return;
       }
     })
+  }
+
+  /**
+   * Gets the trending items from the server.
+   * @param itemList list to add items to
+   */
+  getTrending(itemList: ItemList){
+    // First, determine the API.
+    this.getServerInfoObservable().subscribe({
+      next: data => {
+        switch(data.API){// Based on the API, get the trending content.
+          case strings.KITSU:// Kitsu gets trending anime.
+            this.fetchTrending(strings.anime, itemList);
+            itemList.setTitle(strings.trending + " " + strings.anime);
+            break;
+          case strings.TMDB:// TMDB gets trending movies and tv.
+            this.fetchTrending(strings.movie, itemList);
+            this.fetchTrending(strings.tv, itemList);
+            itemList.setTitle(strings.trending + " " + strings.movie + " and " + strings.tv);
+            break;
+          default:
+            itemList.setTitle(strings.TRENDING_ERROR);
+            break;
+        }
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.TRENDING_ERROR);
+      }
+    });
   }
 
   /**
