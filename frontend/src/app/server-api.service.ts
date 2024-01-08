@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { SearchBody } from './data-structures';
+import { SearchBody, ServerAPIResponse } from './data-structures';
+import { ItemAssigner, ItemList } from './item';
+import { strings } from './strings';
 
 
 /**
@@ -33,7 +35,13 @@ export class ServerApiService {
     return this.client.post(url, body.getJSONBody(), options)
   }
 
-  getTrending(type: string){
+  /**
+   * Gets the trending items from the server.
+   * @param type content type
+   * @param itemList list to add items to
+   * @param trendingString string to set to trending
+   */
+  getTrending(type: string, itemList: ItemList, assigner: ItemAssigner){
     let url = environment.API_URL + '/trending?type=' + type;
     let options = {
       headers: {
@@ -41,7 +49,28 @@ export class ServerApiService {
         'Accept': 'text/plain'
       }
     };
-    return this.client.get(url, options);
+    this.client.get(url, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        json.data.forEach((element: any) => {
+          assigner.assign(itemList, element);
+        });
+        return;
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.TRENDING_ERROR);
+        return;
+      }
+    })
+  }
+
+  /**
+   * Gets the server info.
+   * @returns An observable of the response from the server.
+   */
+  getServerInfo(){
+    return this.client.get<ServerAPIResponse>(environment.API_URL + '/api');
   }
 
 }
