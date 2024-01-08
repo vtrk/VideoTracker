@@ -1,7 +1,8 @@
 <h1>Ciao!!!</h1>
 
-<form action="verify.ts" method="post">
-    <input type="text" name="email" placeholder="Enter your email">
-    <input type="password" name="password" placeholder="Enter your password">
+<form (ngSubmit)="login()" id="loginForm" method="post">
+    <input type="text" name="email" [(ngModel)]="email" placeholder="Enter your email">
+    <input type="password" name="password" [(ngModel)]="password" placeholder="Enter your password">
     <input type="submit" value="Log in">
 </form>
+
