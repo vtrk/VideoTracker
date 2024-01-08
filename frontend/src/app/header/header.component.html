@@ -6,7 +6,7 @@
   <a [routerLink]="['/login']">Log in</a>
   <a [routerLink]="['/signin']">Sign in</a>
 </nav>
-<form action="/search.ts" method="get">
-  <input type = "text" id="search" placeholder="find something...">
+<form (ngSubmit)="onSubmit()">
+  <input type = "text" id="search" [formControl]="input" placeholder="find something...">
   <input type = "submit" value="Find">
 </form>
