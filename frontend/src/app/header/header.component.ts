@@ -20,9 +20,7 @@ export class HeaderComponent implements OnInit{
 
   input: FormControl;
 
-  private search: SearchService;
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private search: SearchService) {}
 
   ngOnInit(): void{
     this.input = new FormControl('');
