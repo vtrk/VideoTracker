@@ -23,6 +23,7 @@ public class RESTfulAPI {
      * @return JSON API response
      */
    @GetMapping("/api")
+   @CrossOrigin
     public String api(HttpServletRequest request) {
        return VideoTrackerApplication.API_MANAGER.getAPIName();
     }
@@ -36,6 +37,7 @@ public class RESTfulAPI {
      * @throws IOException IOException
      */
     @GetMapping("/content/**")
+    @CrossOrigin
     public String content(@RequestParam String type, HttpServletRequest request) throws IOException {
         String contentID = request.getRequestURI().substring(9);
        return VideoTrackerApplication.API_MANAGER.getById(contentID, type);
@@ -49,6 +51,7 @@ public class RESTfulAPI {
      * @throws IOException IOException
      */
     @GetMapping("/trending")
+    @CrossOrigin
     public String trending(@RequestParam String type, HttpServletRequest request) throws IOException {
         return VideoTrackerApplication.API_MANAGER.getTrending(type);
     }
@@ -75,6 +78,7 @@ public class RESTfulAPI {
             method = RequestMethod.POST,
             consumes = "text/plain"
     )
+    @CrossOrigin
     public String search(@RequestBody String data, HttpServletRequest request) throws IOException {
         JSONObject json = new JSONObject(data);
         String type = json.getString("type");
@@ -90,6 +94,7 @@ public class RESTfulAPI {
     //***** End of endpoints that use data from external APIs *****
 
     @RequestMapping("/error")
+    @CrossOrigin
     public String error(HttpServletRequest request) {
         return request.getAttribute("javax.servlet.error.status_code").toString();
     }
