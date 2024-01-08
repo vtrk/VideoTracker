@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {ChangeDetectorRef} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { ServerAPIResponse } from '../data-structures';
+import { Component } from '@angular/core';
+import { ServerApiService } from '../server-api.service';
+import { strings } from '../strings';
 
 @Component({
   selector: 'app-about',
@@ -11,19 +9,13 @@ import { ServerAPIResponse } from '../data-structures';
   templateUrl: './about.component.html',
   styleUrl: './about.component.css'
 })
-export class AboutComponent implements OnInit{
+export class AboutComponent {
   title = 'about';
-  serverAPI: string;
-  serverVersion: string;
+  about_serverAPI: string = strings.about_serverAPI;
+  about_serverVersion: string = strings.about_serverVersion;
+  API_Info: Map<string, string> = new Map<string, string>;
 
-  ngOnInit(): void {
-    this.ref.detectChanges();
-  }
-
-  constructor(private ref:ChangeDetectorRef, private client: HttpClient) {
-    this.client.get<ServerAPIResponse>(environment.API_URL + '/api').subscribe(data => {
-      this.serverAPI = "Server API: " + data.API;
-      this.serverVersion = "Server Version: " + data.Version;
-    });
+  constructor(private server: ServerApiService) {
+    this.server.getServerInfo(this.API_Info);
   }
 }

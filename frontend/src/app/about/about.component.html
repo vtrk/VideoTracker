@@ -1,6 +1,6 @@
-<div (ngOnInit)="ngOnInit()">
+<div>
 <p>This is about</p>
 
-<p [innerHTML]="serverVersion"></p>
-<p [innerHTML]="serverAPI"></p>
+<p [innerHTML]="about_serverVersion + API_Info.get('Version')"></p>
+<p [innerHTML]="about_serverAPI + API_Info.get('API')"></p>
 </div>
