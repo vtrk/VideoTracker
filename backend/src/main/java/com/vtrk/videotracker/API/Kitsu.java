@@ -15,12 +15,12 @@ public class Kitsu extends API {
 
     /** Search results only need the following fields
      *  <ul>
-     *      <li>slug</li>
+     *      <li>canonicalTitle</li>
      *      <li>posterImage</li>
      *  </ul>
      *  */
     private static final List<String> searchResultsFields = List.of(
-            "slug",
+            "canonicalTitle",
             "posterImage"
     );
 
