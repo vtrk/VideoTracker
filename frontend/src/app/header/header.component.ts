@@ -8,7 +8,14 @@ import { SearchBody } from '../utils/data-structures';
 import { CommonModule } from '@angular/common';
 import { strings } from '../strings';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAddressCard, faBookmark,
+  faDoorClosed,
+  faGear,
+  faHouse, faList,
+  faMagnifyingGlass,
+  faRightToBracket
+} from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 
   @Component({
@@ -86,4 +93,11 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
     }
 
     protected readonly faGithub = faGithub;
+    protected readonly faHouse = faHouse;
+    protected readonly faMagnifyingGlass = faMagnifyingGlass;
+    protected readonly faAddressCard = faAddressCard;
+    protected readonly faDoorClosed = faDoorClosed;
+    protected readonly faRightToBracket = faRightToBracket;
+    protected readonly faList = faList;
+    protected readonly faBookmark = faBookmark;
   }

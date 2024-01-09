@@ -1,1 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+:root{
+  --background-light: #f1f1f1;
+  --text-light: purple;
+  --background-dark: #333;
+  --text-dark: #fff;
+}
