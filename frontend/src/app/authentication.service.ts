@@ -15,7 +15,6 @@ export class AuthenticationService {
     }
     console.log('login failed');
     return false;
-
   }
 
   logout(){
