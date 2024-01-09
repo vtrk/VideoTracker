@@ -9,14 +9,18 @@ import { CommonModule } from '@angular/common';
 import { strings } from '../strings';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {
-  faAddressCard, faBookmark,
-  faDoorClosed, faDoorOpen,
+  faAddressCard,
+  faBookmark,
+  faDoorClosed,
+  faDoorOpen,
   faGear,
-  faHouse, faList,
+  faHouse,
+  faList,
   faMagnifyingGlass,
   faRightToBracket
 } from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
+import {AuthenticationService} from "../authentication.service";
 
   @Component({
     selector: 'app-header',
@@ -32,7 +36,18 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
     styleUrl: './header.component.css'
   })
   export class HeaderComponent implements OnInit{
-    faGear = faGear;
+
+    protected readonly faGithub = faGithub;
+    protected readonly faHouse = faHouse;
+    protected readonly faMagnifyingGlass = faMagnifyingGlass;
+    protected readonly faAddressCard = faAddressCard;
+    protected readonly faDoorClosed = faDoorClosed;
+    protected readonly faRightToBracket = faRightToBracket;
+    protected readonly faList = faList;
+    protected readonly faBookmark = faBookmark;
+    protected readonly faGear = faGear;
+    protected readonly faDoorOpen = faDoorOpen;
+
     input: FormControl;
     type: string;
     year: string;
@@ -44,8 +59,17 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
     searchQuery: string = '';
     serverInfo: Map<string, string> = new Map<string, string>();
 
-    constructor(private http: HttpClient, private router: Router, private server: ServerApiService) {
+    constructor(private http: HttpClient, private router: Router, private server: ServerApiService, private authService: AuthenticationService) {
       this.server.getServerInfo(this.serverInfo);
+    }
+
+    isUserLoggedIn(): boolean {
+      return this.authService.userIsAuth;
+    }
+
+    logout(){
+      this.authService.logout();
+      this.router.navigate(['/home']);
     }
 
     ngOnInit(): void{
@@ -92,13 +116,4 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
       this.category = event.target.options[event.target.options.selectedIndex].value
     }
 
-    protected readonly faGithub = faGithub;
-    protected readonly faHouse = faHouse;
-    protected readonly faMagnifyingGlass = faMagnifyingGlass;
-    protected readonly faAddressCard = faAddressCard;
-    protected readonly faDoorClosed = faDoorClosed;
-    protected readonly faRightToBracket = faRightToBracket;
-    protected readonly faList = faList;
-    protected readonly faBookmark = faBookmark;
-    protected readonly faDoorOpen = faDoorOpen;
   }
