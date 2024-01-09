@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemList, } from '../item';
+import { ItemList, } from '../utils/item';
 import { ServerApiService } from '../services/server-api.service';
 import { CommonModule } from '@angular/common';
 

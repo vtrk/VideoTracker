@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { SearchBody, ServerAPIResponse } from '../data-structures';
-import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../item';
+import { SearchBody, ServerAPIResponse } from '../utils/data-structures';
+import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../utils/item';
 import { strings } from '../strings';
 
 
@@ -14,6 +14,8 @@ import { strings } from '../strings';
 })
 export class ServerApiService {
   assigner: ItemAssigner;
+  searchArgs: Map<string, string> = new Map<string, string>();
+  searchType: string = '';
 
   constructor(private client: HttpClient) {
     // Get the server info to initialize the ItemAssigner.
@@ -37,20 +39,64 @@ export class ServerApiService {
   }
 
   /**
-   * Sends a search query to the server.
-   * @param query
-   * @returns An observable of the response from the server.
+   * Sends and fetches data from a search query to the server.
+   * @param searchBody JSON body of the search request
+   * @param itemList list to add items to
+   * 
+   * This function has a wrapper @see {@link getSearch}
    */
-  sendSearchQuery(query: string, type: string, args: Map<string, string>) {
-    let url = environment.API_URL + '/search?query=' + query;
-    let body = new SearchBody(type, query, args);
+  private fetchSearchQuery(body: SearchBody, itemList: ItemList) {
+    let url = environment.API_URL + '/search';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return this.client.post(url, body.getJSONBody(), options)
+    this.client.post(url, body.getJSONBody(), options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        json.data.forEach((element: any) => {
+          this.assigner.assign(itemList, element);
+        });
+        return;
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.SEARCH_ERROR);
+        return;
+      }
+    });
+  }
+
+  /**
+   * Gets the results of a search query from the server and saves them to the itemList.
+   * @param itemList list to add items to
+   * @param searchBody JSON body of the search request
+   */
+  getSearch(itemList: ItemList, searchBody: SearchBody){
+    // First, determine the API.
+    this.getServerInfoObservable().subscribe({
+      next: data => {
+        switch(data.API){// Based on the API, get the search content.
+          case strings.KITSU:// Kitsu searches anime.
+            this.fetchSearchQuery(searchBody, itemList);
+            itemList.setTitle(strings.trending + " " + strings.anime);
+            break;
+          case strings.TMDB:// TMDB searches either movies or tv.
+            this.fetchSearchQuery(searchBody, itemList);
+            itemList.setTitle(strings.trending + " " + strings.movie + " and " + strings.tv);
+            break;
+          default:
+            itemList.setTitle(strings.TRENDING_ERROR);
+            break;
+        }
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.TRENDING_ERROR);
+      }
+    });
   }
 
   /**
@@ -86,7 +132,7 @@ export class ServerApiService {
   }
 
   /**
-   * Gets the trending items from the server.
+   * Gets the trending items from the server and saves them to the itemList.
    * @param itemList list to add items to
    */
   getTrending(itemList: ItemList){

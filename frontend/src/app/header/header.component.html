@@ -9,4 +9,17 @@
 <form (ngSubmit)="onSubmit()">
   <input type = "text" id="search" [formControl]="input" placeholder="find something...">
   <input type = "submit" value="Find">
+  <select id="type" (change)="onTMDBTypeChange($event)" [hidden]="serverInfo.get('API') == 'Kitsu'">
+    <option value="movie" selected>Movies</option>
+    <option value="tv">TV Shows</option>
+  </select>
+  <select id="year" (change)="onTMDBYearChange($event)" name="year" id="year" [hidden]="serverInfo.get('API') == 'Kitsu'">
+    <option value="none" selected>Select a year</option>
+    <option value="{{item}}" *ngFor="let item of range">{{item}}</option>
+  </select>
+  <select id="category" (change)="onKitsuCategoryChange($event)" [hidden]="serverInfo.get('API') == 'TMDB'">
+    <option value="none" selected>Select a category</option>
+    <option value="adventure">Adventure</option>
+    <option value="horror">Horror</option>
+  </select>
 </form>

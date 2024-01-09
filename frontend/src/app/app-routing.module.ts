@@ -7,7 +7,6 @@ import {UserListComponent} from "./user-list/user-list.component";
 import {AboutComponent} from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
 import { SigninComponent } from "./signin/signin.component";
-import { SearchService } from "./search.service";
 import { SearchresultsComponent } from "./searchresults/searchresults.component";
 
 export const routes: Routes = [
@@ -25,6 +24,6 @@ export const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [SearchService]
+  providers: []
 })
 export class AppRoutingModule { }
