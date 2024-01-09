@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthenticationService {
+  private userIsAuthenticated = false;
+  constructor() {}
+  login(email: string, password: string):boolean{
+    //Qui bisogna mettere la chiamata al server per il login
+    if(email == 'admin' && password == 'admin') {
+      this.userIsAuthenticated = true;
+      return true;
+    }
+    return false;
+  }
+
+  logout(){
+    this.userIsAuthenticated = false;
+  }
+
+  get userIsAuth(){
+    return this.userIsAuthenticated;
+  }
+
+}

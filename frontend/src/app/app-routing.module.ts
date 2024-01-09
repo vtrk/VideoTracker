@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from "./auth.guard";
 
 import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -12,9 +13,9 @@ import { SearchresultsComponent } from "./searchresults/searchresults.component"
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'settings', component: SettingsComponent },
+  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent },
-  { path: 'user-list', component: UserListComponent },
+  { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
   { path: 'search/:searchQuery', component: SearchresultsComponent },
