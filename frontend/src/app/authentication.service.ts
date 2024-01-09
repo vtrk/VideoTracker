@@ -10,9 +10,12 @@ export class AuthenticationService {
     //Qui bisogna mettere la chiamata al server per il login
     if(email == 'admin' && password == 'admin') {
       this.userIsAuthenticated = true;
+      console.log('login success');
       return true;
     }
+    console.log('login failed');
     return false;
+
   }
 
   logout(){
