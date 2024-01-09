@@ -4,8 +4,8 @@ import { AuthGuard } from "./auth.guard";
 
 import { HomeComponent } from './home/home.component';
 import { SettingsComponent } from './settings/settings.component';
-import {UserListComponent} from "./user-list/user-list.component";
-import {AboutComponent} from "./about/about.component";
+import { UserListComponent} from "./user-list/user-list.component";
+import { AboutComponent} from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
 import { SigninComponent } from "./signin/signin.component";
 import { SearchresultsComponent } from "./searchresults/searchresults.component";
@@ -13,6 +13,7 @@ import { SearchresultsComponent } from "./searchresults/searchresults.component"
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
+  { path: 'searchresults', component: SearchresultsComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent },
   { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },

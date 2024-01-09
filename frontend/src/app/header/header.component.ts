@@ -52,6 +52,7 @@ import {AuthenticationService} from "../authentication.service";
     type: string;
     year: string;
     category: string;
+    searchBar: boolean = false;
 
     range: number[] = [];
     startYear: number = new Date().getFullYear();
@@ -61,6 +62,14 @@ import {AuthenticationService} from "../authentication.service";
 
     constructor(private http: HttpClient, private router: Router, private server: ServerApiService, private authService: AuthenticationService) {
       this.server.getServerInfo(this.serverInfo);
+    }
+
+    get searchBarStatus(): boolean {
+      return this.searchBar;
+    }
+
+    openSearchBar() {
+      this.searchBar = !this.searchBar;
     }
 
     isUserLoggedIn(): boolean {
@@ -73,6 +82,7 @@ import {AuthenticationService} from "../authentication.service";
     }
 
     ngOnInit(): void{
+      console.log(this.searchBarStatus);
       this.input = new FormControl('');
       this.type = "movie";
       this.year = "none";
