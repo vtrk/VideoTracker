@@ -6,7 +6,8 @@
   <a [routerLink]="['/about']"><fa-icon [icon]="faAddressCard"></fa-icon> </a>
   <a [routerLink]="['/settings']"><fa-icon [icon]="faGear"></fa-icon></a>
   <a [routerLink]="['/login']"><fa-icon [icon]="faDoorClosed"></fa-icon> </a>
-  <a [routerLink]="['/signin']"><fa-icon [icon]="faRightToBracket"></fa-icon> </a>
+  <a [routerLink]="['/signin']"><fa-icon [icon]="faRightToBracket" [hidden]="isLoggedIn()"></fa-icon> </a>
+  <a [routerLink]="['/logout']"><fa-icon [icon]="faDoorOpen"></fa-icon [hidden]="!isLoggedIn()"> </a>
 </nav>
 
 

@@ -10,7 +10,7 @@ import { strings } from '../strings';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {
   faAddressCard, faBookmark,
-  faDoorClosed,
+  faDoorClosed, faDoorOpen,
   faGear,
   faHouse, faList,
   faMagnifyingGlass,
@@ -100,4 +100,5 @@ import {faGithub} from "@fortawesome/free-brands-svg-icons";
     protected readonly faRightToBracket = faRightToBracket;
     protected readonly faList = faList;
     protected readonly faBookmark = faBookmark;
+    protected readonly faDoorOpen = faDoorOpen;
   }
