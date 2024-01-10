@@ -1,0 +1,8 @@
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+<div>
+<p [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">This is about</p>
+
+<p [innerHTML]="about_serverVersion + API_Info.get('Version')" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></p>
+<p [innerHTML]="about_serverAPI + API_Info.get('API')" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></p>
+</div>
+</body>

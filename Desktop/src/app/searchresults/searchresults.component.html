@@ -1,0 +1,10 @@
+<body>
+<h3>Here are the results for your search</h3>
+<p [innerHTML]="searchQuery"></p>
+<div>
+    <div *ngFor="let item of itemList.getItems()">
+        <img id="{{item.id}}" title="{{item.type}}" src="{{item.image}}" alt="404" width="200" height="auto" (click)="goto($event)"/><br>
+        <label id="{{item.id}}" title="{{item.type}}" for="{{item.id}}" (click)="goto($event)">{{item.name}}</label>
+    </div>
+</div>
+</body>
