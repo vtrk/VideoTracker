@@ -1,5 +1,5 @@
 <body>
-<p id="Welcome">Welcome to VideoTracker</p>
+<p id="Welcome" class=".fs-1 text-center">Welcome to VideoTracker</p>
 <p (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()"><p>
 <div *ngFor="let item of itemList.getItems()">
   <img id="{{item.id}}" title="{{item.type}}" src="{{item.image}}" alt="404" width="200" height="auto" (click)="goto($event)"/><br>

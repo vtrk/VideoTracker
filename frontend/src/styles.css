@@ -1,7 +1,36 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
-:root{
-  --background-light: #f1f1f1;
-  --text-light: purple;
-  --background-dark: #333;
-  --text-dark: #fff;
+body{
+  margin:0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Cantarell', sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+}
+
+nav{
+  background-color: #333;
+  text-color: #fff;
+}
+
+.main-container{
+  flex: 1;
+}
+
+footer{
+  padding: 10px;
+  text-align: center;
+  background-color: #333;
+  margin-top: auto;
+}
+
+body.dark-mode{
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-mode nav a{
+  background-color: #222;
 }

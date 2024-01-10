@@ -12,10 +12,18 @@ import {UserListComponent} from "./user-list/user-list.component";
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterLink, LoginComponent, HeaderComponent, FooterComponent, UserListComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+
 })
 export class AppComponent {
   title = 'VideoTracker';
-
+  darkTheme: boolean = false;
   constructor() {}
+
+  isDarkTheme(): boolean {
+    return this.darkTheme;
+  }
+  toggleTheme() {
+    this.darkTheme = !this.darkTheme;
+  }
 }

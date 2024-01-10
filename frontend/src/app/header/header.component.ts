@@ -16,8 +16,8 @@ import {
   faGear,
   faHouse,
   faList,
-  faMagnifyingGlass,
-  faRightToBracket
+  faMagnifyingGlass, faMoon,
+  faRightToBracket, faSun
 } from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {AuthenticationService} from "../authentication.service";
@@ -53,6 +53,7 @@ import {AuthenticationService} from "../authentication.service";
     year: string;
     category: string;
     searchBar: boolean = false;
+    darkTheme: boolean = false;
 
     range: number[] = [];
     startYear: number = new Date().getFullYear();
@@ -70,6 +71,14 @@ import {AuthenticationService} from "../authentication.service";
 
     openSearchBar() {
       this.searchBar = !this.searchBar;
+    }
+
+    isDarkTheme(): boolean{
+      return this.darkTheme;
+    }
+
+    toggleTheme(){
+      this.darkTheme = !this.darkTheme;
     }
 
     isUserLoggedIn(): boolean {
@@ -126,4 +135,6 @@ import {AuthenticationService} from "../authentication.service";
       this.category = event.target.options[event.target.options.selectedIndex].value
     }
 
+    protected readonly faSun = faSun;
+    protected readonly faMoon = faMoon;
   }
