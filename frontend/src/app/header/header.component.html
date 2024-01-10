@@ -1,5 +1,5 @@
-<nav class="navbar">
-  <p>VideoTracker</p>
+<nav class="navbar" [ngClass]="{'dark-mode':isDarkTheme()}">
+  <p [ngClass]="{'dark-mode':isDarkTheme()}">VideoTracker</p>
   <a [routerLink]="['/home']"><fa-icon [icon]="faHouse"></fa-icon></a>
   <a [routerLink]="['.', { queryParamsHandling: 'reload' }] " (click)="openSearchBar()"><fa-icon [icon]="faMagnifyingGlass"></fa-icon> </a>
   <a [routerLink]="[]" [hidden]="!isDarkTheme()" (click)="toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
@@ -13,7 +13,7 @@
 </nav>
 
 
-<form (ngSubmit)="onSubmit()" [hidden]="searchBarStatus">
+<form [ngClass]="{'dark-mode':isDarkTheme()}" (ngSubmit)="onSubmit()" [hidden]="searchBarStatus">
   <nav class="navbar position-absolute start-50 translate-middle-x">
     <input type = "text" id="search" [formControl]="input"  placeholder="find something...">
     <input type = "submit" [routerLink]="['/searchresults']" value="Find">

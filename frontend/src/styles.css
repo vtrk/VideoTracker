@@ -11,8 +11,25 @@ body{
 }
 
 nav{
-  background-color: #333;
-  text-color: #fff;
+  background-color: #fff;
+}
+
+nav.dark-mode{
+  background-color: #444;
+}
+
+p{
+  font-family: Cantarelle, sans-serif;
+  color: #333;
+}
+
+p.dark-mode{
+  color: white;
+}
+
+form.dark-mode{
+  background-color: #222;
+  text-color: white;
 }
 
 .main-container{
@@ -26,11 +43,11 @@ footer{
   margin-top: auto;
 }
 
+footer.dark-mode{
+  background-color: white;
+}
+
 body.dark-mode{
   background-color: #333;
   color: #fff;
-}
-
-body.dark-mode nav a{
-  background-color: #222;
 }
