@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ItemList, } from '../utils/item';
 import { ServerApiService } from '../services/server-api.service';
 import { CommonModule } from '@angular/common';
+import {ThemeService} from "../theme.service";
 
 @Component({
   selector: 'app-home',
@@ -13,11 +14,11 @@ import { CommonModule } from '@angular/common';
 export class HomeComponent implements OnInit{
   itemList: ItemList = new ItemList();
 
-  constructor(private api: ServerApiService) {}
+  constructor(private api: ServerApiService, public themeService: ThemeService) {}
 
   /**
    * Starting routine
-   * 
+   *
    * Gets the trending content to display on the home component.
    */
   ngOnInit(): void{
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit{
 
   /**
    * TODO: Loads the content of the item clicked on.
-   * @param event 
+   * @param event
    */
   goto(event: any){
     var target = event.target;
