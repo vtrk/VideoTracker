@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import {AuthenticationService} from "../authentication.service";
 import {FormsModule} from "@angular/forms";
+import {ThemeService} from "../theme.service";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    NgClass
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
@@ -23,7 +26,7 @@ export class SettingsComponent {
   change_user: string = '';
   dark_theme: boolean = false;
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService, public themeService : ThemeService) {}
 
   change_password(){
     console.log(this.old_password, this.new_password, this.change_pass);

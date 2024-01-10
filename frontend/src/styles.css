@@ -8,14 +8,47 @@ body{
   font-family: 'Cantarell', sans-serif;
   transition: background-color 0.3s, color 0.3s;
   text-align: center;
+  background-color: #c7c7cc;
+  color: white;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000; /* Impedisce sovrapposizioni con altri elementi */
+}
+
+a{
+  color: #0885ec;
+  text-color: white;
+}
+
+a.keeptrack{
+  color: darkblue;
 }
 
 nav{
-  background-color: #fff;
+  background-color: #333;
+  position: fixed;
+  transition: margin-top 0.3s ease-in-out;
 }
 
 nav.dark-mode{
   background-color: #444;
+}
+
+.navbar-brand{
+  font-family: Cantarelle, sans-serif;
+  color: white;
+}
+
+.navbar-brand:hover{
+  color: white;
+}
+
+a{
+ color: blue;
 }
 
 p{
@@ -27,9 +60,16 @@ p.dark-mode{
   color: white;
 }
 
+form{
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #c7c7cc;
+  text-color: #333;
+}
+
 form.dark-mode{
-  background-color: #222;
-  text-color: white;
+  transition: background-color 0.3s, color 0.3s;
+  background-color: #333;
+  text-color: gray;
 }
 
 .main-container{
@@ -44,10 +84,26 @@ footer{
 }
 
 footer.dark-mode{
-  background-color: white;
+  background-color: #444;
 }
 
 body.dark-mode{
   background-color: #333;
   text-color: #fff;
 }
+
+label{
+  font-family: Cantarelle, sans-serif;
+  color: #333;
+}
+
+label.dark-mode{
+  color: white;
+}
+
+input{
+  font-family: Cantarelle, sans-serif;
+  color: #333;
+  background-color: #fff;
+}
+

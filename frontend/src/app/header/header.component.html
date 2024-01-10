@@ -1,5 +1,10 @@
-<nav class="navbar" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-  <p [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">VideoTracker</p>
+<nav class="navbar fixed-top mb-4" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+  <nav class="navbar-brand" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+    <img src="favicon.ico" alt="" width="30" height="30" class="d-inline-block align-top">
+    VideoTracker
+  </nav>
+  <a></a>
+  <a></a>
   <a [routerLink]="['/home']"><fa-icon [icon]="faHouse"></fa-icon></a>
   <a [routerLink]="['/user-list']"><fa-icon [icon]="faBookmark"></fa-icon> </a>
   <a [routerLink]="['/about']"><fa-icon [icon]="faAddressCard"></fa-icon> </a>
@@ -12,8 +17,8 @@
   <a></a>
 </nav>
 
-<form [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" (ngSubmit)="onSubmit()">
-  <nav class="navbar position-absolute start-50 translate-middle-x">
+<form (ngSubmit)="onSubmit()" class="mt-4" style="z-index: 99" >
+  <nav class="navbar position-fixed start-50 translate-middle-x mt-3" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
     <input type = "text" id="search" [formControl]="input"  placeholder="find something...">
     <button [routerLink]="['/searchresults']" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
     <select id="type" (change)="onTMDBTypeChange($event)" [hidden]="serverInfo.get('API') == 'Kitsu'">

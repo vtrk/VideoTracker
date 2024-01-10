@@ -1,9 +1,9 @@
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
 <h1>Settings</h1>
-<body>
   <div>
       <div>
         <h3>Change Password</h3>
-        <form (ngSubmit)="change_password()" method="post">
+        <form (ngSubmit)="change_password()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
           <div>
             <label>Old Password</label>
             <input type="password" name="old_password" id="old_password" placeholder="Old Password">
@@ -21,7 +21,7 @@
       </div>
       <div>
         <h3>Change Email</h3>
-        <form (ngSubmit)="change_email()" method="post">
+        <form (ngSubmit)="change_email()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
           <div>
             <label>Old Email</label>
             <input type="email" name="old_email" id="old_email" placeholder="Old Email">
@@ -39,7 +39,7 @@
       </div>
       <div>
         <h3>Change Username</h3>
-        <form (ngSubmit)="change_username()" method="post">
+        <form (ngSubmit)="change_username()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
           <div>
             <label>New Email</label>
             <input type="text" name="new_username" id="new_username" placeholder="New Username">
