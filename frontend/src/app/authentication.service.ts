@@ -17,6 +17,23 @@ export class AuthenticationService {
     return false;
   }
 
+  signIn(email: string, password: string, confirmPassword: string):boolean{
+    //Check if the email is already in use
+    /*if() {
+      console.log('Sign in failed');
+      return false;
+    }
+    //check if the password and the confirm password are the same
+    if(password != confirmPassword){
+      console.log('Sign in failed');
+      return false;
+    }
+    */
+    console.log('Sign in success');
+    this.userIsAuthenticated = true;
+    return true;
+  }
+
   logout(){
     this.userIsAuthenticated = false;
   }

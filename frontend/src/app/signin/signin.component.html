@@ -15,7 +15,7 @@
               <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="form-control my-3.py-2" placeholder="confirm password">
               <div class="text-center" id="bottom">
                 <button class="btn btn-primary">Sign in</button>
-                <a href="#" class="nav-link">Already signed?</a>
+                <a [routerLink]="['/login']" class="nav-link">Already signed?</a>
               </div>
             </form>
           </div>
