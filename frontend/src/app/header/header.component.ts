@@ -21,6 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {AuthenticationService} from "../authentication.service";
+import {ThemeService} from "../theme.service";
 
   @Component({
     selector: 'app-header',
@@ -53,7 +54,6 @@ import {AuthenticationService} from "../authentication.service";
     year: string;
     category: string;
     searchBar: boolean = false;
-    darkTheme: boolean = false;
 
     range: number[] = [];
     startYear: number = new Date().getFullYear();
@@ -61,7 +61,7 @@ import {AuthenticationService} from "../authentication.service";
     searchQuery: string = '';
     serverInfo: Map<string, string> = new Map<string, string>();
 
-    constructor(private http: HttpClient, private router: Router, private server: ServerApiService, private authService: AuthenticationService) {
+    constructor(private http: HttpClient, private router: Router, private server: ServerApiService, private authService: AuthenticationService, public themeService: ThemeService) {
       this.server.getServerInfo(this.serverInfo);
     }
 
@@ -71,14 +71,6 @@ import {AuthenticationService} from "../authentication.service";
 
     openSearchBar() {
       this.searchBar = !this.searchBar;
-    }
-
-    isDarkTheme(): boolean{
-      return this.darkTheme;
-    }
-
-    toggleTheme(){
-      this.darkTheme = !this.darkTheme;
     }
 
     isUserLoggedIn(): boolean {

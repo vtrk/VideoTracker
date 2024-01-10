@@ -1,9 +1,9 @@
-<nav class="navbar" [ngClass]="{'dark-mode':isDarkTheme()}">
-  <p [ngClass]="{'dark-mode':isDarkTheme()}">VideoTracker</p>
+<nav class="navbar" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+  <p [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">VideoTracker</p>
   <a [routerLink]="['/home']"><fa-icon [icon]="faHouse"></fa-icon></a>
   <a [routerLink]="['.', { queryParamsHandling: 'reload' }] " (click)="openSearchBar()"><fa-icon [icon]="faMagnifyingGlass"></fa-icon> </a>
-  <a [routerLink]="[]" [hidden]="!isDarkTheme()" (click)="toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
-  <a [routerLink]="[]" [hidden]="isDarkTheme()" (click)="toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
+  <a [routerLink]="[]" [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
+  <a [routerLink]="[]" [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
   <a [routerLink]="['/user-list']"><fa-icon [icon]="faBookmark"></fa-icon> </a>
   <a [routerLink]="['/about']"><fa-icon [icon]="faAddressCard"></fa-icon> </a>
   <a [routerLink]="['/settings']"><fa-icon [icon]="faGear"></fa-icon></a>
@@ -13,7 +13,7 @@
 </nav>
 
 
-<form [ngClass]="{'dark-mode':isDarkTheme()}" (ngSubmit)="onSubmit()" [hidden]="searchBarStatus">
+<form [hidden]="searchBarStatus">
   <nav class="navbar position-absolute start-50 translate-middle-x">
     <input type = "text" id="search" [formControl]="input"  placeholder="find something...">
     <input type = "submit" [routerLink]="['/searchresults']" value="Find">
