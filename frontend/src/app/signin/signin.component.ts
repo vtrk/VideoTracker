@@ -20,7 +20,7 @@ export class SigninComponent {
 
   constructor(public themeService: ThemeService){
   }
-  signin(){
+  signIn(){
     console.log(this.email, this.password, this.confirmPassword);
   }
 }
