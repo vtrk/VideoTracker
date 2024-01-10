@@ -55,8 +55,6 @@ import {ThemeService} from "../theme.service";
     type: string;
     year: string;
     category: string;
-    darkTheme: boolean = true;
-
     range: number[] = [];
     startYear: number = new Date().getFullYear();
 
@@ -65,14 +63,6 @@ import {ThemeService} from "../theme.service";
 
     constructor(private http: HttpClient, private router: Router, private server: ServerApiService, private authService: AuthenticationService, public themeService: ThemeService) {
       this.server.getServerInfo(this.serverInfo);
-    }
-
-    isDarkTheme(): boolean{
-      return this.darkTheme;
-    }
-
-    toggleTheme(){
-      this.darkTheme = !this.darkTheme;
     }
 
     isUserLoggedIn(): boolean {
