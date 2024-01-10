@@ -48,12 +48,14 @@ import {ThemeService} from "../theme.service";
     protected readonly faBookmark = faBookmark;
     protected readonly faGear = faGear;
     protected readonly faDoorOpen = faDoorOpen;
+    protected readonly faSun = faSun;
+    protected readonly faMoon = faMoon;
 
     input: FormControl;
     type: string;
     year: string;
     category: string;
-    searchBar: boolean = false;
+    darkTheme: boolean = true;
 
     range: number[] = [];
     startYear: number = new Date().getFullYear();
@@ -65,12 +67,12 @@ import {ThemeService} from "../theme.service";
       this.server.getServerInfo(this.serverInfo);
     }
 
-    get searchBarStatus(): boolean {
-      return this.searchBar;
+    isDarkTheme(): boolean{
+      return this.darkTheme;
     }
 
-    openSearchBar() {
-      this.searchBar = !this.searchBar;
+    toggleTheme(){
+      this.darkTheme = !this.darkTheme;
     }
 
     isUserLoggedIn(): boolean {
@@ -83,7 +85,6 @@ import {ThemeService} from "../theme.service";
     }
 
     ngOnInit(): void{
-      console.log(this.searchBarStatus);
       this.input = new FormControl('');
       this.type = "movie";
       this.year = "none";
@@ -126,7 +127,4 @@ import {ThemeService} from "../theme.service";
     onKitsuCategoryChange(event: any){
       this.category = event.target.options[event.target.options.selectedIndex].value
     }
-
-    protected readonly faSun = faSun;
-    protected readonly faMoon = faMoon;
   }
