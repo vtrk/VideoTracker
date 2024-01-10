@@ -1,8 +1,0 @@
-<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-<p id="Welcome" class=".fs-1 text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Welcome to VideoTracker</p>
-<p (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"><p>
-<div *ngFor="let item of itemList.getItems()">
-  <img id="{{item.id}}" title="{{item.type}}" src="{{item.image}}" alt="404" width="200" height="auto" (click)="goto($event)"/><br>
-  <label id="{{item.id}}" title="{{item.type}}" for="{{item.id}}" (click)="goto($event)">{{item.name}}</label>
-</div>
-</body>
