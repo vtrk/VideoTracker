@@ -7,7 +7,6 @@ import com.vtrk.videotracker.utils.Properties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -27,6 +26,14 @@ public class VideoTrackerApplication {
         SpringApplication.run(VideoTrackerApplication.class, args);
 
         logger.info("Version: " + Properties.getInstance().getProperty("VERSION"));
+        /*
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        List<User> prova = userDaoPostgres.findAll();
+        for (User user : prova) {
+            System.out.println(user.getUsername());
+        }
+
+         */
     }
 
 }

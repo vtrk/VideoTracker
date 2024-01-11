@@ -24,9 +24,9 @@ public class DBManager {
     public Connection getConnection(){
         if (con == null){
             try {
-                con = DriverManager.getConnection("da_inserire", "postgres", "postgres");
+                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                System.out.println("Error in getConnection\n"+e.getErrorCode());
             }
         }
         return con;
@@ -48,8 +48,6 @@ public class DBManager {
         return new ReviewDaoPostgres(getConnection());
     }
 
-    public NotificationDao getNotificationDao(){
-        return new NotificationDaoPostgres(getConnection());
-    }
+    public NotificationDao getNotificationDao(){return new NotificationDaoPostgres(getConnection());}
 
 }
