@@ -1,0 +1,33 @@
+#searchbar{
+  padding: 0;
+}
+
+.searchbar{
+  padding: 10px 20px;
+  border-radius: 60px;
+  display: flex;
+  height: 25px;
+}
+
+.searchbar:focus-within{
+  box-shadow: 0 0 0 0px blue;
+}
+
+::placeholder{
+  color: #333;
+  padding: 10px 20px;
+  display: flex;
+}
+
+.custom-submit-button{
+  border-radius: 50px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+}
+
+.type{
+  border-radius: 60px;
+  padding: 10px 20px;
+  display: flex;
+}
