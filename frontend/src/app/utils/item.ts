@@ -2,6 +2,8 @@
  * @fileoverview This file contains interfaces and classes for storing and managing items.
  */
 
+import { strings } from "../strings";
+
 /**
  * Interface for storing an item.
  * An item represents a piece of content that is fetched from the /trending or /search endpoints.
@@ -84,11 +86,11 @@ export class ItemList {
  */
 export interface ItemAssigner {
     /**
-     * Assigns an item to an ItemList.
+     * Assign items to an ItemList.
      * @param itemList to assign to
-     * @param element to assign
+     * @param json JSON of items to assign (parsed)
      */
-    assign(itemList: ItemList, element: any): void;
+    assign(itemList: ItemList, json: any): void;
 }
 
 /**
@@ -99,12 +101,30 @@ export interface ItemAssigner {
  */
 export class TMDBItemAssigner implements ItemAssigner {
     /**
-     * Assigns an item from the TMDB API to an ItemList.
+     * Assigns items from the TMDB API to an ItemList.
      * @param itemList to assign to
-     * @param element to assign (parsed JSON)
+     * @param json JSON of items to assign (parsed)
      */
-    assign(itemList: ItemList, element: any): void {
-        throw new Error("Method not implemented.");
+    assign(itemList: ItemList, json: any): void {
+        json.results.forEach((element: any) => {
+            let item: Item; // Movies and tv shows have a different name for the title/name field.
+            if(element.media_type == strings.movie) {
+                item = {
+                    id: element.id,
+                    type: element.media_type,
+                    name: element.title,
+                    image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
+                };
+            }
+            else
+                item = {
+                    id: element.id,
+                    type: element.media_type,
+                    name: element.name,
+                    image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
+                };
+            itemList.addItem(item);
+        });
     }
 }
 
@@ -116,17 +136,19 @@ export class TMDBItemAssigner implements ItemAssigner {
  */
 export class KitsuItemAssigner implements ItemAssigner {
     /**
-     * Assigns an item from the Kitsu API to an ItemList.
+     * Assigns items from the Kitsu API to an ItemList.
      * @param itemList to assign to
-     * @param element to assign (parsed JSON)
+     * @param json JSON of items to assign (parsed)
      */
-    assign(itemList: ItemList, element: any): void {
-        let item: Item = {
-            id: element.id,
-            type: element.type,
-            name: element.attributes.canonicalTitle,
-            image: element.attributes.posterImage.original
-        };
-        itemList.addItem(item);
+    assign(itemList: ItemList, json: any): void {
+        json.data.forEach((element: any) => {
+            let item: Item = {
+                id: element.id,
+                type: element.type,
+                name: element.attributes.canonicalTitle,
+                image: element.attributes.posterImage.original
+            };
+            itemList.addItem(item);
+        });
     }
 }
