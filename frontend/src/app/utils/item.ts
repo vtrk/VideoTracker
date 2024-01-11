@@ -76,7 +76,7 @@ export class ItemList {
 }
 
 /**
- * Interface for assigning an item to an ItemList.
+ * Interface for assigning items to an ItemList.
  * @see {@link ItemList}
  * @see {@link Item}
  * 
