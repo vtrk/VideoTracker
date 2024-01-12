@@ -4,14 +4,14 @@ public class Review {
 
     private int id;
     private int vote;
-    private String comment;
+    private String user_comment;
     private User user;
     private Content content;
 
-    public Review( int id, int vote, String comment, User user, Content content ){
+    public Review( int id, int vote, String user_comment, User user, Content content ){
         this.id = id;
         this.vote = vote;
-        this.comment = comment;
+        this.user_comment = user_comment;
         this.user = user;
         this.content = content;
     }
@@ -32,12 +32,12 @@ public class Review {
         this.vote = vote;
     }
 
-    public String getComment() {
-        return comment;
+    public String getUserComment() {
+        return user_comment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setUserComment(String user_comment) {
+        this.user_comment = user_comment;
     }
 
     public User getUser() {

@@ -1,7 +1,10 @@
 package com.vtrk.videotracker.Database.Dao;
 import com.vtrk.videotracker.Database.Model.User;
 
+import java.util.List;
+
 public interface UserDao {
+    List<User> findAll();
     User findById(int id);
     User findByEmail(String email);
     void add(User user);
