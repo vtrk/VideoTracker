@@ -22,7 +22,7 @@
   <nav id="searchbar" class="navbar position-fixed start-50 translate-middle-x mt-3 w-100" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
     <div class="container d-flex justify-content-center align-items-center w-100">
     <input class="searchbar" type = "text" id="search" [formControl]="input"  placeholder="find something...">
-    <button class="custom-submit-button" type="submit" [routerLink]="['/searchresults']" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
+    <button class="custom-submit-button" type="submit" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
     <select id="type" (change)="onTMDBTypeChange($event)" [hidden]="serverInfo.get('API') == 'Kitsu'">
       <option value="movie" selected>Movies</option>
       <option value="tv">TV Shows</option>
