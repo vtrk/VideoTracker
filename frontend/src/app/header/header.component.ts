@@ -17,7 +17,8 @@ import {
   faHouse,
   faList,
   faMagnifyingGlass, faMoon,
-  faRightToBracket, faSun
+  faRightToBracket, faSun,
+  faEnvelope
 } from '@fortawesome/free-solid-svg-icons';
 import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {AuthenticationService} from "../authentication.service";
@@ -50,6 +51,7 @@ export class HeaderComponent implements OnInit{
   protected readonly faDoorOpen = faDoorOpen;
   protected readonly faSun = faSun;
   protected readonly faMoon = faMoon;
+  protected readonly faEnvelope = faEnvelope;
 
   input: FormControl;
   type: string;

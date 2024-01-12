@@ -9,8 +9,10 @@
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
             </svg>
+            <p [hidden]="show_message()" >Email already in use or passwords don't match</p>
             <form (ngSubmit)="signIn()" id="loginForm" method="post">
               <input type="text" name="email" [(ngModel)]="email"  class="form-control my-3.py-2" placeholder="email">
+              <input type="text" name="username" [(ngModel)]="username"  class="form-control my-3.py-2" placeholder="username">
               <input type="password" name="password" [(ngModel)]="password" class="form-control my-3.py-2" placeholder="password">
               <input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="form-control my-3.py-2" placeholder="confirm password">
               <div class="text-center" id="bottom">
