@@ -15,7 +15,6 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'searchresults', component: SearchresultsComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent },
   { path: 'mailbox', component: MailboxComponent, canActivate: [AuthGuard] },
