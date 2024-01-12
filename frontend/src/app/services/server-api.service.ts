@@ -56,9 +56,7 @@ export class ServerApiService {
     this.client.post(url, body.getJSONBody(), options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        json.data.forEach((element: any) => {
-          this.assigner.assign(itemList, element);
-        });
+        this.assigner.assign(itemList, json);
         return;
       },
       error: error => {
