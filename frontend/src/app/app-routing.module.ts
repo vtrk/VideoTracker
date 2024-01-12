@@ -10,6 +10,7 @@ import { LoginComponent } from "./login/login.component";
 import { SigninComponent } from "./signin/signin.component";
 import { SearchresultsComponent } from "./searchresults/searchresults.component";
 import {MailboxComponent} from "./mailbox/mailbox.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'search/:searchQuery', component: SearchresultsComponent },
   { path: 'search', redirectTo: '/home', pathMatch: 'full' } // Redirects to home if no search query is given.
 ];

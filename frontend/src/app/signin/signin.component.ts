@@ -24,6 +24,8 @@ export class SigninComponent {
   username: string = '';
   password: string = '';
   confirmPassword: string = '';
+  something_is_wrong: boolean = true;
+  protected readonly faGear = faGear;
 
   constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService){
   }
@@ -33,5 +35,8 @@ export class SigninComponent {
     this.router.navigate(['/home']);
   }
 
-  protected readonly faGear = faGear;
+  show_message() {
+    return this.something_is_wrong;
+  }
+
 }
