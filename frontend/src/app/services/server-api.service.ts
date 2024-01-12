@@ -79,16 +79,15 @@ export class ServerApiService {
         switch(data.API){// Based on the API, get the search content.
           case strings.KITSU:// Kitsu searches anime.
             this.fetchSearchQuery(searchBody, itemList);
-            itemList.setTitle(strings.trending + " " + strings.anime);
             break;
           case strings.TMDB:// TMDB searches either movies or tv.
             this.fetchSearchQuery(searchBody, itemList);
-            itemList.setTitle(strings.trending + " " + strings.movie + " and " + strings.tv);
             break;
           default:
             itemList.setTitle(strings.TRENDING_ERROR);
             break;
         }
+        itemList.setTitle(strings.SEARCH_RESULTS);
       },
       error: error => {
         console.log(error);
