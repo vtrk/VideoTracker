@@ -8,6 +8,7 @@
   <a [routerLink]="['/home']"><fa-icon [icon]="faHouse"></fa-icon></a>
   <a [routerLink]="['/user-list']"><fa-icon [icon]="faBookmark"></fa-icon> </a>
   <a [routerLink]="['/about']"><fa-icon [icon]="faAddressCard"></fa-icon> </a>
+  <a [routerLink]="['/mailbox']"><fa-icon [icon]="faEnvelope"></fa-icon> </a>
   <a [routerLink]="['/settings']"><fa-icon [icon]="faGear"></fa-icon></a>
   <a [routerLink]="['/login']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faDoorClosed"></fa-icon> </a>
   <a [routerLink]="['/home']" [hidden]="!isUserLoggedIn()" (click)="logout()"><fa-icon [icon]="faDoorOpen"></fa-icon> </a>

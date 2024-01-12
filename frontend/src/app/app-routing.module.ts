@@ -9,6 +9,7 @@ import { AboutComponent} from "./about/about.component";
 import { LoginComponent } from "./login/login.component";
 import { SigninComponent } from "./signin/signin.component";
 import { SearchresultsComponent } from "./searchresults/searchresults.component";
+import {MailboxComponent} from "./mailbox/mailbox.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'searchresults', component: SearchresultsComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent },
+  { path: 'mailbox', component: MailboxComponent, canActivate: [AuthGuard] },
   { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
