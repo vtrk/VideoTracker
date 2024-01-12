@@ -83,7 +83,7 @@ public class Kitsu extends API {
         @throws IOException if connection fails
      */
     public String searchAnime(String query) throws IOException {
-        return makeRequest("/anime?filter%5Btext%5D=" + query.replaceAll(" ", "%20") + "&fields%5Banime%5D=" + String.join(",", searchResultsFields), "GET", new java.util.HashMap<>() {{
+        return makeRequest("/anime?page%5Blimit%5D=20&filter%5Btext%5D=" + query.replaceAll(" ", "%20") + "&fields%5Banime%5D=" + String.join(",", searchResultsFields), "GET", new java.util.HashMap<>() {{
             put("Accept", "application/vnd.api+json");
             put("Content-Type", "application/vnd.api+json");
             put("User-Agent", "VideoTracker/" + Properties.getInstance().getProperty("VERSION"));
@@ -102,7 +102,7 @@ public class Kitsu extends API {
         for(String key : queryFilters.keySet())
             query.append("filter%5B").append(key).append("%5D=").append(queryFilters.get(key)).append("&");
         query.append("fields%5Banime%5D=").append(String.join(",", searchResultsFields));
-        return makeRequest("/anime?" + query, "GET", new java.util.HashMap<>() {{
+        return makeRequest("/anime?page%5Blimit%5D=20&" + query, "GET", new java.util.HashMap<>() {{
             put("Accept", "application/vnd.api+json");
             put("Content-Type", "application/vnd.api+json");
             put("User-Agent", "VideoTracker/" + Properties.getInstance().getProperty("VERSION"));
