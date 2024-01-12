@@ -3,6 +3,7 @@ import {FormsModule} from "@angular/forms";
 import {AuthenticationService} from "../authentication.service";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,14 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private authService: AuthenticationService, public themeService: ThemeService) {}
+  constructor(private router: Router, private authService: AuthenticationService, public themeService: ThemeService) {}
 
   verify(){
     console.log(this.email, this.password);
-    console.log(this.authService.login(this.email, this.password));
+    if(this.authService.login(this.email, this.password)){
+      console.log('Login successful');
+      this.router.navigate(['/home']);
+    }
   }
 
 }

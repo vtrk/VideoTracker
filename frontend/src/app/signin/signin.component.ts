@@ -5,7 +5,7 @@ import {NgClass} from "@angular/common";
 import {AuthenticationService} from "../authentication.service";
 import {faGear} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -21,14 +21,16 @@ import {RouterLink} from "@angular/router";
 })
 export class SigninComponent {
   email: string = '';
+  username: string = '';
   password: string = '';
   confirmPassword: string = '';
 
-  constructor(public themeService: ThemeService, private authService: AuthenticationService){
+  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService){
   }
   signIn(){
     console.log(this.email, this.password, this.confirmPassword);
-    console.log(this.authService.signIn(this.email, this.password, this.confirmPassword));
+    console.log(this.authService.signIn(this.email,this.username, this.password, this.confirmPassword));
+    this.router.navigate(['/home']);
   }
 
   protected readonly faGear = faGear;

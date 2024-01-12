@@ -7,7 +7,7 @@ export class AuthenticationService {
   private userIsAuthenticated = false;
   constructor() {}
   login(email: string, password: string):boolean{
-    //Qui bisogna mettere la chiamata al server per il login
+    //Here goes the code to check if the email or username and password are correct
     if(email == 'admin' && password == 'admin') {
       this.userIsAuthenticated = true;
       console.log('login success');
@@ -17,7 +17,7 @@ export class AuthenticationService {
     return false;
   }
 
-  signIn(email: string, password: string, confirmPassword: string):boolean{
+  signIn(email: string,username: string, password: string, confirmPassword: string):boolean{
     //Check if the email is already in use
     /*if() {
       console.log('Sign in failed');
