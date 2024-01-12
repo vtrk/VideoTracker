@@ -6,6 +6,11 @@ a:hover{
   color: #0000FF;
 }
 
+form{
+  background-color: white;
+}
+
 #bottom{
   background-color: white;
 }
+

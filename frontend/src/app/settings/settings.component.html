@@ -1,51 +1,59 @@
-<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" class="vh-100">
 <h1>Settings</h1>
-  <div>
-      <div>
-        <h3>Change Password</h3>
-        <form (ngSubmit)="change_password()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-          <div>
-            <label>Old Password</label>
-            <input type="password" name="old_password" id="old_password" [(ngModel)]="old_password" placeholder="Old Password">
-          </div>
-          <div>
-            <label>New Password</label>
-            <input type="password" name="new_password" id="new_password" [(ngModel)]="new_password" placeholder="New Password">
-          </div>
-          <div>
-            <label>Confirm Password</label>
-            <input type="password" name="confirm_password" id="confirm_password" [(ngModel)]="confirm_password" placeholder="Confirm Password">
-          </div>
-          <button type="submit" name="change_password_btn">Change Password</button>
-        </form>
+<div class="container mt-3 d-flex flex-column justify-content-center align-items-center my-auto">
+  <div class="row d-flex flex-row align-items-start">
+    <div class="col">
+      <div class="card border-0 shadow">
+        <div class="card-body">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5v-1a2 2 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693Q8.844 9.002 8 9c-5 0-6 3-6 4m7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1"/>
+          </svg>
+          <form (ngSubmit)="change_password()" id="password changer" method="post">
+            <input type="text" name="old password" [(ngModel)]="old_password"  class="form-control my-3.py-2" placeholder="old password">
+            <input type="text" name="new password" [(ngModel)]="new_password" class="form-control my-3.py-2" placeholder="new password">
+            <input type="text" name="confirm password" [(ngModel)]="confirm_password"  class="form-control my-3.py-2" placeholder="confirm password">
+            <div class="text-center" id="bottom_pw">
+              <button class="btn btn-primary" type="submit" name="change_password_btn">Change Password</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <h3>Change Email</h3>
-        <form (ngSubmit)="change_email()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-          <div>
-            <label>Old Email</label>
-            <input type="email" name="old_email" id="old_email" [(ngModel)]="old_email" placeholder="Old Email">
-          </div>
-          <div>
-            <label>New Email</label>
-            <input type="email" name="new_email" id="new_email" [(ngModel)]="new_email" placeholder="New Email">
-          </div>
-          <div>
-            <label>Confirm Email</label>
-            <input type="email" name="confirm_email" id="confirm_email" [(ngModel)]="confirm_email" placeholder="Confirm Email">
-          </div>
-          <button type="submit" name="change_email_btn">Change Email</button>
-        </form>
+    </div>
+    <div class="col">
+      <div class="card border-0 shadow">
+        <div class="card-body">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+          </svg>
+          <form (ngSubmit)="change_email()" method="post">
+            <input type="text" name="old_email" [(ngModel)]="old_email"  class="form-control my-3.py-2" placeholder="old email">
+            <input type="text" name="new_email" [(ngModel)]="new_email" class="form-control my-3.py-2" placeholder="new email">
+            <input type="text" name="confirm_email" [(ngModel)]="confirm_email"  class="form-control my-3.py-2" placeholder="confirm email">
+            <div class="text-center" id="bottom_em">
+              <button class="btn btn-primary" type="submit" name="change_email_btn">Change E-mail</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div>
-        <h3>Change Username</h3>
-        <form (ngSubmit)="change_username()" method="post" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-          <div>
-            <label>New Username</label>
-            <input type="text" name="new_username" id="new_username" [(ngModel)]="new_username" placeholder="New Username">
+    </div>
+    <div class="col">
+      <div class="row-12 row-sm-8 row-md-6 m-auto">
+        <div class="card border-0 shadow">
+          <div class="card-body">
+            <svg class="bi bi-person-circle mx-auto my-3" xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+            <form (ngSubmit)="change_username()" method="post">
+              <input type="text" name="new_username" [(ngModel)]="new_username"  class="form-control my-3.py-2" placeholder="New Username">
+              <div class="text-center" id="bottom_uname">
+                <button class="btn btn-primary" type="submit" name="change_uname_btn">Change Username</button>
+              </div>
+            </form>
           </div>
-          <button type="submit" name="change_username_btn">Change Username</button>
-        </form>
+        </div>
       </div>
+    </div>
   </div>
+ </div>
 </body>
