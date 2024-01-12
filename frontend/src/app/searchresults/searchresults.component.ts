@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ServerApiService } from '../services/server-api.service';
 import { SearchBody } from '../utils/data-structures';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-searchresults',
@@ -17,7 +18,8 @@ export class SearchresultsComponent implements OnInit{
   searchQuery: string = '';
   itemList: ItemList;
   
-  constructor(private route: ActivatedRoute, private server: ServerApiService) {
+  constructor(private route: ActivatedRoute, private server: ServerApiService, location: Location) {
+    location.replaceState('/search');
     this.route.params.subscribe(params => { //Recieves the request body as a stringified JSON object.
       let body = JSON.parse(params['searchQuery']); //Converts the stringified JSON object into a SearchBody.
       this.itemList = new ItemList();
