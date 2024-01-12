@@ -13,8 +13,8 @@
   <a [routerLink]="['/login']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faDoorClosed"></fa-icon> </a>
   <a [routerLink]="['/home']" [hidden]="!isUserLoggedIn()" (click)="logout()"><fa-icon [icon]="faDoorOpen"></fa-icon> </a>
   <a [routerLink]="['/signin']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faRightToBracket"></fa-icon> </a>
-  <a [routerLink]="[]" [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
-  <a [routerLink]="[]" [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
+  <a [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
+  <a [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
   <a></a>
 </nav>
 
