@@ -3,11 +3,12 @@ import { ItemList, } from '../utils/item';
 import { ServerApiService } from '../services/server-api.service';
 import { CommonModule } from '@angular/common';
 import {ThemeService} from "../theme.service";
+import { ItemListComponent } from '../item-list/item-list.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ItemListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

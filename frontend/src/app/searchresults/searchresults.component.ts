@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { ServerApiService } from '../services/server-api.service';
 import { SearchBody } from '../utils/data-structures';
 import { Location } from '@angular/common';
+import { ItemListComponent } from '../item-list/item-list.component';
 
 @Component({
   selector: 'app-searchresults',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ItemListComponent],
   templateUrl: './searchresults.component.html',
   styleUrl: './searchresults.component.css'
 })
