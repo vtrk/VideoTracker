@@ -6,6 +6,6 @@ import com.vtrk.videotracker.Database.Model.User;
 import java.util.List;
 
 public interface UserListDao {
-    List<Content> findAllByUser(User user);
+    List<Content> findByIdUser(int user);
     UserListDao findById(int id);
 }

@@ -56,6 +56,8 @@ public class RESTfulAPI {
         return VideoTrackerApplication.API_MANAGER.getTrending(type);
     }
 
+
+
     /**
      * Search content by query
      * @param data JSON search query

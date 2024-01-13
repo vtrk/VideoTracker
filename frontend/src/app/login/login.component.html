@@ -11,7 +11,7 @@
               </svg>
               <p [hidden]="show_message()" >Wrong credentials</p>
               <form (ngSubmit)="verify()" id="loginForm" method="post">
-                <input type="text" name="email" [(ngModel)]="email"  class="form-control my-3.py-2" placeholder="email/username">
+                <input type="text" name="email" [(ngModel)]="email_username"  class="form-control my-3.py-2" placeholder="email/username">
                 <input type="password" name="password" [(ngModel)]="password" class="form-control my-3.py-2" placeholder="password">
                 <div class="text-center" id="bottom">
                   <button class="btn btn-primary">Login</button>

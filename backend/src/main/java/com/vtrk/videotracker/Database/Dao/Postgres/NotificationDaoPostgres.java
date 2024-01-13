@@ -19,7 +19,7 @@ public class NotificationDaoPostgres implements NotificationDao {
     }
 
     @Override
-    public List<Notification> findByUser(User user) {
+    public List<Notification> findByIdUser(int id_user) {
         return null;
     }
 

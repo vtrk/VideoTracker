@@ -1,9 +1,5 @@
 <body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-<table>
-  <tr>
-    <td>Title</td>
-    <td>State</td>
-    <td>Type</td>
-  </tr>
-</table>
+<p id="User-List" class=".fs-1 text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Your list</p>
+<p (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"><p>
+  <item-list [itemList]="itemList" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></item-list>
 </body>

@@ -6,6 +6,7 @@ import {NgClass} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {ServerApiService} from "../services/server-api.service";
 
 @Component({
   selector: 'app-login',
@@ -20,18 +21,18 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  email: string = '';
+  email_username: string = '';
   password: string = '';
   wrong_credentials: boolean = true;
   protected readonly faHouse = faHouse;
 
 
-  constructor(private router: Router, private authService: AuthenticationService, public themeService: ThemeService) {}
+  constructor(private api: ServerApiService,private router: Router, private authService: AuthenticationService, public themeService: ThemeService) {}
 
   verify(){
-    console.log(this.email, this.password);
-    if(this.authService.login(this.email, this.password)){
-      console.log('Login successful');
+    console.log(this.email_username, this.password);
+    if(this.authService.login(this.email_username, this.password)){
+      console.log('Login successful'+this.api.getUserId(this.email_username, this.password));
       this.router.navigate(['/home']);
     }else{
       this.wrong_credentials = false;

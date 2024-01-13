@@ -1,0 +1,5 @@
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+<p id="Notification" class=".fs-1 text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Your notification</p>
+<p (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"><p>
+  <item-list [itemList]="itemList" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></item-list>
+</body>

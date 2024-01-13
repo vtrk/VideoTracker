@@ -14,7 +14,7 @@ public class UserListDaoPostgres implements UserListDao {
         this.connection = connection;
     }
     @Override
-    public List<Content> findAllByUser(User user) {
+    public List<Content> findByIdUser(int id_user) {
         return null;
     }
 

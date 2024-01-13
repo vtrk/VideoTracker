@@ -42,7 +42,7 @@ export class ServerApiService {
    * Sends and fetches data from a search query to the server.
    * @param searchBody JSON body of the search request
    * @param itemList list to add items to
-   * 
+   *
    * This function has a wrapper @see {@link getSearch}
    */
   private fetchSearchQuery(body: SearchBody, itemList: ItemList) {
@@ -101,7 +101,7 @@ export class ServerApiService {
    * @param type content type
    * @param itemList list to add items to
    * @param trendingString string to set to trending
-   * 
+   *
    * This function has a wrapper @see {@link getTrending}
    */
   private fetchTrending(type: string, itemList: ItemList){
@@ -183,4 +183,51 @@ export class ServerApiService {
       }
     });
   }
+
+  getDbList(itemList: ItemList){
+    let url = environment.API_URL + '/dbuserlist';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return this.client.get(url, options);
+    /*
+    1. Get the user id(Cookie).
+    2. Get the list of the user using UserListDaoPostgres.getList(int id_user), it returns a list of notifications.
+    */
+  }
+
+  getDbNotifications(itemList: ItemList){
+    let url = environment.API_URL + '/dbnotifications';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return this.client.get(url, options);
+    /*
+    1. Get the user id(Cookie).
+    2. Get the notifications using NotificationDaoPostgres.getNotifications(int id_user), it returns a list of notifications.
+    */
+  }
+
+  getUserId( email_username: string,  password: string):string{
+    let url = environment.API_URL + '/dbuserid';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return "1";
+    /*
+    Searching on the db for the user by Email or Username.
+
+    UserDaoPostgres.findByEmail(email_username, password)
+    */
+  }
+
 }

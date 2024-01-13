@@ -47,7 +47,7 @@ public class UserDaoPostgres implements UserDao {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public User findByEmailOrUsername(String email_username, String password) {
         return null;
     }
 
