@@ -6,6 +6,7 @@ import { ServerApiService } from '../services/server-api.service';
 import { SearchBody } from '../utils/data-structures';
 import { Location } from '@angular/common';
 import { ItemListComponent } from '../item-list/item-list.component';
+import {ThemeService} from "../theme.service";
 
 @Component({
   selector: 'app-searchresults',
@@ -18,8 +19,8 @@ export class SearchresultsComponent implements OnInit{
   title = 'Search Results';
   searchQuery: string = '';
   itemList: ItemList;
-  
-  constructor(private route: ActivatedRoute, private server: ServerApiService, location: Location) {
+
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private server: ServerApiService, location: Location) {
     location.replaceState('/search');
     this.route.params.subscribe(params => { //Recieves the request body as a stringified JSON object.
       let body = JSON.parse(params['searchQuery']); //Converts the stringified JSON object into a SearchBody.
