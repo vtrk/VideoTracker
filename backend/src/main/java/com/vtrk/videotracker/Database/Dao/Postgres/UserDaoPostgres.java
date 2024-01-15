@@ -97,16 +97,34 @@ public class UserDaoPostgres implements UserDao {
 
     @Override
     public void add(User user) {
-
+        try{
+            String query = "INSERT INTO public.user_vt (id, email, password, username, admin) VALUES(nextval('user_id_seq'::regclass), '"+user.getEmail()+"', '"+user.getPassword()+"', '"+user.getUsername()+"', "+user.isIs_admin()+");";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add"+e);
+        }
     }
 
     @Override
     public void update(User user) {
-
+        try{
+            String query = "UPDATE public.user_vt SET email='"+user.getEmail()+"', password='"+user.getPassword()+"', username='"+user.getUsername()+"', admin="+user.isIs_admin()+" WHERE id="+user.getId()+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in update "+e);
+        }
     }
 
     @Override
     public void remove(User user) {
-
+        try{
+            String query = "DELETE FROM public.user_vt WHERE id="+user.getId()+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
     }
 }

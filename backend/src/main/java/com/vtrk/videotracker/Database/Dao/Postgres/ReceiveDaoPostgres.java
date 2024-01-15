@@ -33,16 +33,23 @@ public class ReceiveDaoPostgres implements ReceiveDao {
 
     @Override
     public void add(int id_user, int id_notification) {
-
-    }
-
-    @Override
-    public void update(int id_user, int id_notification) {
-
+        try{
+            String query = "INSERT INTO public.receive (id_user, id_notification) VALUES("+id_user+", "+id_notification+");";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
     }
 
     @Override
     public void remove(int id_user, int id_notification) {
-
+        try{
+            String query = "DELETE FROM public.receive WHERE id_user="+id_user+" AND id_notification="+id_notification+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
     }
 }

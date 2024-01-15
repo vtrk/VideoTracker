@@ -35,16 +35,35 @@ public class ContentDaoPostgres implements ContentDao{
 
     @Override
     public void add(Content content) {
+        try{
+            String query = "INSERT INTO public.content (id, title, duration, n_episode, link) VALUES('"+content.getId()+"', '"+content.getTitle()+"', "+content.getDuration()+", "+content.getN_episode()+", '"+content.getLink()+"');";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
 
     }
 
     @Override
     public void update(Content content) {
-
+        try{
+            String query = "UPDATE public.content SET title='"+content.getTitle()+"', duration= "+content.getDuration()+", n_episode= "+content.getN_episode()+" , link='"+content.getLink()+"' WHERE id='"+content.getId()+"';";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in update "+e);
+        }
     }
 
     @Override
     public void remove(Content content) {
-
+        try{
+            String query = "DELETE FROM public.content WHERE id = '"+content.getId()+"';";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
     }
 }

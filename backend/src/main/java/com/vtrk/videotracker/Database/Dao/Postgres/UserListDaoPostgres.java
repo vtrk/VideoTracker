@@ -51,4 +51,15 @@ public class UserListDaoPostgres implements UserListDao {
         }
         return user_list;
     }
+
+    @Override
+    public void add(int id_user) {
+        try{
+            String query = "INSERT INTO public.list (id, id_user) VALUES(nextval('list_id_seq'::regclass), "+id_user+");";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
+    }
 }

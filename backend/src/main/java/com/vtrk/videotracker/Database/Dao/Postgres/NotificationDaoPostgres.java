@@ -54,16 +54,35 @@ public class NotificationDaoPostgres implements NotificationDao {
 
     @Override
     public void add(Notification notification) {
-
+        //
+        try{
+            String query = "INSERT INTO public.notification (id, title, description) VALUES(nextval('notification_id_seq'::regclass), '"+notification.getTitle()+"', '"+notification.getDescription()+"');";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
     }
 
     @Override
     public void update(Notification notification) {
-
+        try{
+            String query = "UPDATE public.notification SET title='"+notification.getTitle()+"', description='"+notification.getDescription()+"' WHERE id="+notification.getId()+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in update "+e);
+        }
     }
 
     @Override
     public void remove(Notification notification) {
-
+        try{
+            String query = "DELETE FROM public.notification WHERE id= "+notification.getId()+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
     }
 }

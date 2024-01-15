@@ -62,16 +62,34 @@ public class ReviewDaoPostgres implements ReviewDao {
 
     @Override
     public void add(Review review) {
-
+        try{
+            String query = "INSERT INTO public.review (id, vote, user_comment, id_user, id_content) VALUES(nextval('review_id_seq'::regclass), "+review.getVote()+", '"+review.getUserComment()+"', "+review.getIdUser()+", '"+review.getIdContent()+"');";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
     }
 
     @Override
     public void update(Review review) {
-
+        try{
+            String query = "UPDATE public.review SET vote="+review.getVote()+", user_comment='"+review.getUserComment()+"', id_user="+review.getIdUser()+", id_content='"+review.getIdContent()+"' WHERE id= "+review.getId()+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in update "+e);
+        }
     }
 
     @Override
     public void remove(Review review) {
-
+        try{
+            String query = "DELETE FROM public.review WHERE id= "+review.getId()+" ;";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
     }
 }
