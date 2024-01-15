@@ -91,16 +91,26 @@ export class HeaderComponent implements OnInit{
     //Avoids queries with '&' since it could disrupt the external API calls.
     if(!this.input.value.includes('&')){
       switch(this.serverInfo.get('API')){ //Using SearchBody it is possible to get the JSON body of the request to send to the other
-        case 'Kitsu':
+        case strings.KITSU:
           if(this.category == 'none')
             this.router.navigate(['/search', new SearchBody(strings.anime, this.input.value, new Map<string, string>()).getJSONBody()]);
           else
             this.router.navigate(['/search', new SearchBody(strings.anime, this.input.value, new Map<string, string>([['category', this.category]])).getJSONBody()]);
           break;
-        case 'TMDB':
-          //TODO: implement
-          console.log(this.year);
-          console.log(this.type);
+        case strings.TMDB:
+          if(this.year == 'none')
+            this.router.navigate(['/search', new SearchBody(this.type, this.input.value, new Map<string, string>()).getJSONBody()]);
+          else
+            switch(this.type){
+              case strings.movie:
+                this.router.navigate(['/search', new SearchBody(this.type, this.input.value, new Map<string, string>([[strings.movie_year, this.year]])).getJSONBody()]);
+                break;
+              case strings.tv:
+                this.router.navigate(['/search', new SearchBody(this.type, this.input.value, new Map<string, string>([[strings.tv_year, this.year]])).getJSONBody()]);
+                break;
+              default:
+                console.log(strings.API_ERROR);
+            }
           break;
         default:
           console.log(strings.API_ERROR);

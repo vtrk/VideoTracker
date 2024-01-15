@@ -12,4 +12,6 @@ export const strings = {
     anime: "anime",
     movie: "movie",
     tv: "tv",
+    movie_year: "primary_release_year",
+    tv_year: "first_air_date_year",
 };
