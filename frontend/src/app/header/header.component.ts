@@ -119,4 +119,17 @@ export class HeaderComponent implements OnInit{
   onKitsuCategoryChange(event: any){
     this.category = event.target.options[event.target.options.selectedIndex].value
   }
+
+  /**
+   * Checks if the API name is the same as the string passed.
+   * @param api name of the api to check
+   * @returns the result of the comparison between the string passed and the API name, if the API name is not set returns true
+   */
+  apiIs(api: string): boolean{
+    let realAPI = this.serverInfo.get('API');
+    if(realAPI == strings.API_ERROR)
+      return true;
+
+    return realAPI == api;
+  }
 }
