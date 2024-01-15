@@ -19,6 +19,24 @@
   border-radius: 50%;
 }
 
+.custom-size{
+  width: 30px;
+  height: 30px;
+}
+
+fa-icon{
+  color: #b7b5b5;
+}
+
+fa-icon:hover{
+  filter: brightness(200%);
+}
+
+.icons a:hover{
+  filter:brightness(120%);
+}
+
+
 p{
   color: white;
 }
