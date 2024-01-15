@@ -22,7 +22,7 @@ export class SearchresultsComponent implements OnInit{
 
   constructor(public themeService: ThemeService, private route: ActivatedRoute, private server: ServerApiService, location: Location) {
     location.replaceState('/search');
-    this.route.params.subscribe(params => { //Recieves the request body as a stringified JSON object.
+    this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       let body = JSON.parse(params['searchQuery']); //Converts the stringified JSON object into a SearchBody.
       this.itemList = new ItemList();
       this.server.getSearch(this.itemList, new SearchBody(body.type, body.query, body.args));
