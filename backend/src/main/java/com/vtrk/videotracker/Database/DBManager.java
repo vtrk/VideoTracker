@@ -49,5 +49,7 @@ public class DBManager {
     }
 
     public NotificationDao getNotificationDao(){return new NotificationDaoPostgres(getConnection());}
+    public ReceiveDao getReceiveDao(){return new ReceiveDaoPostgres(getConnection());}
+    public ContainsDao getContainsDao(){return new ContainsDaoPostgres(getConnection());}
 
 }
