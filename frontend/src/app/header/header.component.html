@@ -32,26 +32,24 @@
         <a class="nav-link" style="cursor: pointer;" [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
       </li>
     </ul>
-  </div>
-  <form (ngSubmit)="onSubmit()" class="form-inline" style="z-index: 99" >
-    <nav id="searchbar" class="navbar position-fixed start-50 translate-middle-x mt-3 w-100" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-      <div class="container d-flex justify-content-center align-items-center w-100">
-        <input class="searchbar" type = "text" id="search" [formControl]="input"  placeholder="find something...">
-        <button class="custom-submit-button" type="submit" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
-        <select id="type" (change)="onTMDBTypeChange($event)" [hidden]="serverInfo.get('API') == 'Kitsu'">
+    <form class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit()">
+      <div class="d-flex">
+        <input class="form-control mr-sm-2" type = "text" id="search" [formControl]="input"  placeholder="find something...">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
+        <select class="form-select" id="type" (change)="onTMDBTypeChange($event)" [hidden]="apiIs('Kitsu')">
           <option value="movie" selected>Movies</option>
           <option value="tv">TV Shows</option>
         </select>
-        <select id="year" (change)="onTMDBYearChange($event)" name="year" [hidden]="serverInfo.get('API') == 'Kitsu'">
+        <select class="form-select" id="year" (change)="onTMDBYearChange($event)" name="year" [hidden]="apiIs('Kitsu')">
           <option value="none" selected>Select a year</option>
           <option value="{{item}}" *ngFor="let item of range">{{item}}</option>
         </select>
-        <select id="category" (change)="onKitsuCategoryChange($event)" [hidden]="serverInfo.get('API') == 'TMDB'">
+        <select class="form-select" id="category" (change)="onKitsuCategoryChange($event)" [hidden]="apiIs('TMDB')">
           <option value="none" selected>Select a category</option>
           <option value="adventure">Adventure</option>
           <option value="horror">Horror</option>
         </select>
       </div>
-    </nav>
-  </form>
+    </form>
+  </div>
 </nav>
