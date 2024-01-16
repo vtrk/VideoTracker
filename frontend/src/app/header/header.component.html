@@ -31,25 +31,27 @@
         <a class="nav-link" style="cursor: pointer;" [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
         <a class="nav-link" style="cursor: pointer;" [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
       </li>
+      <li class="nav-item px-lg-5 px-sm-3 px-1">
+        <form class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit()">
+          <div class="d-flex">
+            <input class="form-control mr-sm-2" type = "text" id="search" [formControl]="input"  placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
+            <select class="form-select" id="type" (change)="onTMDBTypeChange($event)" [hidden]="apiIs('Kitsu')">
+              <option value="movie" selected>Movies</option>
+              <option value="tv">TV Shows</option>
+            </select>
+            <select class="form-select" id="year" (change)="onTMDBYearChange($event)" name="year" [hidden]="apiIs('Kitsu')">
+              <option value="none" selected>Select a year</option>
+              <option value="{{item}}" *ngFor="let item of range">{{item}}</option>
+            </select>
+            <select class="form-select" id="category" (change)="onKitsuCategoryChange($event)" [hidden]="apiIs('TMDB')">
+              <option value="none" selected>Select a category</option>
+              <option value="adventure">Adventure</option>
+              <option value="horror">Horror</option>
+            </select>
+          </div>
+        </form>
+      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit()">
-      <div class="d-flex">
-        <input class="form-control mr-sm-2" type = "text" id="search" [formControl]="input"  placeholder="find something...">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Find"><fa-icon [icon]="faMagnifyingGlass"></fa-icon></button>
-        <select class="form-select" id="type" (change)="onTMDBTypeChange($event)" [hidden]="apiIs('Kitsu')">
-          <option value="movie" selected>Movies</option>
-          <option value="tv">TV Shows</option>
-        </select>
-        <select class="form-select" id="year" (change)="onTMDBYearChange($event)" name="year" [hidden]="apiIs('Kitsu')">
-          <option value="none" selected>Select a year</option>
-          <option value="{{item}}" *ngFor="let item of range">{{item}}</option>
-        </select>
-        <select class="form-select" id="category" (change)="onKitsuCategoryChange($event)" [hidden]="apiIs('TMDB')">
-          <option value="none" selected>Select a category</option>
-          <option value="adventure">Adventure</option>
-          <option value="horror">Horror</option>
-        </select>
-      </div>
-    </form>
   </div>
 </nav>
