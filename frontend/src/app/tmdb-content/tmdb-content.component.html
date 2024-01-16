@@ -1,10 +1,29 @@
 <body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
-<h1 [innerHTML]="'Title: ' + content.title"></h1>
-<h1 [innerHTML]="'Description: ' + content.description"></h1>
-<img [src]="content.poster" width="400">
-<h1 [innerHTML]="'Release Date: ' + content.releaseDate"></h1>
-
-<h1 [innerHTML]="'Runtime: ' + content.runtime" *ngIf="content.runtime"></h1>
-<h1 [innerHTML]="'Seasons: ' + content.seasons" *ngIf="content.seasons"></h1>
-<h1 [innerHTML]="'Episodes: ' + content.episodes" *ngIf="content.episodes"></h1>
+  <section>
+    <div class="container mt-4 pt-5">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img [src]="content.poster" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">{{content.title}}</h5>
+              <p class="card-text"><small class="text-muted">{{content.releaseDate}}</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{content.title}}</h5>
+              <p class="card-text">{{content.description}}</p>
+              <p [innerHTML]="'Runtime: ' + content.runtime" *ngIf="content.runtime"></p>
+              <p [innerHTML]="'Seasons: ' + content.seasons" *ngIf="content.seasons"></p>
+              <p [innerHTML]="'Episodes: ' + content.episodes" *ngIf="content.episodes"></p>
+              <p class="card-text"><small class="text-muted">{{content.releaseDate}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
