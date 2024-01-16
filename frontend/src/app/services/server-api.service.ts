@@ -274,15 +274,6 @@ export class ServerApiService {
         return;
       }
     });
-    /*
-    Frontend:
-    1. add cookieService to the constructor.
-    2. this.cookieService.get('id_user'); // returns the id of the user as a string.
-    Backend:
-    1. Get the list id using id_user.
-    2. UserList list = UserListDaoPostgres.findByIdUser((int)id_user);
-    3. Get the list of the user using ContainsDaoPostgres.findContentInList(list.getId), it returns a list of content.
-    */
   }
 
   getDbNotifications(itemList: ItemList){
@@ -294,13 +285,6 @@ export class ServerApiService {
       }
     };
     return this.client.get(url, options);
-    /*
-    Frontend
-    1. add cookieService to the constructor.
-    2. this.cookieService.get('id_user'); // returns the id of the user as a string.
-    Backend:
-    1. Get the notifications using ReceiveDaoPostgres.findByIdUser((int) id_user), it returns a list of notifications.
-    */
   }
 
   login(email_username: string,  password: string){
@@ -326,15 +310,6 @@ export class ServerApiService {
         return error.toString();
       }
     });
-
-    /*
-    Use this function in the backend:
-    User find = UserDaoPostgres.findByEmailOrUsername(email_username, password);
-    if(find.getIdUser() != 0){
-      return find.getIdUser().toString(); //This is the result that I need
-    }
-    return "0";
-    */
   }
 
   signIn( email: string, username : string, password: string): string {
@@ -389,10 +364,6 @@ export class ServerApiService {
       }
     });
     return '0';
-    /*
-    Use this function in the backend:
-    UserDaoPostgres.updateFromSettings((int)id_user, email, 1);
-    */
   }
 
   changePassword(id_user : string, password: string):string{
@@ -420,10 +391,6 @@ export class ServerApiService {
       }
     });
     return '0';
-    /*
-    Use this function in the backend:
-    UserDaoPostgres.updateFromSettings((int)id_user, password, 2);
-    */
   }
 
   changeUsername(id_user: string,username : string):string{
@@ -451,10 +418,86 @@ export class ServerApiService {
       }
     });
     return '0';
-    /*
-    Use this function in the backend:
-    UserDaoPostgres.updateFromSettings((int)id_user, username, 3);
-    */
+  }
+
+  //to-do
+
+  getInfoProfile(){
+    let url = environment.API_URL + '/profileInfo';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user')
+    };
+    //Need to get back the info of the user
+  }
+
+  addToPlanned(id_content : string){
+    let url = environment.API_URL + '/addToList';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content,
+      status: "planned"
+    };
+    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+  }
+
+  addToCompleted(id_content : string){
+    let url = environment.API_URL + '/addToList';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content,
+      status: "completed"
+    };
+    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+  }
+
+  addToWatching(id_content : string){
+    let url = environment.API_URL + '/addToList';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content,
+      status: "watching"
+    };
+    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+  }
+
+  addToStopped(id_content : string){
+    let url = environment.API_URL + '/addToList';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content,
+      status: "stopped"
+    };
+    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
   }
 
 }

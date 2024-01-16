@@ -33,19 +33,19 @@ export class KitsuContentComponent {
   }
 
   addPlanned(){
-
+    this.api.addToPlanned(this.content.id);
   }
 
   addCompleted(){
-
+    this.api.addToCompleted(this.content.id);
   }
 
   addWatching(){
-
+    this.api.addToWatching(this.content.id);
   }
 
   addStopped(){
-
+    this.api.addToStopped(this.content.id);
   }
 
 }

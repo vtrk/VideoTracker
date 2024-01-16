@@ -21,30 +21,30 @@ export class TmdbContentComponent {
   protected readonly faSquareCheck = faSquareCheck;
   protected readonly faSquarePlus = faSquarePlus;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private server: ServerApiService, location: Location) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
       let id = params['id'];
       this.content = new TMDBContent();
-      server.getTMDBContent(this.content, type, id);
+      api.getTMDBContent(this.content, type, id);
     });
   }
 
   addPlanned(){
-
+    this.api.addToPlanned(this.content.id);
   }
 
   addCompleted(){
-
+    this.api.addToCompleted(this.content.id);
   }
 
   addWatching(){
-
+    this.api.addToWatching(this.content.id);
   }
 
   addStopped(){
-
+    this.api.addToStopped(this.content.id);
   }
 
 }

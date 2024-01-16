@@ -28,8 +28,6 @@ export class SettingsComponent {
   constructor(private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService) {}
 
   change_password(){
-    console.log(this.new_password, this.confirm_password);
-    //qui bisogna chiama il server per cambiare la password
     if(this.new_password == this.confirm_password){
       this.api.changePassword(this.cookieService.get('id_user'),this.new_password);
     }else{
@@ -38,8 +36,6 @@ export class SettingsComponent {
   }
 
   change_email(){
-    console.log(this.new_email, this.confirm_email);
-    //qui bisogna chiama il server per cambiare l'email
     if(this.new_email == this.confirm_email){
       this.api.changeEmail(this.cookieService.get('id_user'),this.new_email);
     }else{
@@ -48,8 +44,6 @@ export class SettingsComponent {
   }
 
   change_username(){
-    console.log(this.new_username);
-    //qui bisogna chiama il server per cambiare l'username
     this.api.changeUsername(this.cookieService.get('id_user'),this.new_username);
   }
 
