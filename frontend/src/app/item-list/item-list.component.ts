@@ -10,10 +10,10 @@ import { ItemList } from '../utils/item';
         <div class="container mx-auto mt-4">
           <div class="row">
             <div *ngFor="let item of itemList.getItems()" class="col-md-4">
-              <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto" style="width: 18rem;">
+              <div class="d-flex aligns-items-center justify-content-center card text-center w-75 mx-auto" style="width: 18rem; cursor: pointer;">
                 <img id="{{item.id}}" title="{{item.type}}" src="{{item.image}}" alt="404" (click)="goto($event)" class="card-img-top" style="height: 400px!important; object-fit: cover;"/><br>
                 <div class="card-body">
-                  <label id="{{item.id}}" title="{{item.type}}" for="{{item.id}}" (click)="goto($event)" class="card-title">{{item.name}}</label>
+                  <label id="{{item.id}}" title="{{item.type}}" for="{{item.id}}" (click)="goto($event)" class="card-title" style="cursor: pointer;">{{item.name}}</label>
                 </div>
               </div>
             </div>
