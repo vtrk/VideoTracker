@@ -41,7 +41,7 @@ export class SettingsComponent {
     console.log(this.new_email, this.confirm_email);
     //qui bisogna chiama il server per cambiare l'email
     if(this.new_email == this.confirm_email){
-      this.api.changePassword(this.cookieService.get('id_user'),this.new_email);
+      this.api.changeEmail(this.cookieService.get('id_user'),this.new_email);
     }else{
       this.error_email = true;
     }
@@ -50,7 +50,7 @@ export class SettingsComponent {
   change_username(){
     console.log(this.new_username);
     //qui bisogna chiama il server per cambiare l'username
-    this.api.changePassword(this.cookieService.get('id_user'),this.new_username);
+    this.api.changeUsername(this.cookieService.get('id_user'),this.new_username);
   }
 
   show_message_password(){
