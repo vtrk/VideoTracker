@@ -288,7 +288,7 @@ export class ServerApiService {
     */
   }
 
-  getUserId( email_username: string,  password: string):string{
+  login( email_username: string,  password: string):string{
     let url = environment.API_URL + '/dbUserid';
     let options = {
       headers: {
@@ -307,23 +307,31 @@ export class ServerApiService {
     */
   }
 
-  getSignIn( email: string, username : string, password: string):string{
-    let url = environment.API_URL + '/dbSignIn';
+  signIn( email: string, username : string, password: string): string {
+    let url = environment.API_URL + '/register';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return "1";
-    /*
-    Use this function in the backend:
-
-    User user = new User(0,email,username,password,false);
-    UserDaoPostgres.add(user);
-    User userAdded = UserDaoPostgres.findByEmailOrUsername(email, password);
-    userAdded.getIdUser().toString(); //This is the result that I need
-    */
+    let JSONBody = {
+      email: email,
+      username: username,
+      password: password
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+    return '';
   }
 
   changeEmail(id_user : string, email: string):string{

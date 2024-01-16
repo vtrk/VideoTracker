@@ -11,7 +11,7 @@ export class AuthenticationService {
   constructor(private api: ServerApiService, private cookieService: CookieService) {}
   login(email: string, password: string):boolean{
     //Here goes the code to check if the email or username and password are correct
-    this.check = this.api.getUserId(email, password);
+    this.check = this.api.login(email, password);
     if(this.check != null || this.check != "0"){
       this.userIsAuthenticated = true;
       console.log('login success');
@@ -24,11 +24,12 @@ export class AuthenticationService {
 
   signIn(email: string,username: string, password: string, confirmPassword: string):boolean{
     //Check if the email is already in use
-    this.check = this.api.getUserId(email, password);
+    /*
+    this.check = this.api.login(email, password);
     if(this.check != null || this.check != "0") {
       console.log('Sign in failed');
       return false;
-    }
+    }*/
     //check if the password and the confirm password are the same
     if(password != confirmPassword){
       console.log('Sign in failed');
@@ -36,7 +37,7 @@ export class AuthenticationService {
     }
     console.log('Sign in success');
     this.userIsAuthenticated = true;
-    this.check = this.api.getSignIn(email,username,password);
+    this.check = this.api.signIn(email,username,password);
     this.cookieService.set('IdUser', this.check);
     return true;
   }
