@@ -1,5 +1,8 @@
 package com.vtrk.videotracker.controller;
 
+import com.vtrk.videotracker.Database.DBManager;
+import com.vtrk.videotracker.Database.Dao.Postgres.UserDaoPostgres;
+import com.vtrk.videotracker.Database.Model.User;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
@@ -101,4 +104,36 @@ public class RESTfulAPI {
         return request.getAttribute("javax.servlet.error.status_code").toString();
     }
 
+
+    /**
+     * Register a new user
+     * @param data JSON user data
+     * @param request request
+     * @return
+     *
+     * A valid JSON user data looks like this:<br>
+     * {
+     *   "username": "username",
+     *   "email": "email",
+     *   "password": "password"
+     * }
+     */
+    @RequestMapping(
+            value = "/register",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String register(@RequestBody String data, HttpServletRequest request) {
+        JSONObject json = new JSONObject(data);
+        String username = json.getString("username");
+        String email = json.getString("email");
+        String password = json.getString("password");
+
+        User user = new User(0, email, username, password, false);
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        userDaoPostgres.add(user);
+        User userAdded = userDaoPostgres.findByEmailOrUsername(email, password);
+        return Integer.toString(userAdded.getId());
+    }
 }
