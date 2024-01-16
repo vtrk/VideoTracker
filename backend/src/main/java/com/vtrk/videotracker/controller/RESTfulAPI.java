@@ -282,8 +282,43 @@ public class RESTfulAPI {
      *     "id": "id",
      *     "email": "email",
      *     "username": "username",
+     *     "completed": "completed",
+     *     "watching": "watching",
+     *     "on_hold": "on-hold",
+     *     "dropped": "dropped",
+     *     "planning": "planning"
      * }
      */
+    @RequestMapping(
+            value = "/profile",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String profile(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        User user = userDaoPostgres.findById(id_user);
+        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        UserList list = userListDaoPostgres.findByIdUser(id_user);
+        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        String completed = containsDaoPostgres.countByState(list.getId(), "completed");
+        String watching = containsDaoPostgres.countByState(list.getId(), "watching");
+        String on_hold = containsDaoPostgres.countByState(list.getId(), "on-hold");
+        String dropped = containsDaoPostgres.countByState(list.getId(), "dropped");
+        String planning = containsDaoPostgres.countByState(list.getId(), "planning");
+        JSONObject response = new JSONObject();
+        response.put("id", user.getId());
+        response.put("email", user.getEmail());
+        response.put("username", user.getUsername());
+        response.put("completed", completed);
+        response.put("watching", watching);
+        response.put("on_hold", on_hold);
+        response.put("dropped", dropped);
+        response.put("planning", planning);
+        return response.toString();
+    }
 
 
     /**
