@@ -61,7 +61,7 @@ class VideoTrackerApplicationTests {
         System.out.println("TMDB API Test Passed");
     }
 
-
+    @Test
     void DatabaseTest() {
         System.out.println("Database Test");
 
@@ -156,7 +156,6 @@ class VideoTrackerApplicationTests {
             System.out.println(Not.getDescription());
         }
 
-
         //Insert/Update/Delete (Nelle insert tutti gli id devono essere a zero, per chi ha un int, perchè viene fatto in automatico dal db)
 
         //User
@@ -216,7 +215,7 @@ class VideoTrackerApplicationTests {
         review.update(r4);
 
         review.remove(r3);*/
-//Notification
+        //Notification
 
         NotificationDaoPostgres notification = new NotificationDaoPostgres(DBManager.getInstance().getConnection());
 
@@ -256,6 +255,17 @@ class VideoTrackerApplicationTests {
 
         contains.remove(2,"001anime");*/
 
-
     }
+
+    @Test
+    void testAddToDB(){
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+
+        User user = new User(0, "", "test", "test", false);
+
+        userDaoPostgres.add(user);
+        User user2 = userDaoPostgres.findByEmailOrUsername("test", "test");
+        System.out.println(user2.getId());
+    }
+
 }
