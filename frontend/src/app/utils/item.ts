@@ -113,7 +113,7 @@ export class TMDBItemAssigner implements ItemAssigner {
                     id: element.id,
                     type: strings.movie,
                     name: element.title,
-                    image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
+                    image: strings.TMDB_poster_url + element.poster_path
                 };
             }
             else
@@ -121,7 +121,7 @@ export class TMDBItemAssigner implements ItemAssigner {
                     id: element.id,
                     type: strings.tv,
                     name: element.name,
-                    image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
+                    image: strings.TMDB_poster_url + element.poster_path
                 };
             itemList.addItem(item);
         });

@@ -6,6 +6,7 @@ export const strings = {
     API_ERROR: "Error fetching API data.",
     TRENDING_ERROR: "Error loading trending content.",
     SEARCH_ERROR: "Error loading search results.",
+    CONTENT_ERROR: "Error loading content.",
     SEARCH_NO_RESULTS: "No results found.",
     SEARCH_RESULTS: "Search Results",
     trending: "Trending",
@@ -14,4 +15,5 @@ export const strings = {
     tv: "tv",
     movie_year: "primary_release_year",
     tv_year: "first_air_date_year",
+    TMDB_poster_url: "https://image.tmdb.org/t/p/w500",
 };

@@ -1,0 +1,6 @@
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
+<h1 [innerHTML]="content.title"></h1>
+<h1 [innerHTML]="content.description"></h1>
+<img [src]="content.poster" width="400">
+<h1 [innerHTML]="content.releaseDate"></h1>
+</body>

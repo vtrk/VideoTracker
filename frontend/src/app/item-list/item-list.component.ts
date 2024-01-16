@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemList } from '../utils/item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'item-list',
@@ -24,15 +25,26 @@ import { ItemList } from '../utils/item';
 export class ItemListComponent {
     @Input() itemList: ItemList;
 
+    constructor(private router: Router) {}
+
     /**
    * TODO: Loads the content of the item clicked on.
    * @param event
    */
     goto(event: any){
       var target = event.target;
-      var value = target.attributes.id.nodeValue;
+      var id = target.attributes.id.nodeValue;
       var type = target.attributes.title.nodeValue;
-      console.log(value);
-      console.log(type);
+      switch(type){
+        case 'movie':
+        case 'tv':
+          this.router.navigate(['/content', type, id]);
+          break;
+        case 'anime':
+          //TODO
+          break;
+        default:
+          break;
+      }
     }
 }

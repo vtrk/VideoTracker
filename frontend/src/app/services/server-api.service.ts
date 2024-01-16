@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { SearchBody, ServerAPIResponse } from '../utils/data-structures';
 import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../utils/item';
 import { strings } from '../strings';
+import { Content, TMDBContent } from '../utils/content';
 
 
 /**
@@ -36,6 +37,48 @@ export class ServerApiService {
         console.log(error);
       },
     });
+  }
+
+  /**
+   * Gets the content of an item from the server (TMDB API).
+   * @param item Content object to add data to
+   * @param type type of content
+   * @param id id of content
+   */
+  getTMDBContent(item: TMDBContent, type: string, id: string){
+    // Since the type of content is known, the API is known so no need to request the API type from the server.
+    let url = environment.API_URL + '/content/' + id + '?type=' + type;
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    this.client.get(url, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        switch(type){
+          case strings.anime:
+            //TODO
+            break;
+          case strings.movie:
+            item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date);
+            break;
+          case strings.tv:
+            item.setValues(json.id, json.name, json.overview, strings.TMDB_poster_url + json.poster_path, json.first_air_date);
+            break;
+          default:
+            item.setErrorString(strings.CONTENT_ERROR);
+            break;
+        }
+        return;
+      },
+      error: error => {
+        console.log(error);
+        item.setErrorString(strings.CONTENT_ERROR);
+        return;
+      }
+    })
   }
 
   /**

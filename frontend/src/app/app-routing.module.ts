@@ -10,6 +10,8 @@ import { SigninComponent } from "./signin/signin.component";
 import { SearchresultsComponent } from "./searchresults/searchresults.component";
 import {MailboxComponent} from "./mailbox/mailbox.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import { ContentComponent } from "./content/content.component";
+import { TmdbContentComponent } from "./tmdb-content/tmdb-content.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,7 +23,10 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'search/:searchQuery', component: SearchresultsComponent },
-  { path: 'search', redirectTo: '/home', pathMatch: 'full' } // Redirects to home if no search query is given.
+  { path: 'search', redirectTo: '/home', pathMatch: 'full' }, // Redirects to home if no search query is given.
+  { path: 'content/:type/:id', component: ContentComponent }, // Redirects to the component that displays the content for the current API.
+  { path: 'tmdb/:type/:id', component: TmdbContentComponent}, // Displays the content for the TMDB API.
+  { path: 'content', redirectTo: '/home', pathMatch: 'full' }, // Redirects to home if no content is given.
 ];
 
 @NgModule({
