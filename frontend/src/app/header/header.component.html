@@ -24,8 +24,8 @@
         <a class="nav-link" [routerLink]="['/login']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faDoorClosed"></fa-icon></a>
         <a class="nav-link" [routerLink]="['/home']" [hidden]="!isUserLoggedIn()" (click)="logout()"><fa-icon [icon]="faDoorOpen"></fa-icon></a>
       </li>
-      <li class="nav-item px-lg-5 px-sm-3 px-1">
-        <a class="nav-link" [routerLink]="['/signin']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faRightToBracket"></fa-icon></a>
+      <li class="nav-item px-lg-5 px-sm-3 px-1" [hidden]="isUserLoggedIn()">
+        <a class="nav-link" [routerLink]="['/signin']"><fa-icon [icon]="faRightToBracket"></fa-icon></a>
       </li>
       <li class="nav-item px-lg-5 px-sm-3 px-1">
         <a class="nav-link" style="cursor: pointer;" [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
