@@ -1,0 +1,19 @@
+#Default{
+  color: gray;
+}
+#Completed{
+  color: green;
+}
+#Watching{
+  color: yellow;
+}
+#Dropped{
+  color: red;
+}
+#PTW{
+  color: blue;
+}
+
+.custom-submit-button:hover{
+  filter: brightness(150%);
+}
