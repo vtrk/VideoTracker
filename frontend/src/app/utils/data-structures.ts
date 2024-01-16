@@ -48,7 +48,7 @@ export class SearchBody {
         return JSON.stringify({
             type: this.type,
             query: this.query,
-            args: this.args
+            args: Object.fromEntries(this.args)
         });
     }
 }

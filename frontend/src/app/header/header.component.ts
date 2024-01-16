@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit{
   }
 
   onSubmit(){
-
+    
     //Avoids queries with '&' since it could disrupt the external API calls.
     if(!this.input.value.includes('&')){
       switch(this.serverInfo.get('API')){ //Using SearchBody it is possible to get the JSON body of the request to send to the other
@@ -95,10 +95,10 @@ export class HeaderComponent implements OnInit{
           if(this.category == 'none')
             this.router.navigate(['/search', new SearchBody(strings.anime, this.input.value, new Map<string, string>()).getJSONBody()]);
           else
-            this.router.navigate(['/search', new SearchBody(strings.anime, this.input.value, new Map<string, string>([['category', this.category]])).getJSONBody()]);
+            this.router.navigate(['/search', new SearchBody(strings.anime, this.input.value, new Map<string, string>([['categories', this.category]])).getJSONBody()]);
           break;
         case strings.TMDB:
-          if(this.year == 'none')
+          if(this.year === 'none')
             this.router.navigate(['/search', new SearchBody(this.type, this.input.value, new Map<string, string>()).getJSONBody()]);
           else
             switch(this.type){
