@@ -1,9 +1,14 @@
 package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
+import com.vtrk.videotracker.Database.Dao.Postgres.ContainsDaoPostgres;
 import com.vtrk.videotracker.Database.Dao.Postgres.UserDaoPostgres;
+import com.vtrk.videotracker.Database.Dao.Postgres.UserListDaoPostgres;
+import com.vtrk.videotracker.Database.Model.Content;
 import com.vtrk.videotracker.Database.Model.User;
+import com.vtrk.videotracker.Database.Model.UserList;
 import com.vtrk.videotracker.VideoTrackerApplication;
+import com.vtrk.videotracker.utils.Properties;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * RESTful API
@@ -134,6 +140,10 @@ public class RESTfulAPI {
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
         userDaoPostgres.add(user);
         User userAdded = userDaoPostgres.findByEmailOrUsername(email, password);
+
+        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        userListDaoPostgres.add(userAdded.getId());
+
         return Integer.toString(userAdded.getId());
     }
 
@@ -197,5 +207,61 @@ public class RESTfulAPI {
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
         userDaoPostgres.updateFromSettings(id, credential, choice);
         return "1";
+    }
+
+    /**
+     * Get user list
+     * @param data JSON user data
+     * @param request request
+     * @return JSON API response
+     * <br>
+     * A valid JSON user data looks like this:<br>
+     * {
+     *  "id_user": "id"
+     * }
+     * <br>
+     * Response (JSON of content):<br>
+     * {
+     *      ...
+     *      "content": {
+     *          "id_list": "id",
+     *          "title": "title",
+     *          "description": "description",
+     *          "type": "type",
+     *          "poster": "poster"
+     *      }
+     *      ...
+     * }
+     */
+    @RequestMapping(
+            value = "/list",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String list(@RequestBody String data, HttpServletRequest request) {
+        JSONObject json = new JSONObject(data);
+        long id_user = json.getLong("id_user");
+        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        UserList list = userListDaoPostgres.findByIdUser((int)id_user);
+        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+
+        List<Content> responseList = containsDaoPostgres.findContentInList(list.getId());
+        JSONObject response = new JSONObject();
+        for(Content content : responseList){
+            JSONObject contentJSON = new JSONObject();
+            String[] id = content.getId().split("_"); // Avoid returning content from other APIs
+            if((id[1].equals("movie") || id[1].equals("tv")) && !Properties.getInstance().getProperty("API").equals("TMDB"))
+                continue;
+            else if (id[1].equals("anime") && !Properties.getInstance().getProperty("API").equals("Kitsu"))
+                continue;
+            contentJSON.put("id", id[0]);
+            contentJSON.put("title", content.getTitle());
+            contentJSON.put("description", content.getDuration());
+            contentJSON.put("type", content.getLink());
+            contentJSON.put("poster", content.getN_episode());
+            response.put(content.getId(), contentJSON);
+        }
+        return response.toString();
     }
 }
