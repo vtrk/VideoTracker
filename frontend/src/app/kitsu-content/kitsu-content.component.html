@@ -1,0 +1,16 @@
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
+    <h1 [innerHTML]="'Title: ' + content.title"></h1>
+    <h1 [innerHTML]="'Description: ' + content.synopsis"></h1>
+    <img [src]="content.poster" width="400">
+    <h1 [innerHTML]="'Episode Count: ' + content.episodeCount"></h1>
+    
+    <h1 [innerHTML]="'Episode Lenght: ' + content.episodeLength"></h1>
+    <h1 [innerHTML]="'Show Type: ' + content.showType"></h1>
+    <h1 [innerHTML]="'Status: ' + content.status"></h1>
+    <h1 [innerHTML]="'Start Date: ' + content.startDate"></h1>
+    <h1 [innerHTML]="'End Date: ' + content.endDate"></h1>
+    <h1 [innerHTML]="'Age Rating: ' + content.ageRating"></h1>
+
+
+
+</body>

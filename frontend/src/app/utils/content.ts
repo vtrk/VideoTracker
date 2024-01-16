@@ -91,3 +91,36 @@ export class TMDBContent extends Content {
  * Content representation of a Kitsu item.
  * 
  */
+export class KitsuContent extends Content {
+
+    title: string;
+    synopsis: string;
+    poster: string;
+    episodeCount: string;
+    episodeLength: string;
+    showType: string;
+    status: string;
+    startDate: string;
+    endDate: string;
+    ageRating: string;
+    genres: string;
+
+    constructor() {
+        super();
+        this.API = strings.KITSU;
+    }
+
+    setValues(id: string, title: string, synopsis: string, poster: string, episodeCount: string, episodeLength: string, showType: string, status: string, startDate: string, endDate: string, ageRating: string, genres: string){
+        this.id = id;
+        this.title = title;
+        this.synopsis = synopsis;
+        this.poster = poster;
+        this.episodeCount = episodeCount;
+        this.episodeLength = episodeLength;
+        this.showType = showType;
+        this.status = status;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.ageRating = ageRating;
+    }
+}

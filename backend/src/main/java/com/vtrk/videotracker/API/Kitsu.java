@@ -26,7 +26,6 @@ public class Kitsu extends API {
 
     /** Fields that should be displayed in anime page
      * <ul>
-     *     <li>slug</li>
      *     <li>titles</li>
      *     <li>posterImage</li>
      *     <li>synopsis</li>
@@ -40,7 +39,6 @@ public class Kitsu extends API {
      *     <li>genres</li>
      * */
     private static final List<String> animeFields = List.of(
-            "slug",
             "titles",
             "posterImage",
             "synopsis",

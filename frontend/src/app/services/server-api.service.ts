@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { SearchBody, ServerAPIResponse } from '../utils/data-structures';
 import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../utils/item';
 import { strings } from '../strings';
-import { Content, TMDBContent } from '../utils/content';
+import { Content, KitsuContent, TMDBContent } from '../utils/content';
 
 
 /**
@@ -39,6 +39,32 @@ export class ServerApiService {
     });
   }
 
+
+  getKitsuContent(item: KitsuContent, type: string, id: string){
+    // Since the type of content is known, the API is known so no need to request the API type from the server.
+    let url = environment.API_URL + '/content/' + id + '?type=' + type;
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    this.client.get(url, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+          console.log(json.data.titles)
+          item.setValues(json.data.id, json.data.attributes.titles.en_jp, json.data.attributes.synopsis, json.data.attributes.posterImage.original, json.data.attributes.episodeCount, json.data.attributes.episodeLength, json.data.attributes.showType, json.data.attributes.status, json.data.attributes.startDate, json.data.attributes.endDate, json.data.attributes.ageRating, '');
+
+        return;
+      },
+      error: error => {
+        console.log(error);
+        item.setErrorString(strings.CONTENT_ERROR);
+        return;
+      }
+    })
+  }
+
   /**
    * Gets the content of an item from the server (TMDB API).
    * @param item Content object to add data to
@@ -58,9 +84,6 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         switch(type){
-          case strings.anime:
-            //TODO
-            break;
           case strings.movie:
             item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date, json.runtime);
             break;

@@ -38,10 +38,10 @@ export class ItemListComponent {
       switch(type){
         case 'movie':
         case 'tv':
-          this.router.navigate(['/content', type, id]);
+          this.router.navigate(['/tmdb', type, id]);
           break;
         case 'anime':
-          //TODO
+          this.router.navigate(['/kitsu', type, id]);
           break;
         default:
           break;

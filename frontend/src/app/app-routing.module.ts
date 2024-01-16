@@ -12,6 +12,7 @@ import {MailboxComponent} from "./mailbox/mailbox.component";
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import { ContentComponent } from "./content/content.component";
 import { TmdbContentComponent } from "./tmdb-content/tmdb-content.component";
+import { KitsuContentComponent } from "./kitsu-content/kitsu-content.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -27,6 +28,7 @@ export const routes: Routes = [
   { path: 'content/:type/:id', component: ContentComponent }, // Redirects to the component that displays the content for the current API.
   { path: 'tmdb/:type/:id', component: TmdbContentComponent}, // Displays the content for the TMDB API.
   { path: 'content', redirectTo: '/home', pathMatch: 'full' }, // Redirects to home if no content is given.
+  { path: 'kitsu/:type/:id', component: KitsuContentComponent }, // Displays the content for the Kitsu API.
 ];
 
 @NgModule({
