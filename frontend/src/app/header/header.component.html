@@ -20,6 +20,9 @@
       <li class="nav-item px-lg-5 px-sm-3 px-1">
         <a class="nav-link" [routerLink]="['/settings']"><fa-icon [icon]="faGear"></fa-icon></a>
       </li>
+      <li class="nav-item px-lg-5 px-sm-3 px-1" [hidden]="!isUserLoggedIn()">
+        <a class="nav-link" [routerLink]="['/profile']"><fa-icon [icon]="faUser"></fa-icon></a>
+      </li>
       <li class="nav-item px-lg-5 px-sm-3 px-1">
         <a class="nav-link" [routerLink]="['/login']" [hidden]="isUserLoggedIn()"><fa-icon [icon]="faDoorClosed"></fa-icon></a>
         <a class="nav-link" [routerLink]="['/home']" [hidden]="!isUserLoggedIn()" (click)="logout()"><fa-icon [icon]="faDoorOpen"></fa-icon></a>

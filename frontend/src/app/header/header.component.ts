@@ -9,18 +9,15 @@ import { CommonModule } from '@angular/common';
 import { strings } from '../strings';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {
-  faAddressCard,
   faBookmark,
   faDoorClosed,
   faDoorOpen,
   faGear,
   faHouse,
-  faList,
   faMagnifyingGlass, faMoon,
   faRightToBracket, faSun,
-  faEnvelope
+  faEnvelope,faUser
 } from '@fortawesome/free-solid-svg-icons';
-import {faGithub} from "@fortawesome/free-brands-svg-icons";
 import {AuthenticationService} from "../authentication.service";
 import {ThemeService} from "../theme.service";
 
@@ -39,19 +36,17 @@ import {ThemeService} from "../theme.service";
 })
 export class HeaderComponent implements OnInit{
 
-  protected readonly faGithub = faGithub;
   protected readonly faHouse = faHouse;
   protected readonly faMagnifyingGlass = faMagnifyingGlass;
-  protected readonly faAddressCard = faAddressCard;
   protected readonly faDoorClosed = faDoorClosed;
   protected readonly faRightToBracket = faRightToBracket;
-  protected readonly faList = faList;
   protected readonly faBookmark = faBookmark;
   protected readonly faGear = faGear;
   protected readonly faDoorOpen = faDoorOpen;
   protected readonly faSun = faSun;
   protected readonly faMoon = faMoon;
   protected readonly faEnvelope = faEnvelope;
+  protected readonly faUser = faUser;
 
   input: FormControl;
   type: string;
@@ -87,7 +82,7 @@ export class HeaderComponent implements OnInit{
   }
 
   onSubmit(){
-    
+
     //Avoids queries with '&' since it could disrupt the external API calls.
     if(!this.input.value.includes('&')){
       switch(this.serverInfo.get('API')){ //Using SearchBody it is possible to get the JSON body of the request to send to the other

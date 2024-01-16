@@ -13,6 +13,7 @@ import {ResetPasswordComponent} from "./reset-password/reset-password.component"
 import { ContentComponent } from "./content/content.component";
 import { TmdbContentComponent } from "./tmdb-content/tmdb-content.component";
 import { KitsuContentComponent } from "./kitsu-content/kitsu-content.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'signin', component: SigninComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'resetpassword', component: ResetPasswordComponent },
   { path: 'search/:searchQuery', component: SearchresultsComponent },
   { path: 'search', redirectTo: '/home', pathMatch: 'full' }, // Redirects to home if no search query is given.
