@@ -237,8 +237,13 @@ export class ServerApiService {
     };
     return this.client.get(url, options);
     /*
-    1. Get the user id(Cookie).
-    2. Get the list of the user using UserListDaoPostgres.getList(int id_user), it returns a list of notifications.
+    Frontend:
+    1. add cookieService to the constructor.
+    2. this.cookieService.get('id_user'); // returns the id of the user as a string.
+    Backend:
+    1. Get the list id using id_user.
+    2. UserList list = UserListDaoPostgres.findByIdUser((int)id_user);
+    3. Get the list of the user using ContainsDaoPostgres.findContentInList(list.getId), it returns a list of content.
     */
   }
 
@@ -252,8 +257,11 @@ export class ServerApiService {
     };
     return this.client.get(url, options);
     /*
-    1. Get the user id(Cookie).
-    2. Get the notifications using NotificationDaoPostgres.getNotifications(int id_user), it returns a list of notifications.
+    Frontend
+    1. add cookieService to the constructor.
+    2. this.cookieService.get('id_user'); // returns the id of the user as a string.
+    Backend:
+    1. Get the notifications using ReceiveDaoPostgres.findByIdUser((int) id_user), it returns a list of notifications.
     */
   }
 
@@ -269,7 +277,33 @@ export class ServerApiService {
     /*
     Searching on the db for the user by Email or Username.
 
-    UserDaoPostgres.findByEmail(email_username, password)
+    Use this function in the backend:
+    User find = UserDaoPostgres.findByEmailOrUsername(email_username, password);
+    if(find.getIdUser() != 0){
+      return find.getIdUser().toString(); //This is the result that I need
+    }
+    return "0";
+    */
+  }
+
+  getSignIn( email: string, username : string, password: string):string{
+    let url = environment.API_URL + '/dbuserid';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return "1";
+    /*
+    Searching on the db for the user by Email or Username.
+
+    Use this function in the backend:
+
+    User user = new User(0,email,username,password,false);
+    UserDaoPostgres.add(user);
+    User userAdded = UserDaoPostgres.findByEmailOrUsername(email, password);
+    userAdded.getIdUser().toString(); //This is the result that I need
     */
   }
 

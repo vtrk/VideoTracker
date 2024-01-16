@@ -6,6 +6,7 @@ import {AuthenticationService} from "../authentication.service";
 import {faGear} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Router, RouterLink} from "@angular/router";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-signin',
@@ -27,11 +28,11 @@ export class SigninComponent {
   something_is_wrong: boolean = true;
   protected readonly faGear = faGear;
 
-  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService){
-  }
+  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService, private cookieService: CookieService) {}
   signIn(){
     console.log(this.email, this.password, this.confirmPassword);
     console.log(this.authService.signIn(this.email,this.username, this.password, this.confirmPassword));
+
     this.router.navigate(['/home']);
   }
 

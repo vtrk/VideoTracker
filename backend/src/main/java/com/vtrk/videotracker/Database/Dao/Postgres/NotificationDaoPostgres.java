@@ -33,25 +33,6 @@ public class NotificationDaoPostgres implements NotificationDao {
         return notification;
     }
 
-    /*
-        Returns a list of notifications id for a given user
-    */
-    @Override
-    public List<Integer> findByIdUser(int id_user) {
-        List<Integer> notifications = new ArrayList<Integer>();
-        try {
-            String query = "SELECT * FROM review WHERE id_user = "+id_user+";";
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()){
-                notifications.add(rs.getInt("id"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
-        }
-        return notifications;
-    }
-
     @Override
     public void add(Notification notification) {
         //
