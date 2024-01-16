@@ -136,4 +136,34 @@ public class RESTfulAPI {
         User userAdded = userDaoPostgres.findByEmailOrUsername(email, password);
         return Integer.toString(userAdded.getId());
     }
+
+    /**
+     * Login
+     * @param data JSON user data
+     * @param request request
+     * @return
+     *
+     * A valid JSON user data looks like this:<br>
+     * {
+     *   "email_username": "email_username",
+     *   "password": "password"
+     * }
+     */
+    @RequestMapping(
+            value = "/login",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String login(@RequestBody String data, HttpServletRequest request) {
+        JSONObject json = new JSONObject(data);
+        String email_username = json.getString("email_username");
+        String password = json.getString("password");
+
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        User user = userDaoPostgres.findByEmailOrUsername(email_username, password);
+        if(user.getId() == 0)
+            return "0";
+        return Integer.toString(user.getId());
+    }
 }
