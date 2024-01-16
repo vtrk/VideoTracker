@@ -111,7 +111,7 @@ export class TMDBItemAssigner implements ItemAssigner {
             if(element.title) { // If the title field exists, it is a movie.
                 item = {
                     id: element.id,
-                    type: element.media_type,
+                    type: strings.movie,
                     name: element.title,
                     image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
                 };
@@ -119,7 +119,7 @@ export class TMDBItemAssigner implements ItemAssigner {
             else
                 item = {
                     id: element.id,
-                    type: element.media_type,
+                    type: strings.tv,
                     name: element.name,
                     image: 'https://image.tmdb.org/t/p/w500' + element.poster_path
                 };
