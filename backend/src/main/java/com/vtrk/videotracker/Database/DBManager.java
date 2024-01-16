@@ -2,6 +2,7 @@ package com.vtrk.videotracker.Database;
 
 import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Dao.Postgres.*;
+import com.vtrk.videotracker.utils.Properties;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,7 +25,7 @@ public class DBManager {
     public Connection getConnection(){
         if (con == null){
             try {
-                con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
+                con = DriverManager.getConnection("jdbc:postgresql://" + Properties.getInstance().getProperty("DB_HOST"), Properties.getInstance().getProperty("DB_USER"), Properties.getInstance().getProperty("DB_PASSWORD"));
             } catch (SQLException e) {
                 System.out.println("Error in getConnection\n"+e.getErrorCode());
             }
