@@ -268,4 +268,15 @@ class VideoTrackerApplicationTests {
         contains.remove(2,"001anime");*/
     }
 
+    @Test
+    void testCounting(){
+        ContainsDaoPostgres contains = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        String count = contains.countByState(1,"completed");
+        String count1 = contains.countByState(1,"watching");
+        String count2 = contains.countByState(1,"planned");
+        System.out.println(count);
+        System.out.println(count1);
+        System.out.println(count2);
+    }
+
 }
