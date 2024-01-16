@@ -53,9 +53,7 @@ export class ServerApiService {
     this.client.get(url, options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-          console.log(json.data.titles)
           item.setValues(json.data.id, json.data.attributes.titles.en_jp, json.data.attributes.synopsis, json.data.attributes.posterImage.original, json.data.attributes.episodeCount, json.data.attributes.episodeLength, json.data.attributes.showType, json.data.attributes.status, json.data.attributes.startDate, json.data.attributes.endDate, json.data.attributes.ageRating, '');
-
         return;
       },
       error: error => {
@@ -437,23 +435,8 @@ export class ServerApiService {
     return ["",""];
   }
 
-  addToPlanned(id_content : string){
-    let url = environment.API_URL + '/addToList';
-    let options = {
-      headers: {
-        'Content-Type': 'text/plain',
-        'Accept': 'text/plain'
-      }
-    };
-    let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content,
-      status: "planned"
-    };
-    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
-  }
 
-  addToCompleted(id_content : string){
+  addToList(id_content : string, status : string, title : string, duration: string, n_episode: string, link: string, type: string){
     let url = environment.API_URL + '/addToList';
     let options = {
       headers: {
@@ -463,41 +446,24 @@ export class ServerApiService {
     };
     let JSONBody = {
       id_user: this.cookieService.get('id_user'),
-      id_content: id_content,
-      status: "completed"
+      id_content: id_content + '_' + type,
+      status: status,
+      title: title,
+      duration: duration,
+      n_episode: n_episode,
+      link: link
     };
-    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
-  }
-
-  addToWatching(id_content : string){
-    let url = environment.API_URL + '/addToList';
-    let options = {
-      headers: {
-        'Content-Type': 'text/plain',
-        'Accept': 'text/plain'
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
       }
-    };
-    let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content,
-      status: "watching"
-    };
-    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
-  }
-
-  addToStopped(id_content : string){
-    let url = environment.API_URL + '/addToList';
-    let options = {
-      headers: {
-        'Content-Type': 'text/plain',
-        'Accept': 'text/plain'
-      }
-    };
-    let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content,
-      status: "stopped"
-    };
+    });
     //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
   }
 

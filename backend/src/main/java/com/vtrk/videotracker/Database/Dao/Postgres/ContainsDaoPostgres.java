@@ -63,4 +63,19 @@ public class ContainsDaoPostgres implements ContainsDao {
             //System.out.println("Error in remove "+e);
         }
     }
+
+    @Override
+    public boolean exists(int id_list, String id_content) {
+        try {
+            String query = "SELECT * FROM contains WHERE id_list = "+id_list+" AND id_content = '"+id_content+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in findAll"+e);
+            return false;
+        }
+        return true;
+    }
 }

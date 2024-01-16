@@ -66,4 +66,18 @@ public class ContentDaoPostgres implements ContentDao{
             //System.out.println("Error in remove "+e);
         }
     }
+
+    @Override
+    public boolean exists(String id) {
+        try {
+            String query = "SELECT * FROM content WHERE id = '"+id+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in findAll"+e);
+        }
+        return true;
+    }
 }

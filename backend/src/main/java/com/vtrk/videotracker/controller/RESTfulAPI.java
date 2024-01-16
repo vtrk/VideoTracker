@@ -1,7 +1,9 @@
 package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
+import com.vtrk.videotracker.Database.Dao.ContentDao;
 import com.vtrk.videotracker.Database.Dao.Postgres.ContainsDaoPostgres;
+import com.vtrk.videotracker.Database.Dao.Postgres.ContentDaoPostgres;
 import com.vtrk.videotracker.Database.Dao.Postgres.UserDaoPostgres;
 import com.vtrk.videotracker.Database.Dao.Postgres.UserListDaoPostgres;
 import com.vtrk.videotracker.Database.Model.Content;
@@ -263,5 +265,74 @@ public class RESTfulAPI {
             response.put(content.getId(), contentJSON);
         }
         return response.toString();
+    }
+
+    /**
+     * Get profile data
+     * @param data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON user data looks like this:<br>
+     * {
+     *      "id_user": "id"
+     * }
+     *<br>
+     * Response (JSON of user data):<br>
+     * {
+     *     "id": "id",
+     *     "email": "email",
+     *     "username": "username",
+     * }
+     */
+
+
+    /**
+     * Add content to user list
+     * @param data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON user data looks like this:<br>
+     * {
+     *     "id_user": "id",
+     *     "id_content": "id",
+     *     "status": "state"
+     *     "title": "title"
+     *     "duration": "duration"
+     *     "n_episode": "n_episode"
+     *     "link": "link"
+     * }
+     * <br>
+     * Response: "1" if successful, "0" otherwise
+     */
+    @RequestMapping(
+            value = "/addToList",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String addToList(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        String id_content = json.getString("id_content");
+        String state = json.getString("status");
+
+        // Add content to database if it doesn't exist
+        ContentDaoPostgres contentDaoPostgres = new ContentDaoPostgres(DBManager.getInstance().getConnection());
+        if(!contentDaoPostgres.exists(id_content)){
+            String title = json.getString("title");
+            int duration = json.getInt("duration");
+            int n_episode = json.getInt("n_episode");
+            String link = json.getString("link");
+            Content content = new Content(id_content, title, duration, n_episode, link);
+            contentDaoPostgres.add(content);
+        }
+
+        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        UserList list = userListDaoPostgres.findByIdUser(id_user);
+        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        containsDaoPostgres.add(list.getId(), id_content, state);
+        if(containsDaoPostgres.exists(list.getId(), id_content))
+            return "1";
+        return "0";
     }
 }

@@ -33,19 +33,19 @@ export class KitsuContentComponent {
   }
 
   addPlanned(){
-    this.api.addToPlanned(this.content.id);
+    this.api.addToList(this.content.id, 'planned', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.id);
   }
 
   addCompleted(){
-    this.api.addToCompleted(this.content.id);
+    this.api.addToList(this.content.id, 'completed', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.id);
   }
 
   addWatching(){
-    this.api.addToWatching(this.content.id);
+    this.api.addToList(this.content.id, 'watching', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.id);
   }
 
   addStopped(){
-    this.api.addToStopped(this.content.id);
+    this.api.addToList(this.content.id, 'dropped', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.id);
   }
 
 }

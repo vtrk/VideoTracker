@@ -7,5 +7,6 @@ public interface ContentDao {
     void add(Content content);
     void update(Content content);
     void remove(Content content);
+    boolean exists(String id);
 
 }
