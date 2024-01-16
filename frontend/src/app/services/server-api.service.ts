@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment';
 import { SearchBody, ServerAPIResponse } from '../utils/data-structures';
 import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../utils/item';
 import { strings } from '../strings';
-import { Content, KitsuContent, TMDBContent } from '../utils/content';
+import { KitsuContent, TMDBContent } from '../utils/content';
+import { CookieService } from 'ngx-cookie-service';
 
 
 /**
@@ -18,7 +19,7 @@ export class ServerApiService {
   searchArgs: Map<string, string> = new Map<string, string>();
   searchType: string = '';
 
-  constructor(private client: HttpClient) {
+  constructor(private client: HttpClient, private cookieService: CookieService) {
     // Get the server info to initialize the ItemAssigner.
     this.getServerInfoObservable().subscribe({
       next: data => {
@@ -288,15 +289,30 @@ export class ServerApiService {
     */
   }
 
-  login( email_username: string,  password: string):string{
-    let url = environment.API_URL + '/dbUserid';
+  login(email_username: string,  password: string){
+    let url = environment.API_URL + '/login';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return "1";
+    let JSONBody = {
+      email_username: email_username,
+      password: password
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let id: string = data.toString();
+        console.log("DATA: "+ id);
+        this.cookieService.set('id_user', id);
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+
     /*
     Use this function in the backend:
     User find = UserDaoPostgres.findByEmailOrUsername(email_username, password);
@@ -331,18 +347,34 @@ export class ServerApiService {
         return error.toString();
       }
     });
-    return '';
+    return '0';
   }
 
   changeEmail(id_user : string, email: string):string{
-    let url = environment.API_URL + '/dbChangeEmail';
+    let url = environment.API_URL + '/update';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return "1";
+    let JSONBody = {
+      id_user: id_user,
+      credential: email,
+      choice: 1
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+    return '0';
     /*
     Use this function in the backend:
     UserDaoPostgres.updateFromSettings((int)id_user, email, 1);
@@ -350,14 +382,30 @@ export class ServerApiService {
   }
 
   changePassword(id_user : string, password: string):string{
-    let url = environment.API_URL + '/dbChangePassword';
+    let url = environment.API_URL + '/update';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return "1";
+    let JSONBody = {
+      id_user: id_user,
+      credential: password,
+      choice: 2
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+    return '0';
     /*
     Use this function in the backend:
     UserDaoPostgres.updateFromSettings((int)id_user, password, 2);
@@ -365,14 +413,30 @@ export class ServerApiService {
   }
 
   changeUsername(id_user: string,username : string):string{
-    let url = environment.API_URL + '/dbChangeUsername';
+    let url = environment.API_URL + '/update';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return "1";
+    let JSONBody = {
+      id_user: id_user,
+      credential: username,
+      choice: 3
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+    return '0';
     /*
     Use this function in the backend:
     UserDaoPostgres.updateFromSettings((int)id_user, username, 3);

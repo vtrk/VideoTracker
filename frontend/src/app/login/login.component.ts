@@ -32,7 +32,7 @@ export class LoginComponent {
   verify(){
     console.log(this.email_username, this.password);
     if(this.authService.login(this.email_username, this.password)){
-      console.log('Login successful'+this.api.getUserId(this.email_username, this.password));
+      console.log('Login successful');
       this.router.navigate(['/home']);
     }else{
       this.wrong_credentials = false;

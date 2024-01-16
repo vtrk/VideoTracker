@@ -11,11 +11,12 @@ export class AuthenticationService {
   constructor(private api: ServerApiService, private cookieService: CookieService) {}
   login(email: string, password: string):boolean{
     //Here goes the code to check if the email or username and password are correct
-    this.check = this.api.login(email, password);
+    this.api.login(email, password);
+
     if(this.check != null || this.check != "0"){
       this.userIsAuthenticated = true;
       console.log('login success');
-      this.cookieService.set('IdUser', this.check);
+      this.cookieService.set('id_user', this.check);
       return true;
     }
     console.log('login failed');
@@ -38,17 +39,17 @@ export class AuthenticationService {
     console.log('Sign in success');
     this.userIsAuthenticated = true;
     this.check = this.api.signIn(email,username,password);
-    this.cookieService.set('IdUser', this.check);
+    this.cookieService.set('id_user', this.check);
     return true;
   }
 
   logout(){
     this.userIsAuthenticated = false;
-    this.cookieService.set('IdUser', "0");
+    this.cookieService.set('id_user', "0");
   }
 
   get userIsAuth(){
-    if(this.cookieService.get('IdUser') != "0"){
+    if(this.cookieService.get('id_user') != "0"){
       this.userIsAuthenticated = true;
     }
     return this.userIsAuthenticated;
