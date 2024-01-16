@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class ContainsDaoPostgres implements ContainsDao {
 
@@ -34,8 +35,15 @@ public class ContainsDaoPostgres implements ContainsDao {
     @Override
     public String countByState(int id_list, String state) {
         String counted = "";
+        String apiUsed = "";
+        Properties properties = new Properties();
+        if(properties.getProperty("API") == "Kitsu"){
+            apiUsed = "AND id_content like '%_anime'";
+        }else{
+            apiUsed = "AND (id_content like '%_tv' or id_content like '%_movie')";
+        }
         try{
-            String query = "SELECT COUNT(*) as count FROM contains WHERE id_list = "+id_list+" AND state = '"+state+"';";
+            String query = "SELECT COUNT(*) as count FROM contains WHERE id_list = "+id_list+" AND state = '"+state+"' "+apiUsed+" ;";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
@@ -83,7 +91,8 @@ public class ContainsDaoPostgres implements ContainsDao {
     @Override
     public boolean exists(int id_list, String id_content) {
         try {
-            String query = "SELECT * FROM contains WHERE id_list = "+id_list+" AND id_content = '"+id_content+"';";
+            properties.getInstance().;
+            String query = "SELECT * FROM contains WHERE id_list = "+id_list+" AND id_content like '"+id_content+"';";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             if(!rs.isBeforeFirst())
