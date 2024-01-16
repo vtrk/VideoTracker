@@ -1,5 +1,4 @@
-<body  [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-<h3>Here are the results for your search</h3>
-<p [innerHTML]="searchQuery"></p>
+<body  [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
+<h1 [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Search Results</h1>
 <item-list [itemList]="itemList"></item-list>
 </body>
