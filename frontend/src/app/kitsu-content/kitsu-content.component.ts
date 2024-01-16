@@ -21,7 +21,7 @@ export class KitsuContentComponent {
       let type = params['type'];
       let id = params['id'];
       this.content = new KitsuContent();
-      server.getKitsuContent(this.content, type, id);
+      this.server.getKitsuContent(this.content, type, id);
     });
   }
 }
