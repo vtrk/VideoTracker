@@ -1,5 +1,5 @@
-<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-<p id="Welcome" class=".fs-1 text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Welcome to VideoTracker</p>
-<p (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"><p>
+<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
+<h1 id="Welcome" class=".fs-1 text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Welcome to VideoTracker</h1>
+<h3 (ngOnInit)="ngOnInit()" [innerHTML]="itemList.getTitle()" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></h3>
 <item-list [itemList]="itemList" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}"></item-list>
 </body>
