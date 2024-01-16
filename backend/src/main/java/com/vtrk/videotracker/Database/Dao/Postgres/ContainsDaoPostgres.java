@@ -2,6 +2,7 @@ package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.ContainsDao;
 import com.vtrk.videotracker.Database.Model.Content;
+import com.vtrk.videotracker.utils.Properties;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class ContainsDaoPostgres implements ContainsDao {
 
@@ -36,8 +36,7 @@ public class ContainsDaoPostgres implements ContainsDao {
     public String countByState(int id_list, String state) {
         String counted = "";
         String apiUsed = "";
-        Properties properties = new Properties();
-        if(properties.getProperty("API") == "Kitsu"){
+        if(Properties.getInstance().getProperty("API").equals("Kitsu")){
             apiUsed = "AND id_content like '%_anime'";
         }else{
             apiUsed = "AND (id_content like '%_tv' or id_content like '%_movie')";
@@ -91,7 +90,6 @@ public class ContainsDaoPostgres implements ContainsDao {
     @Override
     public boolean exists(int id_list, String id_content) {
         try {
-            properties.getInstance().;
             String query = "SELECT * FROM contains WHERE id_list = "+id_list+" AND id_content like '"+id_content+"';";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
