@@ -62,10 +62,10 @@ export class ServerApiService {
             //TODO
             break;
           case strings.movie:
-            item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date);
+            item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date, json.runtime);
             break;
           case strings.tv:
-            item.setValues(json.id, json.name, json.overview, strings.TMDB_poster_url + json.poster_path, json.first_air_date);
+            item.setValues(json.id, json.name, json.overview, strings.TMDB_poster_url + json.poster_path, json.first_air_date, undefined, json.number_of_seasons, json.number_of_episodes);
             break;
           default:
             item.setErrorString(strings.CONTENT_ERROR);

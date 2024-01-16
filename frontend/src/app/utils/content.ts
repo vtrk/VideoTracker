@@ -49,6 +49,13 @@ export class TMDBContent extends Content {
     poster: string;
     releaseDate: string;
 
+    // Movie specific fields
+    runtime: string;
+
+    // TV Show specific fields
+    seasons: string;
+    episodes: string;
+
     constructor() {
         super();
         this.API = strings.TMDB;
@@ -62,13 +69,22 @@ export class TMDBContent extends Content {
      * @param poster field name is 'poster_path'
      * @param releaseDate field name is 'release_date' for movies and 'first_air_date' for tv shows
      */
-    setValues(id: string, title: string, description: string, poster: string, releaseDate: string){
+    setValues(id: string, title: string, description: string, poster: string, releaseDate: string, runtime?: string, seasons?: string, episodes?: string){
         this.id = id;
         this.title = title;
         this.description = description;
         this.poster = poster;
         this.releaseDate = releaseDate;
+
+        if(runtime)
+            this.runtime = runtime;
+        if(seasons)
+            this.seasons = seasons;
+        if(episodes)
+            this.episodes = episodes;
+
     }
+
 }
 
 /**
