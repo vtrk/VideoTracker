@@ -5,15 +5,15 @@ public class Review {
     private int id;
     private int vote;
     private String user_comment;
-    private User user;
-    private Content content;
+    private int id_user;
+    private String id_content;
 
-    public Review( int id, int vote, String user_comment, User user, Content content ){
+    public Review( int id, int vote, String user_comment, int id_user, String id_content ){
         this.id = id;
         this.vote = vote;
         this.user_comment = user_comment;
-        this.user = user;
-        this.content = content;
+        this.id_user = id_user;
+        this.id_content = id_content;
     }
 
     public int getId() {
@@ -40,19 +40,19 @@ public class Review {
         this.user_comment = user_comment;
     }
 
-    public User getUser() {
-        return user;
+    public int getIdUser() {
+        return this.id_user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(int id_user) {
+        this.id_user = id_user;
     }
 
-    public Content getContent() {
-        return content;
+    public String getIdContent() {
+        return this.id_content;
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public void setIdContent(String id_content) {
+        this.id_content = id_content;
     }
 }

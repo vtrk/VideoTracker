@@ -4,11 +4,11 @@ public class UserList {
 
     private int id;
 
-    private User user;
+    private int id_user;
 
-    public UserList( int id, User user ){
+    public UserList( int id, int user ){
         this.id = id;
-        this.user = user;
+        this.id_user = user;
     }
 
     public int getId() {
@@ -19,11 +19,11 @@ public class UserList {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getIdUser() {
+        return id_user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(int id_user) {
+        this.id_user = id_user;
     }
 }

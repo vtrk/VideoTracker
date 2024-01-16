@@ -1,11 +1,9 @@
 package com.vtrk.videotracker.Database.Dao;
 
-
-import com.vtrk.videotracker.Database.Model.Content;
-import com.vtrk.videotracker.Database.Model.User;
-import java.util.List;
+import com.vtrk.videotracker.Database.Model.UserList;
 
 public interface UserListDao {
-    List<Content> findByIdUser(int user);
-    UserListDao findById(int id);
+    UserList findByIdUser(int user);
+    UserList findById(int id);
+    void add(int id_user);
 }

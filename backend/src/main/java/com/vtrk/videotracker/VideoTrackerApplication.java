@@ -26,13 +26,6 @@ public class VideoTrackerApplication {
         SpringApplication.run(VideoTrackerApplication.class, args);
 
         logger.info("Version: " + Properties.getInstance().getProperty("VERSION"));
-        /*
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        List<User> prova = userDaoPostgres.findAll();
-        for (User user : prova) {
-            System.out.println(user.getUsername());
-        }
-         */
     }
 
 }

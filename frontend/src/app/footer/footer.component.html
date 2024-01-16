@@ -1,11 +1,21 @@
 <footer  [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
-  <a href="https://github.com/vtrk/VideoTracker" class="me-auto text-reset">
-    <fa-icon [icon]="faGithub"></fa-icon>
-  </a>
-  <a href="https://kitsu.io/explore/anime" class="me-auto text-reset">
-    <p>Kitsu</p>
-  </a>
-  <a href="https://www.themoviedb.org/" class="me-auto text-reset">
-    <p>TMDB</p>
-  </a>
+  <div class="footerContainer">
+    <div class="icons justify-content-center">
+      <a href="https://kitsu.io/explore/anime" class="me-auto text-reset">
+        <img src="../../assets/KitsuIcon.png" width="30px" height="30px">
+      </a>
+      <a href="https://github.com/vtrk/VideoTracker" class="me-auto text-reset">
+        <fa-icon [icon]="faGithub" class="fa-lg"></fa-icon>
+      </a>
+      <a href="https://www.themoviedb.org/" class="me-auto text-reset">
+        <img src="../../assets/TMDBIcon.png" width="30px" height="30px">
+      </a>
+    </div>
+    <div class="AppInfo">
+      <p>Versione...</p>
+    </div>
+    <div class="footerBottom">
+      <p>Copyright &copy;2024; Designed by <span class="designer">vtrk</span></p>
+    </div>
+  </div>
 </footer>
