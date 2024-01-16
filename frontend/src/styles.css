@@ -51,12 +51,12 @@ a{
  color: blue;
 }
 
-p,h3{
+p,h3,h1{
   font-family: Cantarelle, sans-serif;
   color: #333;
 }
 
-p.dark-mode, h3.dark-mode{
+p.dark-mode, h3.dark-mode, h1.dark-mode{
   color: white;
 }
 
