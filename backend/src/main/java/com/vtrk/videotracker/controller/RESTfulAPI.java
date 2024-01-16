@@ -166,4 +166,36 @@ public class RESTfulAPI {
             return "0";
         return Integer.toString(user.getId());
     }
+
+
+    /**
+     * Update user data
+     * @param data JSON user data
+     * @param request request
+     * @return
+     *
+     * A valid JSON user data looks like this:<br>
+     * {
+     *   "id_user": "id",
+     *   "credential": "credential",
+     *   "choice": "choice"
+     * }
+     * choice: 1 - email, 2 - password, 3 - username
+     */
+    @RequestMapping(
+            value = "/update",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String update(@RequestBody String data, HttpServletRequest request) {
+        JSONObject json = new JSONObject(data);
+        int id = json.getInt("id_user");
+        String credential = json.getString("credential");
+        int choice = json.getInt("choice");
+
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        userDaoPostgres.updateFromSettings(id, credential, choice);
+        return "1";
+    }
 }
