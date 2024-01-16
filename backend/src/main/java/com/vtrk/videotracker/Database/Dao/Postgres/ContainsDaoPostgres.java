@@ -32,6 +32,22 @@ public class ContainsDaoPostgres implements ContainsDao {
     }
 
     @Override
+    public String countByState(int id_list, String state) {
+        String counted = "";
+        try{
+            String query = "SELECT COUNT(*) as count FROM contains WHERE id_list = "+id_list+" AND state = '"+state+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                counted = rs.getString("count");
+            }
+        }catch(SQLException e){
+            //System.out.println("Error in countByState "+e);
+        }
+        return counted;
+    }
+
+    @Override
     public void add(int id_list, String id_content, String state) {
         try{
             String query = "INSERT INTO public.contains (id_list, id_content, state) VALUES("+id_list+", '"+id_content+"', '"+state+"');";
