@@ -15,9 +15,12 @@ import {ServerApiService} from "../services/server-api.service";
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
+
+  info: Array<string>;
+
   constructor(private api: ServerApiService, public themeService: ThemeService) {}
 
   getInfo(){
-    //this.api.getInfoProfile();
+     this.info = this.api.getInfoProfile();
   }
 }

@@ -422,7 +422,7 @@ export class ServerApiService {
 
   //to-do
 
-  getInfoProfile(){
+  getInfoProfile(): Array<string>{
     let url = environment.API_URL + '/profileInfo';
     let options = {
       headers: {
@@ -434,6 +434,7 @@ export class ServerApiService {
       id_user: this.cookieService.get('id_user')
     };
     //Need to get back the info of the user
+    return ["",""];
   }
 
   addToPlanned(id_content : string){
