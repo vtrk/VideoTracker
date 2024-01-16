@@ -9,5 +9,6 @@ public interface UserDao {
     User findByEmailOrUsername(String email_username, String password);
     void add(User user);
     void update(User user);
+    void updateFromSettings(int id, String credential, int choice);
     void remove(User user);
 }

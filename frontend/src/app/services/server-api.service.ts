@@ -228,7 +228,7 @@ export class ServerApiService {
   }
 
   getDbList(itemList: ItemList){
-    let url = environment.API_URL + '/dbuserlist';
+    let url = environment.API_URL + '/dbUserlist';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -248,7 +248,7 @@ export class ServerApiService {
   }
 
   getDbNotifications(itemList: ItemList){
-    let url = environment.API_URL + '/dbnotifications';
+    let url = environment.API_URL + '/dbNotifications';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -266,7 +266,7 @@ export class ServerApiService {
   }
 
   getUserId( email_username: string,  password: string):string{
-    let url = environment.API_URL + '/dbuserid';
+    let url = environment.API_URL + '/dbUserid';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -275,8 +275,6 @@ export class ServerApiService {
     };
     return "1";
     /*
-    Searching on the db for the user by Email or Username.
-
     Use this function in the backend:
     User find = UserDaoPostgres.findByEmailOrUsername(email_username, password);
     if(find.getIdUser() != 0){
@@ -287,7 +285,7 @@ export class ServerApiService {
   }
 
   getSignIn( email: string, username : string, password: string):string{
-    let url = environment.API_URL + '/dbuserid';
+    let url = environment.API_URL + '/dbSignIn';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -296,14 +294,57 @@ export class ServerApiService {
     };
     return "1";
     /*
-    Searching on the db for the user by Email or Username.
-
     Use this function in the backend:
 
     User user = new User(0,email,username,password,false);
     UserDaoPostgres.add(user);
     User userAdded = UserDaoPostgres.findByEmailOrUsername(email, password);
     userAdded.getIdUser().toString(); //This is the result that I need
+    */
+  }
+
+  changeEmail(id_user : string, email: string):string{
+    let url = environment.API_URL + '/dbChangeEmail';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return "1";
+    /*
+    Use this function in the backend:
+    UserDaoPostgres.updateFromSettings((int)id_user, email, 1);
+    */
+  }
+
+  changePassword(id_user : string, password: string):string{
+    let url = environment.API_URL + '/dbChangePassword';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return "1";
+    /*
+    Use this function in the backend:
+    UserDaoPostgres.updateFromSettings((int)id_user, password, 2);
+    */
+  }
+
+  changeUsername(id_user: string,username : string):string{
+    let url = environment.API_URL + '/dbChangeUsername';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return "1";
+    /*
+    Use this function in the backend:
+    UserDaoPostgres.updateFromSettings((int)id_user, username, 3);
     */
   }
 

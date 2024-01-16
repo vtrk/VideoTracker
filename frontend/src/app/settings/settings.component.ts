@@ -3,6 +3,8 @@ import {AuthenticationService} from "../authentication.service";
 import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
+import {CookieService} from "ngx-cookie-service";
+import {ServerApiService} from "../services/server-api.service";
 
 @Component({
   selector: 'app-settings',
@@ -23,7 +25,7 @@ export class SettingsComponent {
   confirm_password: string = '';
   new_username: string = '';
 
-  constructor(private authService: AuthenticationService, public themeService : ThemeService) {}
+  constructor(private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService) {}
 
   change_password(){
     console.log(this.old_password, this.new_password, this.confirm_password);

@@ -118,6 +118,28 @@ public class UserDaoPostgres implements UserDao {
     }
 
     @Override
+    public void updateFromSettings(int id, String credential, int choice) {
+        String query = "";
+        switch (choice){
+            case 1:
+                query = "UPDATE public.user_vt SET email='"+credential+"' WHERE id="+id+";";
+                break;
+            case 2:
+                query = "UPDATE public.user_vt SET password='"+credential+"' WHERE id="+id+";";
+                break;
+            case 3:
+                query = "UPDATE public.user_vt SET username='"+credential+"' WHERE id="+id+";";
+                break;
+        }
+        try{
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in update "+e);
+        }
+    }
+
+    @Override
     public void remove(User user) {
         try{
             String query = "DELETE FROM public.user_vt WHERE id="+user.getId()+";";
