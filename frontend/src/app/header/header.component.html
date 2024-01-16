@@ -31,7 +31,7 @@
         <a class="nav-link" style="cursor: pointer;" [hidden]="!this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faSun"></fa-icon></a>
         <a class="nav-link" style="cursor: pointer;" [hidden]="this.themeService.isDarkTheme()" (click)="this.themeService.toggleTheme()"><fa-icon [icon]="faMoon"></fa-icon></a>
       </li>
-      <li class="nav-item px-lg-5 px-sm-3 px-1">
+      <li class="nav-item">
         <form class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit()">
           <div class="d-flex">
             <input class="form-control mr-sm-2" type = "text" id="search" [formControl]="input"  placeholder="Search">
