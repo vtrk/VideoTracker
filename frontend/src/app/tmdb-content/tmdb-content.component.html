@@ -8,6 +8,10 @@
             <div class="card-body">
               <h5 class="card-title">{{content.title}}</h5>
               <p class="card-text"><small class="text-muted">{{content.releaseDate}}</small></p>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="completed" (click)="addCompleted()"><fa-icon [icon]="faSquareCheck"></fa-icon></button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="stopped" (click)="addStopped()"><fa-icon [icon]="faSquareCaretRight"></fa-icon></button>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
             </div>
           </div>
         </div>
