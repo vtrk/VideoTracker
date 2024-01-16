@@ -108,7 +108,7 @@ export class TMDBItemAssigner implements ItemAssigner {
     assign(itemList: ItemList, json: any): void {
         json.results.forEach((element: any) => {
             let item: Item; // Movies and tv shows have a different name for the title/name field.
-            if(element.media_type == strings.movie) {
+            if(element.title) { // If the title field exists, it is a movie.
                 item = {
                     id: element.id,
                     type: element.media_type,
