@@ -156,6 +156,18 @@ class VideoTrackerApplicationTests {
             System.out.println(Not.getDescription());
         }
 
+    }
+
+    @Test
+    void testAddToDB(){
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+
+        User user = new User(0, "", "test", "test", false);
+
+        userDaoPostgres.add(user);
+        User user2 = userDaoPostgres.findByEmailOrUsername("test", "test");
+        System.out.println(user2.getId());
+
         //Insert/Update/Delete (Nelle insert tutti gli id devono essere a zero, per chi ha un int, perchè viene fatto in automatico dal db)
 
         //User
@@ -254,18 +266,6 @@ class VideoTrackerApplicationTests {
         contains.update(1,"003anime","completed");
 
         contains.remove(2,"001anime");*/
-
-    }
-
-    @Test
-    void testAddToDB(){
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-
-        User user = new User(0, "", "test", "test", false);
-
-        userDaoPostgres.add(user);
-        User user2 = userDaoPostgres.findByEmailOrUsername("test", "test");
-        System.out.println(user2.getId());
     }
 
 }
