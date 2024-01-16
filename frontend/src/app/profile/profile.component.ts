@@ -4,6 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
 import {ServerApiService} from "../services/server-api.service";
 import {HttpClient} from "@angular/common/http";
+import { User } from '../utils/user';
 
 @Component({
   selector: 'app-profile',
@@ -23,15 +24,11 @@ export class ProfileComponent {
   stopped: string;
   planned: string;
   info: Array<string>;
+  user: User;
+
 
   constructor(private api: ServerApiService, public themeService: ThemeService, private client: HttpClient) {
-    this.info = this.api.getInfoProfile();
-    this.email = this.info[0];
-    this.username = this.info[1];
-    this.completed = this.info[2];
-    this.watching = this.info[3];
-    this.stopped = this.info[4];
-    this.planned = this.info[5];
+    this.api.getInfoProfile(this.user);
   }
 
 }

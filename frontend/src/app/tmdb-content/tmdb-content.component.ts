@@ -44,7 +44,7 @@ export class TmdbContentComponent {
   }
 
   addStopped(){
-    this.api.addToList(this.content.id, 'dropped', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.id);
+    this.api.addToList(this.content.id, 'on-hold', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.id);
   }
 
 }

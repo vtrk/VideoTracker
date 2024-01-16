@@ -6,6 +6,7 @@ import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../
 import { strings } from '../strings';
 import { KitsuContent, TMDBContent } from '../utils/content';
 import { CookieService } from 'ngx-cookie-service';
+import { User } from '../utils/user';
 
 
 /**
@@ -420,8 +421,8 @@ export class ServerApiService {
 
   //to-do
 
-  getInfoProfile(): Array<string>{
-    let url = environment.API_URL + '/profileInfo';
+  getInfoProfile(user: User): Array<string>{
+    let url = environment.API_URL + '/profile';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -431,6 +432,17 @@ export class ServerApiService {
     let JSONBody = {
       id_user: this.cookieService.get('id_user')
     };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return;
+      },
+      error: error => {
+        console.log(error);
+        return;
+      }
+    });
     //Need to get back the info of the user
     return ["",""];
   }
