@@ -1,16 +1,31 @@
 <body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
-    <h1 [innerHTML]="'Title: ' + content.title"></h1>
-    <h1 [innerHTML]="'Description: ' + content.synopsis"></h1>
-    <img [src]="content.poster" width="400">
-    <h1 [innerHTML]="'Episode Count: ' + content.episodeCount"></h1>
-    
-    <h1 [innerHTML]="'Episode Lenght: ' + content.episodeLength"></h1>
-    <h1 [innerHTML]="'Show Type: ' + content.showType"></h1>
-    <h1 [innerHTML]="'Status: ' + content.status"></h1>
-    <h1 [innerHTML]="'Start Date: ' + content.startDate"></h1>
-    <h1 [innerHTML]="'End Date: ' + content.endDate"></h1>
-    <h1 [innerHTML]="'Age Rating: ' + content.ageRating"></h1>
-
-
-
+    <section>
+      <div class="container mt-4 pt-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <img [src]="content.poster" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{content.title}}</h5>
+                <p class="card-text">{{content.ageRating}}</p>
+                <p class="card-text"><small class="text-muted">{{content.startDate}}</small></p>
+                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">{{content.endDate}}</small></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{content.title}}</h5>
+                <p class="card-text">{{content.synopsis}}</p>
+                <p [innerHTML]="'Episodes: ' + content.episodeCount" *ngIf="content.episodeCount" [hidden]="content.showType=='movie'"></p>
+                <p [innerHTML]="'Episode Length: ' + content.episodeLength"></p>
+                <p [innerHTML]="'Show Type: ' + content.showType"></p>
+                <p [innerHTML]="'Status: ' + content.status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 </body>
