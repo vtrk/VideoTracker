@@ -98,7 +98,7 @@ public class UserDaoPostgres implements UserDao {
     @Override
     public void add(User user) {
         try{
-            String query = "INSERT INTO public.user_vt (id, email, password, username, admin) VALUES(nextval('user_id_seq'::regclass), '"+user.getEmail()+"', '"+user.getPassword()+"', '"+user.getUsername()+"', "+user.isIs_admin()+");";
+            String query = "INSERT INTO public.user_vt (id, email, password, username, admin) VALUES(nextval('user_vt_id_seq'::regclass), '"+user.getEmail()+"', '"+user.getPassword()+"', '"+user.getUsername()+"', "+user.isIs_admin()+");";
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
