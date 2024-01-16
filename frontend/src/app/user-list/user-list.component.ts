@@ -5,6 +5,7 @@ import {ItemListComponent} from "../item-list/item-list.component";
 import { ItemList, } from '../utils/item';
 import { CommonModule } from '@angular/common';
 import {ServerApiService} from "../services/server-api.service";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-user-list',
@@ -19,11 +20,11 @@ import {ServerApiService} from "../services/server-api.service";
 })
 export class UserListComponent implements OnInit{
   itemList: ItemList = new ItemList();
-  constructor(private api: ServerApiService, public themeService: ThemeService) {}
+  constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService) {}
 
   ngOnInit(): void{
     // Get the list of items.
-    this.api.getDbList(this.itemList);
+    this.api.getDbList(this.itemList, this.cookies.get('id_user'));
   }
 
 }

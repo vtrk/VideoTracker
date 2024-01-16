@@ -251,15 +251,29 @@ export class ServerApiService {
     });
   }
 
-  getDbList(itemList: ItemList){
-    let url = environment.API_URL + '/dbUserlist';
+  getDbList(itemList: ItemList, id_user: string){
+    let url = environment.API_URL + '/list';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return this.client.get(url, options);
+    let JSONBody = {
+      id_user: id_user
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(json);
+        return;
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.CONTENT_ERROR);
+        return;
+      }
+    });
     /*
     Frontend:
     1. add cookieService to the constructor.
