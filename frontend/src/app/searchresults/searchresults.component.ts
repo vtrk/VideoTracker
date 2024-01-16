@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ItemList } from '../utils/item';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import {ThemeService} from "../theme.service";
   templateUrl: './searchresults.component.html',
   styleUrl: './searchresults.component.css'
 })
-export class SearchresultsComponent implements OnInit{
+export class SearchresultsComponent{
   title = 'Search Results';
   searchQuery: string = '';
   itemList: ItemList;
@@ -27,16 +27,5 @@ export class SearchresultsComponent implements OnInit{
       this.itemList = new ItemList();
       this.server.getSearch(this.itemList, new SearchBody(body.type, body.query, new Map(Object.entries(body.args))));
     });
-  }
-
-  ngOnInit(): void {
-  }
-
-  goto(event: any){
-    var target = event.target;
-    var value = target.attributes.id.nodeValue;
-    var type = target.attributes.title.nodeValue;
-    console.log(value);
-    console.log(type);
   }
 }
