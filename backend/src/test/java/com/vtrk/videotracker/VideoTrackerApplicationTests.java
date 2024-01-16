@@ -172,17 +172,17 @@ class VideoTrackerApplicationTests {
 
         //User
 
-        UserDaoPostgres user = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        UserDaoPostgres userDao = new UserDaoPostgres(DBManager.getInstance().getConnection());
 
         User u1 = new User(2, "email1", "username1", "password1", false);
         User u2 = new User(0, "email2", "username2", "password2", true);
         User u3 = new User(3, "email2", "username2", "passwordChanged", false);
 
-        user.add(u1);
-        user.add(u2);
+        userDao.add(u1);
+        userDao.add(u2);
         /*
-        user.update(u3);
-        user.remove(u1);
+        userDao.update(u3);
+        userDao.remove(u1);
         */
 
         //UserList
