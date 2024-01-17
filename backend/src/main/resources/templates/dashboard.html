@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<h1>Dashboard</h1>
+
+<section>
+    <h2>User list</h2>
+    <ul>
+        <li th:each="user : ${users}" th:text="${user}"></li>
+    </ul>
+</section>
+
+<section>
+    <button onclick="sendNotification()">Send Notification</button>
+    <button onclick="viewLogFile()">File Log</button>
+</section>
+
+<script th:inline="javascript">
+    /* Function to send notification */
+    function sendNotification() {
+        // Implementa la logica per l'invio delle notifiche
+        alert('Notifica inviata!');
+    }
+
+    /* Function to get log file */
+    function viewLogFile() {
+        alert('Visualizzazione del file di log');
+    }
+</script>
+
+</body>
+</html>

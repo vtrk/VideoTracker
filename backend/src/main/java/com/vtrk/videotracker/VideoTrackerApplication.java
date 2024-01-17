@@ -3,10 +3,16 @@ package com.vtrk.videotracker;
 import com.vtrk.videotracker.API.Manager.API_Manager;
 import com.vtrk.videotracker.API.Manager.KitsuManager;
 import com.vtrk.videotracker.API.Manager.TMDBManager;
+import com.vtrk.videotracker.Database.DBManager;
+import com.vtrk.videotracker.Database.Dao.Postgres.UserDaoPostgres;
+import com.vtrk.videotracker.Database.Model.User;
+import com.vtrk.videotracker.controller.DashboardController;
 import com.vtrk.videotracker.utils.Properties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -23,7 +29,12 @@ public class VideoTrackerApplication {
         } else {
             throw new RuntimeException("API not found");
         }
-        SpringApplication.run(VideoTrackerApplication.class, args);
+        ConfigurableApplicationContext context =SpringApplication.run(VideoTrackerApplication.class, args);
+        /*DashboardController dashboardController = context.getBean(DashboardController.class);
+        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        List<User> user = userDaoPostgres.findAll() ;
+        String result = dashboardController.showDashboard(user,);*/
+
 
         logger.info("Version: " + Properties.getInstance().getProperty("VERSION"));
     }
