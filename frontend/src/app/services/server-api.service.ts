@@ -85,10 +85,10 @@ export class ServerApiService {
         let json = JSON.parse(JSON.stringify(data));
         switch(type){
           case strings.movie:
-            item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date, json.runtime);
+            item.setValues(json.id, json.title, json.overview, strings.TMDB_poster_url + json.poster_path, json.release_date, strings.movie, json.runtime);
             break;
           case strings.tv:
-            item.setValues(json.id, json.name, json.overview, strings.TMDB_poster_url + json.poster_path, json.first_air_date, undefined, json.number_of_seasons, json.number_of_episodes);
+            item.setValues(json.id, json.name, json.overview, strings.TMDB_poster_url + json.poster_path, json.first_air_date, strings.tv ,undefined, json.number_of_seasons, json.number_of_episodes);
             break;
           default:
             item.setErrorString(strings.CONTENT_ERROR);
@@ -476,7 +476,7 @@ export class ServerApiService {
       status: status,
       title: title,
       duration: duration,
-      n_episode: n_episode,
+      n_episode: n_episode == undefined ? '-1' : n_episode,
       link: link
     };
     this.client.post(url, JSONBody, options).subscribe({

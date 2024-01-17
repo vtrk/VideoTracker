@@ -6,6 +6,7 @@ import { strings } from "../strings";
 export class Content {
     id: string;
     API: string;
+    type: string;
     /**
      * Error string to display if the content could not be retrieved.
      */
@@ -17,10 +18,10 @@ export class Content {
     /**
      * @returns the API name from which the content was retrieved.
      */
-    contentType(){
+    contentAPI(){
         return this.API;
     }
-
+    
     /**
      * Sets the error string
      * @param errorString the error string to display if the content could not be retrieved.
@@ -69,12 +70,13 @@ export class TMDBContent extends Content {
      * @param poster field name is 'poster_path'
      * @param releaseDate field name is 'release_date' for movies and 'first_air_date' for tv shows
      */
-    setValues(id: string, title: string, description: string, poster: string, releaseDate: string, runtime?: string, seasons?: string, episodes?: string){
+    setValues(id: string, title: string, description: string, poster: string, releaseDate: string, type: string, runtime?: string, seasons?: string, episodes?: string){
         this.id = id;
         this.title = title;
         this.description = description;
         this.poster = poster;
         this.releaseDate = releaseDate;
+        this.type = type;
 
         if(runtime)
             this.runtime = runtime;
@@ -108,6 +110,7 @@ export class KitsuContent extends Content {
     constructor() {
         super();
         this.API = strings.KITSU;
+        this.type = strings.anime;
     }
 
     setValues(id: string, title: string, synopsis: string, poster: string, episodeCount: string, episodeLength: string, showType: string, status: string, startDate: string, endDate: string, ageRating: string, genres: string){
