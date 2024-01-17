@@ -6,6 +6,7 @@ import { ItemList, } from '../utils/item';
 import { CommonModule } from '@angular/common';
 import {ServerApiService} from "../services/server-api.service";
 import { CookieService } from 'ngx-cookie-service';
+import {User} from "../utils/user";
 
 @Component({
   selector: 'app-user-list',
@@ -20,6 +21,14 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class UserListComponent implements OnInit{
   itemList: ItemList = new ItemList();
+  email: string;
+  username: string;
+  completed: string;
+  watching: string;
+  stopped: string;
+  planned: string;
+  info: Array<string>;
+  //user: User;
   constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService) {}
 
   ngOnInit(): void{
@@ -27,4 +36,5 @@ export class UserListComponent implements OnInit{
     this.api.getDbList(this.itemList, this.cookies.get('id_user'));
   }
 
+  //protected readonly User = User;
 }

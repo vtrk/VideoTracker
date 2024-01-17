@@ -17,3 +17,7 @@
 .custom-submit-button:hover{
   filter: brightness(150%);
 }
+
+#delete:hover{
+  color:red;
+}
