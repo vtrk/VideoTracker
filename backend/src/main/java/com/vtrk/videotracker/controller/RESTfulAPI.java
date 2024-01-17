@@ -1,12 +1,9 @@
 package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
-import com.vtrk.videotracker.Database.Dao.ContentDao;
-import com.vtrk.videotracker.Database.Dao.Postgres.ContainsDaoPostgres;
-import com.vtrk.videotracker.Database.Dao.Postgres.ContentDaoPostgres;
-import com.vtrk.videotracker.Database.Dao.Postgres.UserDaoPostgres;
-import com.vtrk.videotracker.Database.Dao.Postgres.UserListDaoPostgres;
+import com.vtrk.videotracker.Database.Dao.Postgres.*;
 import com.vtrk.videotracker.Database.Model.Content;
+import com.vtrk.videotracker.Database.Model.Notification;
 import com.vtrk.videotracker.Database.Model.User;
 import com.vtrk.videotracker.Database.Model.UserList;
 import com.vtrk.videotracker.VideoTrackerApplication;
@@ -370,4 +367,49 @@ public class RESTfulAPI {
             return "1";
         return "0";
     }
+
+    /**
+     * Get Notifications for a user
+     * @param data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON user data looks like this:<br>
+     * {
+     *     "id_user": "id",
+     * }
+     * <br>
+     * Response: a JSON of notifications<br>
+     * {
+     *     ...
+     *     "notification": {
+     *          "id": "id",
+     *          "title": "title",
+     *          "description": "description",
+     *      }
+     *      ...
+     * }
+     */
+    @RequestMapping(
+            value = "/notifications",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String notifications(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
+        List<Notification> notifications = receiveDaoPostgres.findByIdUser(id_user);
+        JSONObject response = new JSONObject();
+        for(Notification notification : notifications){
+            JSONObject notificationJSON = new JSONObject();
+            String id = Integer.toString(notification.getId());
+            notificationJSON.put("id", id);
+            notificationJSON.put("title", notification.getTitle());
+            notificationJSON.put("description", notification.getDescription());
+            response.put(id, notificationJSON);
+        }
+        return response.toString(); 
+    }
+
 }
