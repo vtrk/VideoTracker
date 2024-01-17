@@ -276,14 +276,28 @@ export class ServerApiService {
   }
 
   getDbNotifications(itemList: ItemList){
-    let url = environment.API_URL + '/dbNotifications';
+    let url = environment.API_URL + '/notifications';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    return this.client.get(url, options);
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user')
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(json);
+        return;
+      },
+      error: error => {
+        console.log(error);
+        itemList.setTitle(strings.CONTENT_ERROR);
+        return;
+      }
+    });
   }
 
   login(email_username: string,  password: string){
