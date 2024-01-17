@@ -65,7 +65,7 @@ public class UserDaoPostgres implements UserDao {
                 user.setIs_admin(rs.getBoolean("admin"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findById"+e);
         }
         return user;
     }
@@ -90,7 +90,7 @@ public class UserDaoPostgres implements UserDao {
                 user.setIs_admin(rs.getBoolean("admin"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findByEmail"+e);
         }
         return user;
     }
