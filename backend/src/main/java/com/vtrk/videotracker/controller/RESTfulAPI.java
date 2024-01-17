@@ -134,11 +134,10 @@ public class RESTfulAPI {
         String username = json.getString("username");
         String email = json.getString("email");
         String password = json.getString("password");
-
         User user = new User(0, email, username, password, false);
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
         userDaoPostgres.add(user);
-        User userAdded = userDaoPostgres.findByEmailOrUsername(email, password);
+        User userAdded = userDaoPostgres.findByEmail(email, password);
 
         UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
         userListDaoPostgres.add(userAdded.getId());
@@ -170,7 +169,7 @@ public class RESTfulAPI {
         String password = json.getString("password");
 
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        User user = userDaoPostgres.findByEmailOrUsername(email_username, password);
+        User user = userDaoPostgres.findByEmail(email_username, password);
         if(user.getId() == 0)
             return "0";
         return Integer.toString(user.getId());

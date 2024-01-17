@@ -72,7 +72,7 @@ class VideoTrackerApplicationTests {
         for (User user : prova) {
             System.out.println(user.getUsername());
         }
-        User a = userDaoPostgres.findByEmailOrUsername("Hokage","hinata");
+        User a = userDaoPostgres.findByEmail("Hokage","hinata");
         if (a.getId()!= 0){
             System.out.println("found");
         }else{
@@ -165,7 +165,7 @@ class VideoTrackerApplicationTests {
         User user = new User(0, "", "test", "test", false);
 
         userDaoPostgres.add(user);
-        User user2 = userDaoPostgres.findByEmailOrUsername("test", "test");
+        User user2 = userDaoPostgres.findByEmail("test", "test");
         System.out.println(user2.getId());
 
         //Insert/Update/Delete (Nelle insert tutti gli id devono essere a zero, per chi ha un int, perchè viene fatto in automatico dal db)
@@ -174,10 +174,12 @@ class VideoTrackerApplicationTests {
 
         UserDaoPostgres userDao = new UserDaoPostgres(DBManager.getInstance().getConnection());
 
+        User u = new User(1, "naruto@konoha.com", "Hokage", "hinata", true);
         User u1 = new User(2, "email1", "username1", "password1", false);
         User u2 = new User(0, "email2", "username2", "password2", true);
         User u3 = new User(3, "email2", "username2", "passwordChanged", false);
 
+        userDao.add(u);
         userDao.add(u1);
         userDao.add(u2);
         /*
@@ -192,10 +194,10 @@ class VideoTrackerApplicationTests {
         //Content
         ContentDaoPostgres content = new ContentDaoPostgres(DBManager.getInstance().getConnection());
 
-        Content c1 = new Content("001anime", "Boruto", 24,293, "anime.com");
-        Content c2 = new Content("002anime", "Naruto", 24,220, "anime.com");
-        Content c3 = new Content("003anime", "Naruto Shippuden", 24,500, "anime.com");
-        Content c4 = new Content("004anime", "Made in abyss", 24,48, "anime.com");
+        Content c1 = new Content("001_anime", "Boruto", 24,293, "anime.com");
+        Content c2 = new Content("002_anime", "Naruto", 24,220, "anime.com");
+        Content c3 = new Content("003_anime", "Naruto Shippuden", 24,500, "anime.com");
+        Content c4 = new Content("004_anime", "Made in abyss", 24,48, "anime.com");
 
         content.add(c1);
         content.add(c2);

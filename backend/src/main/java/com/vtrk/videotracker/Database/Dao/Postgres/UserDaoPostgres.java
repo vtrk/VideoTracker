@@ -77,15 +77,15 @@ public class UserDaoPostgres implements UserDao {
         Check id to see if the user is found.
     */
     @Override
-    public User findByEmailOrUsername(String email_username, String password) {
-        User user = new User(0, email_username,email_username, password,false);
+    public User findByEmail(String email, String password) {
+        User user = new User(0, email,"", password,false);
         try {
-            String query = "SELECT * FROM user_vt WHERE (email = '"+email_username+"' or username = '"+email_username+"') and password = '"+password+"';";
+            String query = "SELECT * FROM user_vt WHERE email = '"+email+"' and password = '"+password+"';";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
+                System.out.println(rs.getInt("id"));
                 user.setId(rs.getInt("id"));
-                user.setEmail(rs.getString("email"));
                 user.setUsername(rs.getString("username"));
                 user.setIs_admin(rs.getBoolean("admin"));
             }
@@ -102,7 +102,7 @@ public class UserDaoPostgres implements UserDao {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in add"+e);
+            System.out.println("Error in add "+e);
         }
     }
 
