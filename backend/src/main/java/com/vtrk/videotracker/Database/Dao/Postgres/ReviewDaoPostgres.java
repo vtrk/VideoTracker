@@ -93,6 +93,16 @@ public class ReviewDaoPostgres implements ReviewDao {
         }
     }
 
+    public void removeAllReviewsOfAUser(int id_user) {
+        try{
+            String query = "DELETE FROM public.review WHERE id_user= "+id_user+" ;";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
+    }
+
     @Override
     public boolean exists(int id_user, String id_content) {
         try {

@@ -56,6 +56,17 @@ public class ReceiveDaoPostgres implements ReceiveDao {
     }
 
     @Override
+    public void removeAllForAUser(int id_user) {
+        try{
+            String query = "DELETE FROM public.receive WHERE id_user="+id_user+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in remove "+e);
+        }
+    }
+
+    @Override
     public boolean exists(int id_user, int id_notification) {
         try{
             String query = "SELECT * FROM public.receive WHERE id_user="+id_user+" AND id_notification="+id_notification+";";

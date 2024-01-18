@@ -8,5 +8,6 @@ public interface ReceiveDao {
     List<Notification> findByIdUser(int id_user);
     void add(int id_user, int id_notification);
     void remove(int id_user, int id_notification);
+    void removeAllForAUser(int id_user);
     boolean exists(int id_user, int id_notification);
 }

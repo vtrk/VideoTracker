@@ -62,4 +62,15 @@ public class UserListDaoPostgres implements UserListDao {
             //System.out.println("Error in add "+e);
         }
     }
+
+    @Override
+    public void remove(int id_user) {
+        try{
+            String query = "DELETE FROM public.list WHERE id_user="+id_user+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in add "+e);
+        }
+    }
 }

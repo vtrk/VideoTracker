@@ -10,6 +10,6 @@ public interface UserDao {
     void add(User user);
     void update(User user);
     void updateFromSettings(int id, String credential, int choice);
-    void remove(User user);
+    void remove(int id);
     boolean emailInUse(String email);
 }

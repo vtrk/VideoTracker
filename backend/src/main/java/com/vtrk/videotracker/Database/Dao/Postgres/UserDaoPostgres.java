@@ -140,9 +140,9 @@ public class UserDaoPostgres implements UserDao {
     }
 
     @Override
-    public void remove(User user) {
+    public void remove(int id) {
         try{
-            String query = "DELETE FROM public.user_vt WHERE id="+user.getId()+";";
+            String query = "DELETE FROM public.user_vt WHERE id="+id+";";
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
