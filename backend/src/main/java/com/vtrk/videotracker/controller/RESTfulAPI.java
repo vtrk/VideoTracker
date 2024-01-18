@@ -358,6 +358,10 @@ public class RESTfulAPI {
         UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
         UserList list = userListDaoPostgres.findByIdUser(id_user);
         ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        if(containsDaoPostgres.exists(list.getId(), id_content)){
+            containsDaoPostgres.update(list.getId(), id_content, state);
+            return "1";
+        }
         containsDaoPostgres.add(list.getId(), id_content, state);
         if(containsDaoPostgres.exists(list.getId(), id_content))
             return "1";

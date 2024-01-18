@@ -6,6 +6,7 @@ import { TMDBContent } from '../utils/content';
 import { CommonModule, Location } from '@angular/common';
 import {faEye, faSquareCaretRight, faSquareCheck, faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
+import {AuthenticationService} from "../authentication.service";
 
 @Component({
   selector: 'app-tmdb-content',
@@ -21,7 +22,7 @@ export class TmdbContentComponent {
   protected readonly faSquareCheck = faSquareCheck;
   protected readonly faSquarePlus = faSquarePlus;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private authServ: AuthenticationService) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
@@ -46,5 +47,7 @@ export class TmdbContentComponent {
   addStopped(){
     this.api.addToList(this.content.id, 'on-hold', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
   }
+
+  show() {return this.authServ.userIsAuth;}
 
 }

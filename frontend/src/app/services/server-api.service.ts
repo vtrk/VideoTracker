@@ -433,8 +433,6 @@ export class ServerApiService {
     return '0';
   }
 
-  //to-do
-
   getInfoProfile(user: User): Array<string>{
     let url = environment.API_URL + '/profile';
     let options = {
@@ -491,6 +489,32 @@ export class ServerApiService {
       }
     });
     //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+  }
+
+  isContained(id_content : string): boolean{
+    let url = environment.API_URL + '/isContained';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return true;
+      },
+      error: error => {
+        console.log(error);
+        return false;
+      }
+    });
+    return false;
   }
 
 }

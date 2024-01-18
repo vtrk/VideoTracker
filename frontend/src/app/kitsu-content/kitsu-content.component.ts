@@ -7,6 +7,7 @@ import { CommonModule, Location } from '@angular/common';
 import {faSquarePlus,faSquareCheck, faSquareCaretRight, faEye} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CookieService} from "ngx-cookie-service";
+import {AuthenticationService} from "../authentication.service";
 
 @Component({
   selector: 'app-kitsu-content',
@@ -22,7 +23,7 @@ export class KitsuContentComponent {
   protected readonly faSquareCaretRight = faSquareCaretRight;
   protected readonly faEye = faEye;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService,private authServ: AuthenticationService) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
@@ -47,5 +48,7 @@ export class KitsuContentComponent {
   addStopped(){
     this.api.addToList(this.content.id, 'dropped', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
+
+  show() {return this.authServ.userIsAuth;}
 
 }
