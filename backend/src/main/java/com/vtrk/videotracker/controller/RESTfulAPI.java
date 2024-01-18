@@ -545,4 +545,48 @@ public class RESTfulAPI {
         return response.put("response", "0").toString();
     }
 
+    /**
+     * Remove review for specified content
+     * @params data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *      "id_user": "id_user",
+     *      "id_content": "id_content"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if successful</li>
+     *     <li>"1" if it fails</li>
+     * </ul>
+     * {
+     *      "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/removeReview",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String removeReview(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        String id_content = json.getString("id_content");
+        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+
+        JSONObject response = new JSONObject();
+        if(!reviewDaoPostgres.exists(id_user, id_content))
+            return response.put("response", "1").toString();
+
+        reviewDaoPostgres.remove(new Review(0, 0, "", id_user, id_content));
+
+        if(reviewDaoPostgres.exists(id_user, id_content))
+            return response.put("response", "1").toString();
+
+        return response.put("response", "0").toString();
+    }
+
 }
