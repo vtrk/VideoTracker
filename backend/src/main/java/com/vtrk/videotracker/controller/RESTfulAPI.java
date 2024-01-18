@@ -447,6 +447,47 @@ public class RESTfulAPI {
     }
 
     /**
+     * Removes notification for a user
+     * @param data JSON user data
+     * @returns JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *    "id_user": "id",
+     *    "id_notification": "id"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if successful</li>
+     *     <li>"1" if it fails</li>
+     * </ul>
+     * {
+     *     "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/removeNotification",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String removeNotification(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        int id_notification = json.getInt("id_notification");
+        ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
+        JSONObject response = new JSONObject();
+        if(!receiveDaoPostgres.exists(id_user, id_notification))
+            return response.put("response", "1").toString();
+        receiveDaoPostgres.remove(id_user, id_notification);
+        if(receiveDaoPostgres.exists(id_user, id_notification))
+            return response.put("response", "1").toString();
+        return response.put("response", "0").toString();
+    }
+
+
+    /**
      * Get reviews for specified content
      * @params data JSON user data
      * @return JSON API response

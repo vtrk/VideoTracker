@@ -52,4 +52,18 @@ public class ReceiveDaoPostgres implements ReceiveDao {
             //System.out.println("Error in remove "+e);
         }
     }
+
+    @Override
+    public boolean exists(int id_user, int id_notification) {
+        try{
+            String query = "SELECT * FROM public.receive WHERE id_user="+id_user+" AND id_notification="+id_notification+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        }catch(SQLException e){
+            //System.out.println("Error in exists "+e);
+        }
+        return true;
+    }
 }
