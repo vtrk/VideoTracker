@@ -485,7 +485,7 @@ export class ServerApiService {
     });
   }
 
-  removeFromList(id_content : string, type: string){
+  removeFromList(id_user : string, id_content: string): Observable<String>{
     let url = environment.API_URL + '/removeFromList';
     let options = {
       headers: {
@@ -494,21 +494,10 @@ export class ServerApiService {
       }
     };
     let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content + '_' + type,
+      id_user: id_user,
+      id_content: id_content
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
-    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+    return this.client.post<String>(url, JSONBody, options);
   }
 
   getReview(id_content : string, type: string){

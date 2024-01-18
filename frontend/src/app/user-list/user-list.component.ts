@@ -22,14 +22,18 @@ import { Router } from '@angular/router';
   styleUrl: './user-list.component.css'
 })
 export class UserListComponent implements OnInit{
-  userList: ItemUserList = new ItemUserList();
+  userList: ItemUserList;
   faTrashCan = faTrashCan;
+
+  delete_error: boolean = false;
+  delete_error_str: string = "Error while deleting the item.";
 
 
   //user: User;
   constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService, private router: Router) {}
 
   ngOnInit(): void{
+    this.userList = new ItemUserList();
     // Get the list of items.
     this.api.getDbList(this.userList, this.cookies.get('id_user'));
   }
@@ -54,20 +58,27 @@ export class UserListComponent implements OnInit{
   //protected readonly User = User;
 
   remove(event: any){
-    var target = event.target;
-    var type = target.attributes.title.nodeValue;
-    var id = target.attributes.id.nodeValue;
-    this.api.removeFromList(id,type);
-    switch(type){
-      case 'movie':
-      case 'tv':
-        this.router.navigate(['/tmdb', type, id]);
-        break;
-      case 'anime':
-        this.router.navigate(['/kitsu', type, id]);
-        break;
-      default:
-        break;
-    }
+    this.delete_error = false;
+
+    var id = event.target.attributes.fill.ownerElement.parentNode.parentNode.parentNode.attributes.title.nodeValue;
+
+    this.api.removeFromList(this.cookies.get('id_user'), id).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        switch(json.response){
+          case "0":
+            this.ngOnInit();
+            break;
+          case "1":
+          default:
+            this.delete_error = true;
+            break;
+        }
+      },
+      error: error => {
+        console.error(error);
+        this.delete_error = true;
+      }
+    });
   }
 }
