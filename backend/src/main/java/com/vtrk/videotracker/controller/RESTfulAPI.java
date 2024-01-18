@@ -114,7 +114,7 @@ public class RESTfulAPI {
      * @param request request
      * @return
      *
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *   "username": "username",
      *   "email": "email",
@@ -168,7 +168,7 @@ public class RESTfulAPI {
      * @param request request
      * @return
      *
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *   "email_username": "email_username",
      *   "password": "password"
@@ -205,7 +205,7 @@ public class RESTfulAPI {
      * @param request request
      * @return
      *
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *   "id_user": "id",
      *   "credential": "credential",
@@ -236,7 +236,7 @@ public class RESTfulAPI {
      * @param request request
      * @return JSON API response
      * <br>
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *  "id_user": "id"
      * }
@@ -295,7 +295,7 @@ public class RESTfulAPI {
      * @param data JSON user data
      * @return JSON API response
      * <br>
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *      "id_user": "id"
      * }
@@ -349,7 +349,7 @@ public class RESTfulAPI {
      * @param data JSON user data
      * @return JSON API response
      * <br>
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *     "id_user": "id",
      *     "id_content": "id",
@@ -403,7 +403,7 @@ public class RESTfulAPI {
      * @param data JSON user data
      * @return JSON API response
      * <br>
-     * A valid JSON user data looks like this:<br>
+     * A valid JSON request looks like this:<br>
      * {
      *     "id_user": "id",
      * }
@@ -440,6 +440,56 @@ public class RESTfulAPI {
             response.put(id, notificationJSON);
         }
         return response.toString(); 
+    }
+
+    /**
+     * Get reviews for specified content
+     * @params data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *    "id_content": "id",
+     * }
+     * <br>
+     * Response: a JSON of reviews<br>
+     * {
+     *    "reviews": [
+     *    ...
+     *    {
+     *      "id": "id",
+     *      "vote": "vote",
+     *      "user_comment": "user_comment",
+     *      "id_user": "id_user",
+     *      "id_content": "id_content"
+     *    }
+     *    ...
+     *    ]
+     */
+    @RequestMapping(
+            value = "/reviews",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String reviews(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        String id_content = json.getString("id_content");
+        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+        List<Review> reviews = reviewDaoPostgres.findByIdContent(id_content);
+        JSONObject response = new JSONObject();
+        JSONArray responseArray = new JSONArray();
+        for(Review review : reviews){
+            JSONObject reviewJSON = new JSONObject();
+            reviewJSON.put("id", review.getId());
+            reviewJSON.put("vote", review.getVote());
+            reviewJSON.put("user_comment", review.getUserComment());
+            reviewJSON.put("id_user", review.getIdUser());
+            reviewJSON.put("id_content", review.getIdContent());
+            responseArray.put(reviewJSON);
+        }
+        response.put("reviews", responseArray);
+        return response.toString();
     }
 
 }
