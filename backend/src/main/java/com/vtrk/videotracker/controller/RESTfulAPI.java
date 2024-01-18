@@ -399,6 +399,54 @@ public class RESTfulAPI {
     }
 
     /**
+     * Remove content from user list
+     * @param data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *     "id_user": "id",
+     *     "id_content": "id"
+     * }
+     * <br>
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if successful</li>
+     *     <li>"1" if it fails</li>
+     * </ul>
+     * {
+     *     "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/removeFromList",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String removeFromList(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        String id_content = json.getString("id_content");
+
+        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        UserList list = userListDaoPostgres.findByIdUser(id_user);
+        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+
+        JSONObject response = new JSONObject();
+        if(!containsDaoPostgres.exists(list.getId(), id_content))
+            return response.put("response", "1").toString();
+
+        containsDaoPostgres.remove(list.getId(), id_content);
+
+        if(containsDaoPostgres.exists(list.getId(), id_content))
+            return response.put("response", "1").toString();
+
+        return response.put("response", "0").toString();
+    }
+
+    /**
      * Get Notifications for a user
      * @param data JSON user data
      * @return JSON API response
