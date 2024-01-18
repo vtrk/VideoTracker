@@ -1,35 +1,56 @@
-<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
-    <section>
-      <div class="container mt-4 pt-5">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <img [src]="content.poster" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title">{{content.title}}</h5>
-                <p class="card-text">{{content.ageRating}}</p>
-                <p class="card-text"><small class="text-muted">{{content.startDate}}</small></p>
-                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">{{content.endDate}}</small></p>
-                <button [hidden]="show()"  class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="completed" (click)="addCompleted()"><fa-icon [icon]="faSquareCheck"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="stopped" (click)="addStopped()"><fa-icon [icon]="faSquareCaretRight"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
-              </div>
-            </div>
+<<body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
+<section>
+  <div class="container mt-4 pt-5">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <img [src]="content.poster" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{content.title}}</h5>
+            <p class="card-text">{{content.ageRating}}</p>
+            <p class="card-text"><small class="text-muted">{{content.startDate}}</small></p>
+            <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">{{content.endDate}}</small></p>
+            <button [hidden]="show()"  class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
+            <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="completed" (click)="addCompleted()"><fa-icon [icon]="faSquareCheck"></fa-icon></button>
+            <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="stopped" (click)="addStopped()"><fa-icon [icon]="faSquareCaretRight"></fa-icon></button>
+            <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
           </div>
-          <div class="col-md-8">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">{{content.title}}</h5>
-                <p class="card-text">{{content.synopsis}}</p>
-                <p [innerHTML]="'Episodes: ' + content.episodeCount" *ngIf="content.episodeCount" [hidden]="content.showType=='movie'"></p>
-                <p [innerHTML]="'Episode Length: ' + content.episodeLength"></p>
-                <p [innerHTML]="'Show Type: ' + content.showType"></p>
-                <p [innerHTML]="'Status: ' + content.status"></p>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{content.title}}</h5>
+            <p class="card-text">{{content.synopsis}}</p>
+            <p [innerHTML]="'Episodes: ' + content.episodeCount" *ngIf="content.episodeCount" [hidden]="content.showType=='movie'"></p>
+            <p [innerHTML]="'Episode Length: ' + content.episodeLength"></p>
+            <p [innerHTML]="'Show Type: ' + content.showType"></p>
+            <p [innerHTML]="'Status: ' + content.status"></p>
+          </div>
+        </div>
+        <div class="col-md-8" id="reviewcard" [hidden]="show()">
+          <div class="card">
+            <div class="card-body">
+              <div>
+                <p id="reviewHead">Write review</p>
+                <select class="form-text" id="rating">
+                  <option value="0">0/5</option>
+                  <option value="1">1/5</option>
+                  <option value="2">2/5</option>
+                  <option value="3">3/5</option>
+                  <option value="4">4/5</option>
+                  <option value="5">5/5</option>
+                </select>
+                <form>
+                  <textarea id="textarea" name="reviewText" cols="70" placeholder="Leave your review here:"></textarea>
+                </form>
+                <button class="btn btn-primary" type="submit" id="submit">Submit</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 </body>
