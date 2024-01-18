@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication-service/authentication.service";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {ServerApiService} from "../services/server-api.service";
+import {ServerApiService} from "../services/server-api-service/server-api.service";
 
 @Component({
   selector: 'app-login',

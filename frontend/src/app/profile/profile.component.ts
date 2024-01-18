@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {NgClass} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
-import {ServerApiService} from "../services/server-api.service";
+import {ServerApiService} from "../services/server-api-service/server-api.service";
 import {HttpClient} from "@angular/common/http";
 import { UserData } from '../utils/user-data';
 

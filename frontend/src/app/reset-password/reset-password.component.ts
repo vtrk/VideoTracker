@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication-service/authentication.service";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
 

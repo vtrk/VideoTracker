@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Content, TMDBContent } from '../utils/content';
 import { ThemeService } from '../theme.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ServerApiService } from '../services/server-api.service';
+import { ServerApiService } from '../services/server-api-service/server-api.service';
 import { TmdbContentComponent } from "../tmdb-content/tmdb-content.component";
 import { strings } from '../strings';
 

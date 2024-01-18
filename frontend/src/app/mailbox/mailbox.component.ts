@@ -4,7 +4,7 @@ import {ThemeService} from "../theme.service";
 import {ItemListComponent} from "../item-list/item-list.component";
 import { ItemList, } from '../utils/item';
 import { CommonModule } from '@angular/common';
-import {ServerApiService} from "../services/server-api.service";
+import {ServerApiService} from "../services/server-api-service/server-api.service";
 @Component({
   selector: 'app-mailbox',
   standalone: true,

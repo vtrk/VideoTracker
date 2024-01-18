@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { SearchBody, ServerAPIResponse } from '../utils/data-structures';
-import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../utils/item';
-import { strings } from '../strings';
-import { KitsuContent, TMDBContent } from '../utils/content';
+import { environment } from '../../../environments/environment';
+import { SearchBody, ServerAPIResponse } from '../../utils/data-structures';
+import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../../utils/item';
+import { strings } from '../../strings';
+import { KitsuContent, TMDBContent } from '../../utils/content';
 import { CookieService } from 'ngx-cookie-service';
-import { ItemUserList } from '../utils/item-user-list';
-import { UserData } from '../utils/user-data';
+import { ItemUserList } from '../../utils/item-user-list';
+import { UserData } from '../../utils/user-data';
 
 
 /**

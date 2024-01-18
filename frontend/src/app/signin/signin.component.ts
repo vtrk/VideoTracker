@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication-service/authentication.service";
 import {faGear} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Router, RouterLink} from "@angular/router";

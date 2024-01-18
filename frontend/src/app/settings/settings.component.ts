@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../services/authentication-service/authentication.service";
 import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
 import {CookieService} from "ngx-cookie-service";
-import {ServerApiService} from "../services/server-api.service";
+import {ServerApiService} from "../services/server-api-service/server-api.service";
 
 @Component({
   selector: 'app-settings',
