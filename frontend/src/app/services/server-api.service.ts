@@ -7,6 +7,7 @@ import { strings } from '../strings';
 import { KitsuContent, TMDBContent } from '../utils/content';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../utils/user';
+import { ItemUserList } from '../utils/item-user-list';
 
 
 /**
@@ -250,7 +251,7 @@ export class ServerApiService {
     });
   }
 
-  getDbList(itemList: ItemList, id_user: string){
+  getDbList(userList: ItemUserList, id_user: string){
     let url = environment.API_URL + '/list';
     let options = {
       headers: {
@@ -265,11 +266,20 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         console.log(json);
+        json.content.forEach((element: any) => {
+          userList.addToList({
+            id: element.id,
+            poster: element.poster,
+            title: element.title,
+            status: element.state,
+            type: element.type
+          });
+        });
         return;
       },
       error: error => {
         console.log(error);
-        itemList.setTitle(strings.CONTENT_ERROR);
+        userList.setErrorMessage(strings.LIST_ERROR);
         return;
       }
     });
