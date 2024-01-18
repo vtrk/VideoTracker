@@ -410,13 +410,15 @@ public class RESTfulAPI {
      * <br>
      * Response: a JSON of notifications<br>
      * {
+     *     "notifications": [
      *     ...
-     *     "notification": {
+     *     {
      *          "id": "id",
      *          "title": "title",
      *          "description": "description",
      *      }
      *      ...
+     *      ]
      * }
      */
     @RequestMapping(
@@ -431,14 +433,16 @@ public class RESTfulAPI {
         ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
         List<Notification> notifications = receiveDaoPostgres.findByIdUser(id_user);
         JSONObject response = new JSONObject();
+        JSONArray responseArray = new JSONArray();
         for(Notification notification : notifications){
             JSONObject notificationJSON = new JSONObject();
             String id = Integer.toString(notification.getId());
             notificationJSON.put("id", id);
             notificationJSON.put("title", notification.getTitle());
             notificationJSON.put("description", notification.getDescription());
-            response.put(id, notificationJSON);
+            responseArray.put(notificationJSON);
         }
+        response.put("notifications", responseArray);
         return response.toString(); 
     }
 
