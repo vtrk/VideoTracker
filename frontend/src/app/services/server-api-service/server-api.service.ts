@@ -570,4 +570,25 @@ export class ServerApiService {
     });
   }
 
+  deleteAccount(){
+    let url = environment.API_URL + '/deleteAccount';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    this.client.post(url, {id_user: this.cookieService.get('id_user')}, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+  }
+
 }

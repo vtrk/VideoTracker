@@ -5,6 +5,7 @@ import {ThemeService} from "../theme.service";
 import {NgClass} from "@angular/common";
 import {CookieService} from "ngx-cookie-service";
 import {ServerApiService} from "../services/server-api-service/server-api.service";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-settings',
@@ -25,7 +26,7 @@ export class SettingsComponent {
   confirm_password: string = '';
   new_username: string = '';
 
-  constructor(private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService) {}
+  constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService) {}
 
   change_password(){
     if(this.new_password == this.confirm_password){
@@ -45,6 +46,12 @@ export class SettingsComponent {
 
   change_username(){
     this.api.changeUsername(this.cookieService.get('id_user'),this.new_username);
+  }
+
+  delete_account(){
+    this.api.deleteAccount();
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 
   show_message_password(){
