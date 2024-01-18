@@ -18,4 +18,7 @@ export const strings = {
     movie_year: "primary_release_year",
     tv_year: "first_air_date_year",
     TMDB_poster_url: "https://image.tmdb.org/t/p/w500",
+    email_in_use: "Email already in use.",
+    registration_error: "Error registering user.",
+    password_mismatch: "Passwords do not match.",
 };

@@ -120,6 +120,17 @@ public class RESTfulAPI {
      *   "email": "email",
      *   "password": "password"
      * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *   <li>"email_in_use" if email is already in use</li>
+     *   <li>"registration_failed" if the registration fails</li>
+     *   <li>the user id of the newly created account if the registration is successful</li>
+     * </ul>
+     * JSON format:<br>
+     * {
+     *  "response": "response"
+     * }
      */
     @RequestMapping(
             value = "/register",
@@ -134,13 +145,21 @@ public class RESTfulAPI {
         String password = json.getString("password");
         User user = new User(0, email, username, password, false);
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+
+        JSONObject response = new JSONObject();
+
+        if(userDaoPostgres.emailInUse(email))
+            return response.put("response", "email_in_use").toString();
+
         userDaoPostgres.add(user);
         User userAdded = userDaoPostgres.findByEmail(email, password);
+        if(userAdded == null)
+            return response.put("response", "registration_failed").toString();
 
         UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
         userListDaoPostgres.add(userAdded.getId());
 
-        return Integer.toString(userAdded.getId());
+        return response.put("response", Integer.toString(userAdded.getId())).toString();
     }
 
     /**

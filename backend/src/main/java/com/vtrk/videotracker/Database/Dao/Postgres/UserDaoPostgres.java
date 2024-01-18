@@ -149,4 +149,23 @@ public class UserDaoPostgres implements UserDao {
             //System.out.println("Error in remove "+e);
         }
     }
+
+    /**
+     * Check if given email is already in use
+     * @param email email to check
+     * @return true if email is already in use, false otherwise
+     */
+    @Override
+    public boolean emailInUse(String email) {
+        try {
+            String query = "SELECT * FROM user_vt WHERE email = '"+email+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if (!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in emailInUse"+e);
+        }
+        return true;
+    }
 }

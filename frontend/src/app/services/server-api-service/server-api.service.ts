@@ -8,6 +8,7 @@ import { KitsuContent, TMDBContent } from '../../utils/content';
 import { CookieService } from 'ngx-cookie-service';
 import { ItemUserList } from '../../utils/item-user-list';
 import { UserData } from '../../utils/user-data';
+import { Observable } from 'rxjs';
 
 
 /**
@@ -335,7 +336,14 @@ export class ServerApiService {
     });
   }
 
-  signIn( email: string, username : string, password: string): string {
+  /**
+   * Calls the server endpoint to register a new user.
+   * @param email 
+   * @param username 
+   * @param password 
+   * @returns observable of the response from the server
+   */
+  signIn( email: string, username : string, password: string): Observable<string> {
     let url = environment.API_URL + '/register';
     let options = {
       headers: {
@@ -348,18 +356,7 @@ export class ServerApiService {
       username: username,
       password: password
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
-    return '0';
+    return this.client.post<string>(url, JSONBody, options);
   }
 
   changeEmail(id_user : string, email: string):string{

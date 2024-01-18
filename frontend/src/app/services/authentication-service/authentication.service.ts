@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {ServerApiService} from "../server-api-service/server-api.service";
+import { strings } from '../../strings';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,24 +25,8 @@ export class AuthenticationService {
     return false;
   }
 
-  signIn(email: string,username: string, password: string, confirmPassword: string):boolean{
-    //Check if the email is already in use
-    /*
-    this.check = this.api.login(email, password);
-    if(this.check != null || this.check != "0") {
-      console.log('Sign in failed');
-      return false;
-    }*/
-    //check if the password and the confirm password are the same
-    if(password != confirmPassword){
-      console.log('Sign in failed');
-      return false;
-    }
-    console.log('Sign in success');
-    this.userIsAuthenticated = true;
-    this.check = this.api.signIn(email,username,password);
-    this.cookieService.set('id_user', this.check);
-    return true;
+  signIn(email: string, username: string, password: string): Observable<String>{
+    return this.api.signIn(email,username,password);
   }
 
   logout(){
