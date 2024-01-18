@@ -45,9 +45,7 @@ public class DBManager {
         return new UserListDaoPostgres(getConnection());
     }
 
-    public ReviewDao getReviewDao(){
-        return new ReviewDaoPostgres(getConnection());
-    }
+    public ReviewDao getReviewDao(){return new ReviewDaoPostgres(getConnection());}
 
     public NotificationDao getNotificationDao(){return new NotificationDaoPostgres(getConnection());}
     public ReceiveDao getReceiveDao(){return new ReceiveDaoPostgres(getConnection());}

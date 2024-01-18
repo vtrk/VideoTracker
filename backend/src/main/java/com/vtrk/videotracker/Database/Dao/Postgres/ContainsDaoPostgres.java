@@ -1,5 +1,6 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
+import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.ContainsDao;
 import com.vtrk.videotracker.Database.Model.Contains;
 import com.vtrk.videotracker.utils.Properties;
@@ -23,7 +24,7 @@ public class ContainsDaoPostgres implements ContainsDao {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
-                Contains content = new Contains(id_list,new ContentDaoPostgres(connection).findById(rs.getString("id_content")),rs.getString("state"));
+                Contains content = new Contains(id_list, DBManager.getInstance().getContentDao().findById(rs.getString("id_content")),rs.getString("state"));
                 contents.add(content);
             }
         } catch (SQLException e) {

@@ -1,7 +1,7 @@
 package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
-import com.vtrk.videotracker.Database.Dao.Postgres.*;
+import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import com.vtrk.videotracker.utils.Properties;
@@ -143,21 +143,21 @@ public class RESTfulAPI {
         String username = json.getString("username");
         String email = json.getString("email");
         String password = json.getString("password");
-        User user = new User(0, email, username, password, false);
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        User u = new User(0, email, username, password, false);
+        UserDao user = DBManager.getInstance().getUserDao();
 
         JSONObject response = new JSONObject();
 
-        if(userDaoPostgres.emailInUse(email))
+        if(user.emailInUse(email))
             return response.put("response", "email_in_use").toString();
 
-        userDaoPostgres.add(user);
-        User userAdded = userDaoPostgres.findByEmail(email, password);
+        user.add(u);
+        User userAdded = user.findByEmail(email, password);
         if(userAdded == null)
             return response.put("response", "registration_failed").toString();
 
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        userListDaoPostgres.add(userAdded.getId());
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        userListDao.add(userAdded.getId());
 
         return response.put("response", Integer.toString(userAdded.getId())).toString();
     }
@@ -190,8 +190,8 @@ public class RESTfulAPI {
         String email_username = json.getString("email_username");
         String password = json.getString("password");
 
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        User user = userDaoPostgres.findByEmail(email_username, password);
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        User user = userDao.findByEmail(email_username, password);
         JSONObject response = new JSONObject();
         if(user.getId() == 0)
             return response.put("response", "0").toString();
@@ -225,8 +225,8 @@ public class RESTfulAPI {
         String credential = json.getString("credential");
         int choice = json.getInt("choice");
 
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        userDaoPostgres.updateFromSettings(id, credential, choice);
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        userDao.updateFromSettings(id, credential, choice);
         return "1";
     }
 
@@ -265,11 +265,11 @@ public class RESTfulAPI {
     public String list(@RequestBody String data, HttpServletRequest request) {
         JSONObject json = new JSONObject(data);
         long id_user = json.getLong("id_user");
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        UserList list = userListDaoPostgres.findByIdUser((int)id_user);
-        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        UserList list = userListDao.findByIdUser((int)id_user);
+        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
 
-        List<Contains> responseList = containsDaoPostgres.findContentInList(list.getId());
+        List<Contains> responseList = containsDao.findContentInList(list.getId());
         JSONObject response = new JSONObject();
         JSONArray responseArray = new JSONArray();
         for(Contains content : responseList){
@@ -321,16 +321,16 @@ public class RESTfulAPI {
     public String profile(@RequestBody String data) {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        User user = userDaoPostgres.findById(id_user);
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        UserList list = userListDaoPostgres.findByIdUser(id_user);
-        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
-        String completed = containsDaoPostgres.countByState(list.getId(), "completed");
-        String watching = containsDaoPostgres.countByState(list.getId(), "watching");
-        String on_hold = containsDaoPostgres.countByState(list.getId(), "on-hold");
-        String dropped = containsDaoPostgres.countByState(list.getId(), "dropped");
-        String planning = containsDaoPostgres.countByState(list.getId(), "planning");
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        User user = userDao.findById(id_user);
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        UserList list = userListDao.findByIdUser(id_user);
+        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
+        String completed = containsDao.countByState(list.getId(), "completed");
+        String watching = containsDao.countByState(list.getId(), "watching");
+        String on_hold = containsDao.countByState(list.getId(), "on-hold");
+        String dropped = containsDao.countByState(list.getId(), "dropped");
+        String planning = containsDao.countByState(list.getId(), "planning");
         JSONObject response = new JSONObject();
         response.put("id", user.getId());
         response.put("email", user.getEmail());
@@ -375,25 +375,25 @@ public class RESTfulAPI {
         String state = json.getString("status");
 
         // Add content to database if it doesn't exist
-        ContentDaoPostgres contentDaoPostgres = new ContentDaoPostgres(DBManager.getInstance().getConnection());
-        if(!contentDaoPostgres.exists(id_content)){
+        ContentDao contentDao = DBManager.getInstance().getContentDao();
+        if(!contentDao.exists(id_content)){
             String title = json.getString("title");
             int duration = json.getInt("duration");
             int n_episode = json.getInt("n_episode");
             String link = json.getString("link");
             Content content = new Content(id_content, title, duration, n_episode, link);
-            contentDaoPostgres.add(content);
+            contentDao.add(content);
         }
 
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        UserList list = userListDaoPostgres.findByIdUser(id_user);
-        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
-        if(containsDaoPostgres.exists(list.getId(), id_content)){
-            containsDaoPostgres.update(list.getId(), id_content, state);
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        UserList list = userListDao.findByIdUser(id_user);
+        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
+        if(containsDao.exists(list.getId(), id_content)){
+            containsDao.update(list.getId(), id_content, state);
             return "1";
         }
-        containsDaoPostgres.add(list.getId(), id_content, state);
-        if(containsDaoPostgres.exists(list.getId(), id_content))
+        containsDao.add(list.getId(), id_content, state);
+        if(containsDao.exists(list.getId(), id_content))
             return "1";
         return "0";
     }
@@ -430,17 +430,17 @@ public class RESTfulAPI {
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
 
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        UserList list = userListDaoPostgres.findByIdUser(id_user);
-        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        UserList list = userListDao.findByIdUser(id_user);
+        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
 
         JSONObject response = new JSONObject();
-        if(!containsDaoPostgres.exists(list.getId(), id_content))
+        if(!containsDao.exists(list.getId(), id_content))
             return response.put("response", "1").toString();
 
-        containsDaoPostgres.remove(list.getId(), id_content);
+        containsDao.remove(list.getId(), id_content);
 
-        if(containsDaoPostgres.exists(list.getId(), id_content))
+        if(containsDao.exists(list.getId(), id_content))
             return response.put("response", "1").toString();
 
         return response.put("response", "0").toString();
@@ -478,8 +478,8 @@ public class RESTfulAPI {
     public String notifications(@RequestBody String data) {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
-        ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
-        List<Notification> notifications = receiveDaoPostgres.findByIdUser(id_user);
+        ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
+        List<Notification> notifications = receiveDao.findByIdUser(id_user);
         JSONObject response = new JSONObject();
         JSONArray responseArray = new JSONArray();
         for(Notification notification : notifications){
@@ -524,12 +524,12 @@ public class RESTfulAPI {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
         int id_notification = json.getInt("id_notification");
-        ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
+        ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
         JSONObject response = new JSONObject();
-        if(!receiveDaoPostgres.exists(id_user, id_notification))
+        if(!receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
-        receiveDaoPostgres.remove(id_user, id_notification);
-        if(receiveDaoPostgres.exists(id_user, id_notification))
+        receiveDao.remove(id_user, id_notification);
+        if(receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
         return response.put("response", "0").toString();
     }
@@ -568,8 +568,8 @@ public class RESTfulAPI {
     public String reviews(@RequestBody String data) {
         JSONObject json = new JSONObject(data);
         String id_content = json.getString("id_content");
-        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
-        List<Review> reviews = reviewDaoPostgres.findByIdContent(id_content);
+        ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
+        List<Review> reviews = reviewDao.findByIdContent(id_content);
         JSONObject response = new JSONObject();
         JSONArray responseArray = new JSONArray();
         for(Review review : reviews){
@@ -620,15 +620,15 @@ public class RESTfulAPI {
         String user_comment = json.getString("user_comment");
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
-        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+        ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
 
         JSONObject response = new JSONObject();
-        if(reviewDaoPostgres.exists(id_user, id_content))
+        if(reviewDao.exists(id_user, id_content))
             return response.put("response", "2").toString();
 
-        reviewDaoPostgres.add(new Review(0, vote, user_comment, id_user, id_content));
+        reviewDao.add(new Review(0, vote, user_comment, id_user, id_content));
 
-        if(!reviewDaoPostgres.exists(id_user, id_content))
+        if(!reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
         return response.put("response", "0").toString();
@@ -664,15 +664,15 @@ public class RESTfulAPI {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
-        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+        ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
 
         JSONObject response = new JSONObject();
-        if(!reviewDaoPostgres.exists(id_user, id_content))
+        if(!reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
-        reviewDaoPostgres.remove(new Review(0, 0, "", id_user, id_content));
+        reviewDao.remove(new Review(0, 0, "", id_user, id_content));
 
-        if(reviewDaoPostgres.exists(id_user, id_content))
+        if(reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
         return response.put("response", "0").toString();

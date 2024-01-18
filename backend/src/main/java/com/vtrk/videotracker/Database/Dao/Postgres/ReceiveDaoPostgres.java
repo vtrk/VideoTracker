@@ -1,5 +1,6 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
+import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.ReceiveDao;
 import com.vtrk.videotracker.Database.Model.Notification;
 
@@ -22,7 +23,8 @@ public class ReceiveDaoPostgres implements ReceiveDao {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
-                Notification notification = new NotificationDaoPostgres(connection).findById(rs.getInt("id_notification"));
+
+                Notification notification = DBManager.getInstance().getNotificationDao().findById(rs.getInt("id_notification"));
                 receive.add(notification);
             }
         } catch (SQLException e) {
