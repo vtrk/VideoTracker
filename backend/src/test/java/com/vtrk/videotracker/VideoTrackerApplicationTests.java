@@ -145,9 +145,9 @@ class VideoTrackerApplicationTests {
         }
         System.out.println("Testing ContainsDaoPostgres");
         ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
-        List<Content> provaContains =containsDaoPostgres.findContentInList(1);
-        for (Content Cont: provaContains) {
-            System.out.println(Cont.getTitle());
+        List<Contains> provaContains =containsDaoPostgres.findContentInList(1);
+        for (Contains Cont: provaContains) {
+            System.out.println(Cont.getContent().getTitle());
         }
         System.out.println("Testing ReceiveDaoPostgres");
         ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());

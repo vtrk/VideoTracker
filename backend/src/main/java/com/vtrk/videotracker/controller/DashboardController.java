@@ -15,7 +15,7 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String showDashboard(@RequestParam(name = "users") List<User> user , Model model) {
         for (User u : user) {
-            System.out.println(u.getId());
+            //System.out.println(u.getId());
             model.addAttribute("users", Integer.toString(u.getId()));
         }
 

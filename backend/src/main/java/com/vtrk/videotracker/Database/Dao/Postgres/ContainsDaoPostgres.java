@@ -1,7 +1,7 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.ContainsDao;
-import com.vtrk.videotracker.Database.Model.Content;
+import com.vtrk.videotracker.Database.Model.Contains;
 import com.vtrk.videotracker.utils.Properties;
 
 import java.sql.Connection;
@@ -16,14 +16,14 @@ public class ContainsDaoPostgres implements ContainsDao {
     Connection connection = null;
     public ContainsDaoPostgres(Connection connection){ this.connection = connection; }
     @Override
-    public List<Content> findContentInList(int id_list) {
-        List<Content> contents = new ArrayList<Content>();
+    public List<Contains> findContentInList(int id_list) {
+        List<Contains> contents = new ArrayList<Contains>();
         try {
             String query = "SELECT * FROM contains WHERE id_list = '"+id_list+"';";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
-                Content content = new ContentDaoPostgres(connection).findById(rs.getString("id_content"));
+                Contains content = new Contains(id_list,new ContentDaoPostgres(connection).findById(rs.getString("id_content")),rs.getString("state"));
                 contents.add(content);
             }
         } catch (SQLException e) {

@@ -2,10 +2,7 @@ package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.Postgres.*;
-import com.vtrk.videotracker.Database.Model.Content;
-import com.vtrk.videotracker.Database.Model.Notification;
-import com.vtrk.videotracker.Database.Model.User;
-import com.vtrk.videotracker.Database.Model.UserList;
+import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import com.vtrk.videotracker.utils.Properties;
 import jakarta.servlet.http.HttpServletRequest;
@@ -244,21 +241,21 @@ public class RESTfulAPI {
         UserList list = userListDaoPostgres.findByIdUser((int)id_user);
         ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
 
-        List<Content> responseList = containsDaoPostgres.findContentInList(list.getId());
+        List<Contains> responseList = containsDaoPostgres.findContentInList(list.getId());
         JSONObject response = new JSONObject();
-        for(Content content : responseList){
+        for(Contains content : responseList){
             JSONObject contentJSON = new JSONObject();
-            String[] id = content.getId().split("_"); // Avoid returning content from other APIs
+            String[] id = content.getContent().getId().split("_"); // Avoid returning content from other APIs
             if((id[1].equals("movie") || id[1].equals("tv")) && !Properties.getInstance().getProperty("API").equals("TMDB"))
                 continue;
             else if (id[1].equals("anime") && !Properties.getInstance().getProperty("API").equals("Kitsu"))
                 continue;
             contentJSON.put("id", id[0]);
-            contentJSON.put("title", content.getTitle());
-            contentJSON.put("description", content.getDuration());
-            contentJSON.put("type", content.getLink());
-            contentJSON.put("poster", content.getN_episode());
-            response.put(content.getId(), contentJSON);
+            contentJSON.put("title", content.getContent().getTitle());
+            contentJSON.put("description", content.getContent().getDuration());
+            contentJSON.put("type", content.getContent().getLink());
+            contentJSON.put("poster", content.getContent().getN_episode());
+            response.put(content.getContent().getId(), contentJSON);
         }
         return response.toString();
     }
