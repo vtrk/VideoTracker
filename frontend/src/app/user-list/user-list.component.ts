@@ -28,8 +28,6 @@ export class UserListComponent implements OnInit{
   delete_error: boolean = false;
   delete_error_str: string = "Error while deleting the item.";
 
-
-  //user: User;
   constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService, private router: Router) {}
 
   ngOnInit(): void{
@@ -55,7 +53,6 @@ export class UserListComponent implements OnInit{
     }
   }
 
-  //protected readonly User = User;
 
   remove(event: any){
     this.delete_error = false;

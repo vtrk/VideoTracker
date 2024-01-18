@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ItemUserList } from '../../utils/item-user-list';
 import { UserData } from '../../utils/user-data';
 import { Observable } from 'rxjs';
+import { ItemMailList } from '../../utils/mail-list';
 
 
 /**
@@ -286,7 +287,7 @@ export class ServerApiService {
     });
   }
 
-  getDbNotifications(itemList: ItemList){
+  getNotifications(itemMailList: ItemMailList){
     let url = environment.API_URL + '/notifications';
     let options = {
       headers: {
@@ -300,15 +301,32 @@ export class ServerApiService {
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        console.log(json);
+        json.notifications.forEach((element: any) => {
+          itemMailList.add(element.id, element.description, element.title);
+        });
         return;
       },
       error: error => {
         console.log(error);
-        itemList.setTitle(strings.CONTENT_ERROR);
+        itemMailList.setErrorString(strings.NOTIFICATIONS_ERROR);
         return;
       }
     });
+  }
+
+  removeNotification(id_user: string, id_notification: string): Observable<String>{
+    let url = environment.API_URL + '/removeNotification';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: id_user,
+      id_notification: id_notification
+    };
+    return this.client.post<String>(url, JSONBody, options);
   }
 
   login(email_username: string,  password: string): Observable<string>{
