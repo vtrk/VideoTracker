@@ -52,4 +52,22 @@ export class UserListComponent implements OnInit{
   }
 
   //protected readonly User = User;
+
+  remove(event: any){
+    var target = event.target;
+    var type = target.attributes.title.nodeValue;
+    var id = target.attributes.id.nodeValue;
+    this.api.removeFromList(id,type);
+    switch(type){
+      case 'movie':
+      case 'tv':
+        this.router.navigate(['/tmdb', type, id]);
+        break;
+      case 'anime':
+        this.router.navigate(['/kitsu', type, id]);
+        break;
+      default:
+        break;
+    }
+  }
 }
