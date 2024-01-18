@@ -6,6 +6,7 @@ import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import com.vtrk.videotracker.utils.Properties;
 import jakarta.servlet.http.HttpServletRequest;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
@@ -217,8 +218,9 @@ public class RESTfulAPI {
      * <br>
      * Response (JSON of content):<br>
      * {
+     *      "content":[
      *      ...
-     *      "content": {
+     *      {
      *          "id_list": "id",
      *          "title": "title",
      *          "description": "description",
@@ -226,6 +228,7 @@ public class RESTfulAPI {
      *          "poster": "poster"
      *      }
      *      ...
+     *      ]
      * }
      */
     @RequestMapping(
@@ -243,6 +246,7 @@ public class RESTfulAPI {
 
         List<Contains> responseList = containsDaoPostgres.findContentInList(list.getId());
         JSONObject response = new JSONObject();
+        JSONArray responseArray = new JSONArray();
         for(Contains content : responseList){
             JSONObject contentJSON = new JSONObject();
             String[] id = content.getContent().getId().split("_"); // Avoid returning content from other APIs
@@ -252,11 +256,12 @@ public class RESTfulAPI {
                 continue;
             contentJSON.put("id", id[0]);
             contentJSON.put("title", content.getContent().getTitle());
-            contentJSON.put("description", content.getContent().getDuration());
-            contentJSON.put("type", content.getContent().getLink());
-            contentJSON.put("poster", content.getContent().getN_episode());
-            response.put(content.getContent().getId(), contentJSON);
+            contentJSON.put("type", id[1]);
+            contentJSON.put("poster", content.getContent().getLink());
+            contentJSON.put("state", content.getState());
+            responseArray.put(contentJSON);
         }
+        response.put("content", responseArray);
         return response.toString();
     }
 
