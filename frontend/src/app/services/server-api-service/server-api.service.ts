@@ -338,9 +338,9 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to register a new user.
-   * @param email 
-   * @param username 
-   * @param password 
+   * @param email
+   * @param username
+   * @param password
    * @returns observable of the response from the server
    */
   signIn( email: string, username : string, password: string): Observable<string> {
@@ -494,6 +494,58 @@ export class ServerApiService {
       }
     });
     //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
+  }
+
+  getReview(id_content : string, type: string){
+    let url = environment.API_URL + '/getReview';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content + '_' + type
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
+  }
+
+  addReview(id_content : string, type: string, vote: string, review: string){
+    let url = environment.API_URL + '/addReview';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content + '_' + type,
+      vote: vote,
+      review: review
+    };
+    this.client.post(url, JSONBody, options).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        console.log(data);
+        return data.toString();
+      },
+      error: error => {
+        console.log(error);
+        return error.toString();
+      }
+    });
   }
 
 }
