@@ -173,6 +173,11 @@ public class RESTfulAPI {
      *   "email_username": "email_username",
      *   "password": "password"
      * }
+     * <br>
+     * Response: "0" if login fails, the user id otherwise
+     * {
+     *     "response": "response"
+     * }
      */
     @RequestMapping(
             value = "/login",
@@ -187,9 +192,10 @@ public class RESTfulAPI {
 
         UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
         User user = userDaoPostgres.findByEmail(email_username, password);
+        JSONObject response = new JSONObject();
         if(user.getId() == 0)
-            return "0";
-        return Integer.toString(user.getId());
+            return response.put("response", "0").toString();
+        return response.put("response", Integer.toString(user.getId())).toString();
     }
 
 

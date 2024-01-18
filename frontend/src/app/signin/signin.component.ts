@@ -64,7 +64,6 @@ export class SigninComponent {
     this.authService.signIn(email, username, password).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        console.log(json);
         switch(json.response){
           case "email_in_use":
             this.email_in_use = true;

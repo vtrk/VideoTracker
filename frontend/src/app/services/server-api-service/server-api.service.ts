@@ -311,7 +311,7 @@ export class ServerApiService {
     });
   }
 
-  login(email_username: string,  password: string){
+  login(email_username: string,  password: string): Observable<string>{
     let url = environment.API_URL + '/login';
     let options = {
       headers: {
@@ -323,6 +323,7 @@ export class ServerApiService {
       email_username: email_username,
       password: password
     };
+    return this.client.post<string>(url, JSONBody, options);
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
         let id: string = data.toString();
@@ -493,7 +494,5 @@ export class ServerApiService {
         return error.toString();
       }
     });
-    //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
   }
-
 }

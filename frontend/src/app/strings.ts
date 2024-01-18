@@ -21,4 +21,6 @@ export const strings = {
     email_in_use: "Email already in use.",
     registration_error: "Error registering user.",
     password_mismatch: "Passwords do not match.",
+    login_error: "Error logging in.",
+    wrong_credentials: "Wrong email or password.",
 };

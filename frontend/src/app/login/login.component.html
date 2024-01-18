@@ -9,15 +9,24 @@
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
               </svg>
-              <p [hidden]="show_message()" >Wrong credentials</p>
-              <form (ngSubmit)="verify()" id="loginForm" method="post">
-                <input type="text" name="email" [(ngModel)]="email_username"  class="form-control my-3.py-2" placeholder="email/username">
-                <input type="password" name="password" [(ngModel)]="password" class="form-control my-3.py-2" placeholder="password">
-                <div class="text-center" id="bottom">
-                  <button class="btn btn-primary">Login</button>
-                  <a [routerLink]="['/resetpassword']" class="nav-link">Forgot your password?</a>
-                  <a [routerLink]="['/signin']" class="nav-link">Don't have an account?</a>
-                </div>
+              <form #logInForm="ngForm" (ngSubmit)="logIn(logInForm)" id="loginForm" method="post">
+                <h3 [hidden]="!wrong_credentials" [ngClass]="{'hidden': !wrong_credentials}" [innerHTML]="wrong_credentials_str" style="color: red;" ></h3>
+                <h3 [hidden]="!login_error" [ngClass]="{'hidden': !login_error}" [innerHTML]="login_error_str" style="color: red;" ></h3>
+                
+                <input type="email" name="email" ngModel #email="ngModel" required email  class="form-control my-3.py-2" placeholder="Email">
+                  <div class="error" *ngIf="email.touched">
+                    <p *ngIf="email.errors?.['required']" style="color: red;" >Field required</p>
+                    <p *ngIf="email.errors?.['email']" style="color: red;" >Not a valid Email</p>
+                  </div>
+                  <input type="password" name="password" ngModel #password="ngModel" required password  class="form-control my-3.py-2" placeholder="Password">
+                  <div class="error" *ngIf="password.touched">
+                    <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
+                  </div>
+                  <div class="text-center" id="bottom">
+                    <button class="btn btn-primary" [disabled]="logInForm.invalid">Login</button>
+                    <a [routerLink]="['/resetpassword']" class="nav-link">Forgot your password?</a>
+                    <a [routerLink]="['/signin']" class="nav-link">Don't have an account?</a>
+                  </div>
               </form>
             </div>
           </div>
