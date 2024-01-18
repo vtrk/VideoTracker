@@ -26,4 +26,5 @@ export const strings = {
     wrong_credentials: "Wrong email or password",
     NOTIFICATIONS_ERROR: "Error loading notifications",
     ERROR_NOTIFICATIONS_DELETE: "Error deleting notification",
+    SERVER_ERROR: "Server error: The server is either down or not responding",
 };

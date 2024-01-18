@@ -57,8 +57,5 @@ export class MailboxComponent implements OnInit{
         this.error_delete = true;
       }
     });
-    //this.api.deleteNotification(id);
-    //this.itemMailList.list = [];
-    //this.api.getNotifications(this.itemMailList);
   }
 }

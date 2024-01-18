@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication-service/authentication.service";
 import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
@@ -6,6 +6,7 @@ import {NgClass} from "@angular/common";
 import {CookieService} from "ngx-cookie-service";
 import {ServerApiService} from "../services/server-api-service/server-api.service";
 import {Router, RouterLink} from "@angular/router";
+import { strings } from '../strings';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +18,7 @@ import {Router, RouterLink} from "@angular/router";
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit{
   error_email: boolean = true;
   new_email: string = '';
   confirm_email: string = '';
@@ -25,6 +26,9 @@ export class SettingsComponent {
   new_password: string = '';
   confirm_password: string = '';
   new_username: string = '';
+
+  server_error: boolean = false;
+  sever_error_message: string = strings.SERVER_ERROR;
 
   constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService) {}
 
@@ -59,6 +63,20 @@ export class SettingsComponent {
   }
   show_message_email(){
     return this.error_email;
+  }
+
+  ngOnInit(): void {
+    this.api.getServerInfoObservable().subscribe(
+      {
+        next: (data) => {
+
+        },
+        error: (err) => {
+          this.server_error = true;
+          console.log(err);
+        },
+      }
+    );
   }
 
 }
