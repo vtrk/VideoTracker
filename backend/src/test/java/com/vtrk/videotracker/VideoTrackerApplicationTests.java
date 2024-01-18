@@ -3,7 +3,7 @@ package com.vtrk.videotracker;
 import com.vtrk.videotracker.API.Kitsu;
 import com.vtrk.videotracker.API.TMDB;
 import com.vtrk.videotracker.Database.DBManager;
-import com.vtrk.videotracker.Database.Dao.Postgres.*;
+import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.utils.Properties;
 import org.junit.jupiter.api.Test;
@@ -65,93 +65,86 @@ class VideoTrackerApplicationTests {
     void DatabaseTest() {
         System.out.println("Database Test");
 
-        //Texting UserDaoPostgres
-        System.out.println("Testing UserDaoPostgres");
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        List<User> prova = userDaoPostgres.findAll();
-        for (User user : prova) {
-            System.out.println(user.getUsername());
+        //Texting UserDao
+        System.out.println("Testing UserDao");
+        UserDao user = DBManager.getInstance().getUserDao();
+        List<User> prova = user.findAll();
+        for (User u : prova) {
+            System.out.println(u.getUsername());
         }
-        User a = userDaoPostgres.findByEmail("Hokage","hinata");
+        User a = user.findByEmail("naruto@konoga.com","hinata");
         if (a.getId()!= 0){
             System.out.println("found");
         }else{
             System.out.println("not found");
         }
-        User b = userDaoPostgres.findById(1);
+        User b = user.findById(1);
         if (Objects.equals(b.getUsername(), "")){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        //Texting ContentDaoPostgres
-        System.out.println("Testing ContentDaoPostgres");
-        ContentDaoPostgres contentDaoPostgres = new ContentDaoPostgres(DBManager.getInstance().getConnection());
-        Content c = contentDaoPostgres.findById("000Anime");
+        //Texting ContentDao
+        System.out.println("Testing ContentDao");
+        ContentDao content = DBManager.getInstance().getContentDao();
+        Content c = content.findById("000_anime");
         if (Objects.equals(c.getTitle(), "")){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        Content d = contentDaoPostgres.findById("000anime");
+        Content d = content.findById("000_anime");
         if (Objects.equals(d.getTitle(), "")){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        //Texting NotificationDaoPostgres
-        System.out.println("Testing NotificationDaoPostgres");
-        NotificationDaoPostgres notificationDaoPostgres = new NotificationDaoPostgres(DBManager.getInstance().getConnection());
-        Notification e = notificationDaoPostgres.findById(1);
+        //Texting NotificationDao
+        System.out.println("Testing NotificationDao");
+        NotificationDao notification =DBManager.getInstance().getNotificationDao();
+        Notification e = notification.findById(1);
         if (Objects.equals(e.getTitle(), "")){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        /*
-        List<Integer> prova2 = notificationDaoPostgres.findByIdUser(1);
-
-        for (int id_notification : prova2) {
-            System.out.println(id_notification);
-        }
-        */
-        //Texting ReviewDaoPostgres
-        System.out.println("Testing ReviewDaoPostgres");
-        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
-        Review h = reviewDaoPostgres.findById(4);
+        //Texting ReviewDao
+        System.out.println("Testing ReviewDao");
+        ReviewDao review = DBManager.getInstance().getReviewDao();
+        Review h = review.findById(4);
         if (h.getIdUser() == 0){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        List<Review> prova3 = reviewDaoPostgres.findByIdContent("000anime");
-        for (Review review : prova3) {
-            System.out.println(review.getIdUser());
+        List<Review> prova3 = review.findByIdContent("000_anime");
+        for (Review r : prova3) {
+            System.out.println(r.getIdUser());
         }
-        //Texting UserListDaoPostgres
-        System.out.println("Testing UserListDaoPostgres");
-        UserListDaoPostgres userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
-        UserList f =userListDaoPostgres.findByIdUser(1);
+        //Texting UserListDao
+        System.out.println("Testing UserListDao");
+        UserListDao userList = DBManager.getInstance().getUserListDao();
+        UserList f =userList.findByIdUser(1);
         if (f.getId() == 0){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        UserList g = userListDaoPostgres.findById(1);
+        UserList g = userList.findById(1);
         if (g.getIdUser() == 0){
             System.out.println("not found");
         }else{
             System.out.println("found");
         }
-        System.out.println("Testing ContainsDaoPostgres");
-        ContainsDaoPostgres containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
-        List<Contains> provaContains =containsDaoPostgres.findContentInList(1);
+        System.out.println("Testing ContainsDao");
+        ContainsDao contains = DBManager.getInstance().getContainsDao();
+        List<Contains> provaContains =contains.findContentInList(1);
         for (Contains Cont: provaContains) {
             System.out.println(Cont.getContent().getTitle());
         }
-        System.out.println("Testing ReceiveDaoPostgres");
-        ReceiveDaoPostgres receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
-        List<Notification> provaNotification =receiveDaoPostgres.findByIdUser(1);
+        System.out.println("Testing ReceiveDao");
+        ReceiveDao receive = DBManager.getInstance().getReceiveDao();
+        List<Notification> provaNotification =receive.findByIdUser(1);
         for (Notification Not: provaNotification) {
             System.out.println(Not.getDescription());
         }
@@ -160,19 +153,17 @@ class VideoTrackerApplicationTests {
 
     @Test
     void testAddToDB(){
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        UserDao userDao = DBManager.getInstance().getUserDao();
 
         User user = new User(0, "", "test", "test", false);
 
-        userDaoPostgres.add(user);
-        User user2 = userDaoPostgres.findByEmail("test", "test");
+        userDao.add(user);
+        User user2 = userDao.findByEmail("test", "test");
         System.out.println(user2.getId());
 
         //Insert/Update/Delete (Nelle insert tutti gli id devono essere a zero, per chi ha un int, perchè viene fatto in automatico dal db)
 
         //User
-
-        UserDaoPostgres userDao = new UserDaoPostgres(DBManager.getInstance().getConnection());
 
         User u = new User(1, "naruto@konoha.com", "Hokage", "hinata", true);
         User u1 = new User(2, "email1", "username1", "password1", false);
@@ -188,11 +179,11 @@ class VideoTrackerApplicationTests {
         */
 
         //UserList
-        UserListDaoPostgres list = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        UserListDao list = DBManager.getInstance().getUserListDao();
         list.add(3);
 
         //Content
-        ContentDaoPostgres content = new ContentDaoPostgres(DBManager.getInstance().getConnection());
+        ContentDao content = DBManager.getInstance().getContentDao();
 
         Content c1 = new Content("001_anime", "Boruto", 24,293, "anime.com");
         Content c2 = new Content("002_anime", "Naruto", 24,220, "anime.com");
@@ -204,15 +195,17 @@ class VideoTrackerApplicationTests {
         content.add(c3);
         content.add(c4);
 
-        /*c3 = new Content("003anime", "Naruto Shippuden", 22,500, "anime.com");
+        /*
+        c3 = new Content("003anime", "Naruto Shippuden", 22,500, "anime.com");
 
         content.update(c3);
 
-        content.remove(c4);*/
+        content.remove(c4);
+        */
 
         //Review
 
-        ReviewDaoPostgres review = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+        ReviewDao review = DBManager.getInstance().getReviewDao();
 
         Review r1 = new Review(0, 5,"That's my son!!",1,"001anime");
         Review r2 = new Review(0, 5,"One of my favourite!",1,"002anime");
@@ -231,7 +224,7 @@ class VideoTrackerApplicationTests {
         review.remove(r3);*/
         //Notification
 
-        NotificationDaoPostgres notification = new NotificationDaoPostgres(DBManager.getInstance().getConnection());
+        NotificationDao notification = DBManager.getInstance().getNotificationDao();
 
         Notification n = new Notification(2, "Here something you might be interested in", "Vita di x");
         Notification n1 = new Notification(4, "Just a test", "just a test");
@@ -247,7 +240,7 @@ class VideoTrackerApplicationTests {
         notification.remove(n1);*/
 
         //Receive
-        ReceiveDaoPostgres receive = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
+        ReceiveDao receive = DBManager.getInstance().getReceiveDao();
 
         receive.add(1,2);
         receive.add(3,1);
@@ -256,7 +249,7 @@ class VideoTrackerApplicationTests {
         //receive.remove(3,3);
 
         //Contains
-        ContainsDaoPostgres contains = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        ContainsDao contains = DBManager.getInstance().getContainsDao();
 
         contains.add(1,"001anime","watching");
         contains.add(1,"002anime","watching");
@@ -272,7 +265,7 @@ class VideoTrackerApplicationTests {
 
     @Test
     void testCounting(){
-        ContainsDaoPostgres contains = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
+        ContainsDao contains = DBManager.getInstance().getContainsDao();
         String count = contains.countByState(1,"completed");
         String count1 = contains.countByState(1,"watching");
         String count2 = contains.countByState(1,"planned");
