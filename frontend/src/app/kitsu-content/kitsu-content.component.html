@@ -23,7 +23,7 @@
             <h5 class="card-title">{{content.title}}</h5>
             <p class="card-text">{{content.synopsis}}</p>
             <p [innerHTML]="'Episodes: ' + content.episodeCount" *ngIf="content.episodeCount" [hidden]="content.showType=='movie'"></p>
-            <p [innerHTML]="'Episode Length: ' + content.episodeLength"></p>
+            <p [innerHTML]="'Episode Length: ' + content.episodeLength" *ngIf="content.episodeLength"></p>
             <p [innerHTML]="'Show Type: ' + content.showType"></p>
             <p [innerHTML]="'Status: ' + content.status"></p>
           </div>
