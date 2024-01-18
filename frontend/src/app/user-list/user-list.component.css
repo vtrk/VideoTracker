@@ -1,23 +1,25 @@
 #Default{
   color: gray;
 }
+#Watching{
+  color: blue;
+}
 #Completed{
   color: green;
 }
-#Watching{
-  color: yellow;
+#OnHold{
+  color: orange;
 }
 #Dropped{
   color: red;
 }
 #PTW{
-  color: blue;
+  color: purple;
 }
-
-.custom-submit-button:hover{
-  filter: brightness(150%);
-}
-
 #delete:hover{
   color:red;
+}
+
+.menu-entry{
+  cursor: pointer;
 }

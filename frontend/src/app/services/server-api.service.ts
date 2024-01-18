@@ -6,7 +6,8 @@ import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../
 import { strings } from '../strings';
 import { KitsuContent, TMDBContent } from '../utils/content';
 import { CookieService } from 'ngx-cookie-service';
-import { User } from '../utils/user';
+import { ItemUserList } from '../utils/item-user-list';
+import { UserData } from '../utils/user-data';
 
 
 /**
@@ -250,7 +251,7 @@ export class ServerApiService {
     });
   }
 
-  getDbList(itemList: ItemList, id_user: string){
+  getDbList(userList: ItemUserList, id_user: string){
     let url = environment.API_URL + '/list';
     let options = {
       headers: {
@@ -265,11 +266,20 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         console.log(json);
+        json.content.forEach((element: any) => {
+          userList.addToList({
+            id: element.id,
+            poster: element.poster,
+            title: element.title,
+            status: element.state,
+            type: element.type
+          });
+        });
         return;
       },
       error: error => {
         console.log(error);
-        itemList.setTitle(strings.CONTENT_ERROR);
+        userList.setErrorMessage(strings.LIST_ERROR);
         return;
       }
     });
@@ -433,7 +443,7 @@ export class ServerApiService {
     return '0';
   }
 
-  getInfoProfile(user: User): Array<string>{
+  getInfoProfile(user: UserData){
     let url = environment.API_URL + '/profile';
     let options = {
       headers: {
@@ -447,16 +457,14 @@ export class ServerApiService {
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
+        user.setValues(json.id, json.username, json.email, json.watching, json.completed, json.on_hold, json.dropped, json.plan_to_watch);
         return;
       },
       error: error => {
-        console.log(error);
+        user.setErrorMessage(strings.PROFILE_ERROR);
         return;
       }
     });
-    //Need to get back the info of the user
-    return ["",""];
   }
 
 
@@ -489,32 +497,6 @@ export class ServerApiService {
       }
     });
     //first, need to find the id_list by id_user, then you can add using containsDaoPostgres add
-  }
-
-  isContained(id_content : string): boolean{
-    let url = environment.API_URL + '/isContained';
-    let options = {
-      headers: {
-        'Content-Type': 'text/plain',
-        'Accept': 'text/plain'
-      }
-    };
-    let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content
-    };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return true;
-      },
-      error: error => {
-        console.log(error);
-        return false;
-      }
-    });
-    return false;
   }
 
 }
