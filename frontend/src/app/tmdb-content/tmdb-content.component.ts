@@ -48,6 +48,6 @@ export class TmdbContentComponent {
     this.api.addToList(this.content.id, 'on-hold', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
   }
 
-  show() {return this.authServ.userIsAuth;}
+  show() {return !this.authServ.userIsAuth;}
 
 }

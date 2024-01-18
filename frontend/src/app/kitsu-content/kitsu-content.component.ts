@@ -49,6 +49,6 @@ export class KitsuContentComponent {
     this.api.addToList(this.content.id, 'dropped', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
 
-  show() {return this.authServ.userIsAuth;}
+  show() {return !this.authServ.userIsAuth;}
 
 }
