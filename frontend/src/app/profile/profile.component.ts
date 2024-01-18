@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {ThemeService} from "../theme.service";
 import {ServerApiService} from "../services/server-api.service";
 import {HttpClient} from "@angular/common/http";
-import { User } from '../utils/user';
+import { UserData } from '../utils/user-data';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +24,7 @@ export class ProfileComponent {
   stopped: string;
   planned: string;
   info: Array<string>;
-  user: User;
+  user: UserData = new UserData();
 
 
   constructor(private api: ServerApiService, public themeService: ThemeService, private client: HttpClient) {

@@ -8,6 +8,7 @@ export const strings = {
     SEARCH_ERROR: "Error loading search results.",
     CONTENT_ERROR: "Error loading content.",
     LIST_ERROR: "Error loading list.",
+    PROFILE_ERROR: "Error loading profile.",
     SEARCH_NO_RESULTS: "No results found.",
     SEARCH_RESULTS: "Search Results",
     trending: "Trending",

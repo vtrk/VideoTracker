@@ -6,8 +6,8 @@ import { ItemAssigner, ItemList, KitsuItemAssigner, TMDBItemAssigner } from '../
 import { strings } from '../strings';
 import { KitsuContent, TMDBContent } from '../utils/content';
 import { CookieService } from 'ngx-cookie-service';
-import { User } from '../utils/user';
 import { ItemUserList } from '../utils/item-user-list';
+import { UserData } from '../utils/user-data';
 
 
 /**
@@ -445,7 +445,7 @@ export class ServerApiService {
 
   //to-do
 
-  getInfoProfile(user: User): Array<string>{
+  getInfoProfile(user: UserData): Array<string>{
     let url = environment.API_URL + '/profile';
     let options = {
       headers: {
@@ -459,11 +459,11 @@ export class ServerApiService {
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
+        user.setValues(json.id, json.username, json.email, json.watching, json.completed, json.on_hold, json.dropped, json.plan_to_watch);
         return;
       },
       error: error => {
-        console.log(error);
+        user.setErrorMessage(strings.PROFILE_ERROR);
         return;
       }
     });

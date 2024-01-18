@@ -314,7 +314,7 @@ public class RESTfulAPI {
         response.put("watching", watching);
         response.put("on_hold", on_hold);
         response.put("dropped", dropped);
-        response.put("planning", planning);
+        response.put("plan_to_watch", planning);
         return response.toString();
     }
 
