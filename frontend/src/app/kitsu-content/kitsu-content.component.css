@@ -63,3 +63,11 @@ testimonial-box{
   align-items: center;
   width: 100%;
 }
+
+#delete{
+  color:green;
+}
+
+#delete:hover{
+  color:red;
+}
