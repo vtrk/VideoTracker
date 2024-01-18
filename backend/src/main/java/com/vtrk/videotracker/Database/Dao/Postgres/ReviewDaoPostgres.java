@@ -92,4 +92,19 @@ public class ReviewDaoPostgres implements ReviewDao {
             //System.out.println("Error in remove "+e);
         }
     }
+
+    @Override
+    public boolean exists(int id_user, String id_content) {
+        try {
+            String query = "SELECT * FROM review WHERE id_user = " + id_user + " and id_content = "+id_content+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in findAll"+e);
+            return false;
+        }
+        return true;
+    }
 }

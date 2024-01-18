@@ -496,4 +496,53 @@ public class RESTfulAPI {
         return response.toString();
     }
 
+    /**
+     * Add review for specified content
+     * @params data JSON user data
+     * @return JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *   "vote": "vote",
+     *   "user_comment": "user_comment",
+     *   "id_user": "id_user",
+     *   "id_content": "id_content"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *   <li>"0" if successful</li>
+     *   <li>"1" if it fails</li>
+     *   <li>"2" if the user has already written a review</li>
+     * </ul>
+     * {
+     *  "response": "response"
+     *  }
+     */
+    @RequestMapping(
+            value = "/addReview",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String addReview(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int vote = json.getInt("vote");
+        String user_comment = json.getString("user_comment");
+        int id_user = json.getInt("id_user");
+        String id_content = json.getString("id_content");
+        ReviewDaoPostgres reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+
+        JSONObject response = new JSONObject();
+        if(reviewDaoPostgres.exists(id_user, id_content))
+            return response.put("response", "2").toString();
+
+        reviewDaoPostgres.add(new Review(0, vote, user_comment, id_user, id_content));
+
+        if(!reviewDaoPostgres.exists(id_user, id_content))
+            return response.put("response", "1").toString();
+
+        return response.put("response", "0").toString();
+    }
+
 }

@@ -11,5 +11,6 @@ public interface ReviewDao {
     void add(Review review);
     void update(Review review);
     void remove(Review review);
+    boolean exists(int id_user, String id_content);
 
 }
