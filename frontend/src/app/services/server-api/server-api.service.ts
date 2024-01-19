@@ -374,8 +374,8 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to change the email of a user.
-   * @param id_user 
-   * @param email 
+   * @param id_user
+   * @param email
    * @returns an observable of the response from the server
    */
   changeEmail(id_user : string, email: string): Observable<String>{
@@ -396,8 +396,8 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to change the password of a user.
-   * @param id_user 
-   * @param password 
+   * @param id_user
+   * @param password
    * @returns an observable of the response from the server
    */
   changePassword(id_user : string, password: string): Observable<String>{
@@ -418,8 +418,8 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to change the username of a user.
-   * @param id_user 
-   * @param username 
+   * @param id_user
+   * @param username
    * @returns an observable of the response from the server
    */
   changeUsername(id_user: string, username : string): Observable<string>{
@@ -469,12 +469,12 @@ export class ServerApiService {
   /**
    * Adds an item to the user's list.
    * @param id_content
-   * @param status 
-   * @param title 
-   * @param duration 
-   * @param n_episode 
-   * @param link 
-   * @param type 
+   * @param status
+   * @param title
+   * @param duration
+   * @param n_episode
+   * @param link
+   * @param type
    */
   addToList(id_content : string, status : string, title : string, duration: string, n_episode: string, link: string, type: string){
     let url = environment.API_URL + '/addToList';
@@ -509,8 +509,8 @@ export class ServerApiService {
 
   /**
    * Removes an item from the user's list.
-   * @param id_user 
-   * @param id_content 
+   * @param id_user
+   * @param id_content
    * @returns an observable of the response from the server
    */
   removeFromList(id_user : string, id_content: string): Observable<String>{
@@ -553,7 +553,7 @@ export class ServerApiService {
     });
   }
 
-  addReview(id_content : string, type: string, vote: string, review: string){
+  addReview(id_content : string, type: string, vote: string, user_comment: string){
     let url = environment.API_URL + '/addReview';
     let options = {
       headers: {
@@ -562,10 +562,11 @@ export class ServerApiService {
       }
     };
     let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content + '_' + type,
       vote: vote,
-      review: review
+      user_comment: user_comment,
+      id_user: this.cookieService.get('id_user'),
+      id_content: id_content + '_' + type
+
     };
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
