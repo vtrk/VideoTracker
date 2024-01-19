@@ -31,4 +31,5 @@ export const strings = {
     ERROR_CHANGE_USERNAME: "Error changing username",
     EMAILS_DONT_MATCH: "Emails don't match",
     ERRIR_CHANGE_EMAIL: "Error changing email",
+    CLIENT_VERSION: "1.0.0",
 };
