@@ -484,6 +484,7 @@ export class ServerApiService {
         'Accept': 'text/plain'
       }
     };
+    if(duration == undefined) duration = '-1'; // If the duration is undefined, set it to -1. (happens with movies)
     let JSONBody = {
       id_user: this.cookieService.get('id_user'),
       id_content: id_content + '_' + type,
