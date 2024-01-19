@@ -13,30 +13,36 @@
               <h3 [hidden]="!email_in_use" [ngClass]="{'hidden': !email_in_use}" [innerHTML]="email_in_use_error" style="color: red;" ></h3>
               <h3 [hidden]="!password_mismatch" [ngClass]="{'hidden': !password_mismatch}" [innerHTML]="password_mismatch_error" style="color: red;" ></h3>
               <h3 [hidden]="!registration" [ngClass]="{'hidden': !registration}" [innerHTML]="registration_error" style="color: red;" ></h3>
-  
+              
               <input type="email" name="email" ngModel #email="ngModel" required email class="form-control my-3.py-2" placeholder="Email">
               <div class="error" *ngIf="email.touched">
                 <p *ngIf="email.errors?.['required']" style="color: red;" >Field required</p>
                 <p *ngIf="email.errors?.['email']" style="color: red;" >Not a valid Email</p>
               </div>
            
-               <input type="text" name="username" ngModel #username="ngModel" required username class="form-control my-3.py-2" placeholder="Username">
-               <div class="error" *ngIf="username.touched">
-                 <p *ngIf="username.errors?.['required']" style="color: red;" >Field required</p>
-               </div>
-  
-               <input type="password" name="password" ngModel #password="ngModel" required password class="form-control my-3.py-2" placeholder="Password">
-               <div class="error" *ngIf="password.touched">
-                 <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
-               </div>
-  
-              <input type="password" name="confirmPassword" ngModel #confirmPassword="ngModel" required confirmPassword class="form-control my-3.py-2" placeholder="Confirm Password">
-              <div class="error" *ngIf="confirmPassword.touched">
-                <p *ngIf="confirmPassword.errors?.['required']" style="color: red;" >Field required</p>
+              <div class="spacingForm">
+                <input type="text" name="username" ngModel #username="ngModel" required username class="form-control my-3.py-2" placeholder="Username">
+                <div class="error" *ngIf="username.touched">
+                  <p *ngIf="username.errors?.['required']" style="color: red;" >Field required</p>
+                </div>
               </div>
-              <div class="text-center" id="bottom">
+  
+              <div class="spacingForm">
+                <input type="password" name="password" ngModel #password="ngModel" required password class="form-control my-3.py-2" placeholder="Password">
+                <div class="error" *ngIf="password.touched">
+                  <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
+                </div>
+              </div>
+  
+              <div class="spacingForm">
+                <input type="password" name="confirmPassword" ngModel #confirmPassword="ngModel" required confirmPassword class="form-control my-3.py-2" placeholder="Confirm Password">
+                <div class="error" *ngIf="confirmPassword.touched">
+                  <p *ngIf="confirmPassword.errors?.['required']" style="color: red;" >Field required</p>
+                </div>
+              </div>
+              <div class="text-center spacingForm" id="bottom">
                 <button type="submit" [disabled]="signInForm.invalid" class="btn btn-primary">Submit</button>
-                <a [routerLink]="['/login']" class="nav-link">Already signed?</a>
+                <a [routerLink]="['/login']" class="nav-link spacingForm">Already have an account?</a>
               </div>
              </form>
           </div>

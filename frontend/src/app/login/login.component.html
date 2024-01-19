@@ -13,19 +13,23 @@
                 <h3 [hidden]="!wrong_credentials" [ngClass]="{'hidden': !wrong_credentials}" [innerHTML]="wrong_credentials_str" style="color: red;" ></h3>
                 <h3 [hidden]="!login_error" [ngClass]="{'hidden': !login_error}" [innerHTML]="login_error_str" style="color: red;" ></h3>
                 
-                <input type="email" name="email" ngModel #email="ngModel" required email  class="form-control my-3.py-2" placeholder="Email">
+                <div class="spacingForm">
+                  <input type="email" name="email" ngModel #email="ngModel" required email  class="form-control my-3.py-2" placeholder="Email">
                   <div class="error" *ngIf="email.touched">
                     <p *ngIf="email.errors?.['required']" style="color: red;" >Field required</p>
                     <p *ngIf="email.errors?.['email']" style="color: red;" >Not a valid Email</p>
                   </div>
+                </div>
+                <div class="spacingForm">
                   <input type="password" name="password" ngModel #password="ngModel" required password  class="form-control my-3.py-2" placeholder="Password">
                   <div class="error" *ngIf="password.touched">
                     <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
                   </div>
-                  <div class="text-center" id="bottom">
+                </div>
+                  <div class="text-center spacingForm" id="bottom">
                     <button class="btn btn-primary" [disabled]="logInForm.invalid">Login</button>
-                    <a [routerLink]="['/resetpassword']" class="nav-link">Forgot your password?</a>
-                    <a [routerLink]="['/signin']" class="nav-link">Don't have an account?</a>
+                    <a [routerLink]="['/resetpassword']" class="nav-link spacingForm">Forgot your password?</a>
+                    <a [routerLink]="['/signin']" class="nav-link spacingForm">Don't have an account?</a>
                   </div>
               </form>
             </div>
