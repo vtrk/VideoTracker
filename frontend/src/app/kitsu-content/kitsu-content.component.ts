@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { KitsuContent } from '../utils/content';
 import { ThemeService } from '../services/theme/theme.service';
-import { ServerApiService } from '../services/server-api-service/server-api.service';
+import { ServerApiService } from '../services/server-api/server-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CookieService} from "ngx-cookie-service";
-import {AuthenticationService} from "../services/authentication-service/authentication.service";
+import {AuthenticationService} from "../services/authentication/authentication.service";
 import { Title } from '@angular/platform-browser';
 
 @Component({

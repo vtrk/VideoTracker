@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgClass } from "@angular/common";
 import { ThemeService } from "../services/theme/theme.service";
 import { CommonModule } from '@angular/common';
-import { ServerApiService } from "../services/server-api-service/server-api.service";
+import { ServerApiService } from "../services/server-api/server-api.service";
 import { CookieService } from 'ngx-cookie-service';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';

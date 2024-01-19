@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ServerApiService } from '../services/server-api-service/server-api.service';
+import { ServerApiService } from '../services/server-api/server-api.service';
 import { ThemeService } from '../services/theme/theme.service';
 import { ActivatedRoute } from '@angular/router';
 import { TMDBContent } from '../utils/content';
 import { CommonModule, Location } from '@angular/common';
 import {faEye, faSquareCaretRight, faSquareCheck, faSquarePlus} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {AuthenticationService} from "../services/authentication-service/authentication.service";
+import {AuthenticationService} from "../services/authentication/authentication.service";
 
 @Component({
   selector: 'app-tmdb-content',

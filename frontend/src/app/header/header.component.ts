@@ -3,7 +3,7 @@ import {Router, RouterLink} from "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ServerApiService } from '../services/server-api-service/server-api.service';
+import { ServerApiService } from '../services/server-api/server-api.service';
 import { SearchBody } from '../utils/data-structures';
 import { CommonModule } from '@angular/common';
 import { strings } from '../utils/strings';
@@ -18,7 +18,7 @@ import {
   faRightToBracket, faSun,
   faEnvelope,faUser
 } from '@fortawesome/free-solid-svg-icons';
-import {AuthenticationService} from "../services/authentication-service/authentication.service";
+import {AuthenticationService} from "../services/authentication/authentication.service";
 import {ThemeService} from "../services/theme/theme.service";
 
 @Component({

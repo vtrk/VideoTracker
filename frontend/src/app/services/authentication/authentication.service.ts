@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
-import {ServerApiService} from "../server-api-service/server-api.service";
+import {ServerApiService} from "../server-api/server-api.service";
 import { Observable } from 'rxjs';
 
 @Injectable({

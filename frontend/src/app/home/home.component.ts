@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ItemList, } from '../utils/item';
-import { ServerApiService } from '../services/server-api-service/server-api.service';
+import { ServerApiService } from '../services/server-api/server-api.service';
 import { CommonModule } from '@angular/common';
 import {ThemeService} from "../services/theme/theme.service";
 import { ItemListComponent } from '../item-list/item-list.component';

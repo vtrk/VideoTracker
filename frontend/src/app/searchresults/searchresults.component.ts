@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ItemList } from '../utils/item';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ServerApiService } from '../services/server-api-service/server-api.service';
+import { ServerApiService } from '../services/server-api/server-api.service';
 import { SearchBody } from '../utils/data-structures';
 import { Location } from '@angular/common';
 import { ItemListComponent } from '../item-list/item-list.component';

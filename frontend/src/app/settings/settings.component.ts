@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from "../services/authentication-service/authentication.service";
+import { AuthenticationService } from "../services/authentication/authentication.service";
 import { FormsModule, NgForm } from "@angular/forms";
 import { ThemeService } from "../services/theme/theme.service";
 import { CommonModule, NgClass } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
-import { ServerApiService } from "../services/server-api-service/server-api.service";
+import { ServerApiService } from "../services/server-api/server-api.service";
 import { Router } from "@angular/router";
 import { strings } from '../utils/strings';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';

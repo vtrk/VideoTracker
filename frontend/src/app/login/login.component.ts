@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from "@angular/forms";
-import {AuthenticationService} from "../services/authentication-service/authentication.service";
+import {AuthenticationService} from "../services/authentication/authentication.service";
 import {ThemeService} from "../services/theme/theme.service";
 import {CommonModule, NgClass} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {ServerApiService} from "../services/server-api-service/server-api.service";
+import {ServerApiService} from "../services/server-api/server-api.service";
 import { strings } from '../utils/strings';
 import { CookieService } from 'ngx-cookie-service';
 import { Title } from '@angular/platform-browser';
