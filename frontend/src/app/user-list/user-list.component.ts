@@ -57,7 +57,7 @@ export class UserListComponent implements OnInit{
   remove(event: any){
     this.delete_error = false;
 
-    var id = event.target.attributes.fill.ownerElement.parentNode.parentNode.parentNode.attributes.title.nodeValue;
+    var id = event.target.attributes.fill.ownerElement.parentNode.parentNode.parentNode.attributes.id.nodeValue;
 
     this.api.removeFromList(this.cookies.get('id_user'), id).subscribe({
       next: data => {

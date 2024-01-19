@@ -43,7 +43,7 @@
                 <td class="menu-entry" id="{{item.id}}" title="{{item.type}}" (click)="goto($event)">{{item.title}}</td>
                 <td>{{item.status}}</td> <!-- qui andrebbe fatto uno switch che consente di cambiare lo stato dell'anime mostrando l'icona dello stato corrente-->
                 <td>
-                  <div id="delete" title="{{item.id + '_' + item.type}}" (click)="remove($event)"><fa-icon [icon]="faTrashCan" class="menu-entry"></fa-icon></div>
+                  <div id="{{item.id + '_' + item.type}}" (click)="remove($event)"><fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon></div>
                 </td>
             </tr>
           </tbody>
