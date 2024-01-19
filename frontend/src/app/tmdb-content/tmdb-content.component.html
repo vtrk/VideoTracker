@@ -22,7 +22,7 @@
             <div class="card-body">
               <h5 class="card-title">{{content.title}}</h5>
               <p class="card-text">{{content.description}}</p>
-              <p [innerHTML]="'Runtime: ' + content.runtime" *ngIf="content.runtime"></p>
+              <p [innerHTML]="'Runtime: ' + content.runtime + ' min'" *ngIf="content.runtime"></p>
               <p [innerHTML]="'Seasons: ' + content.seasons" *ngIf="content.seasons"></p>
               <p [innerHTML]="'Episodes: ' + content.episodes" *ngIf="content.episodes"></p>
             </div>
