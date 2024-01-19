@@ -528,7 +528,7 @@ export class ServerApiService {
     return this.client.post<String>(url, JSONBody, options);
   }
 
-  getReview(id_content : string, type: string){
+  getReview(id_content : string, type: string, reviewList: ReviewList){
     let url = environment.API_URL + '/getReview';
     let options = {
       headers: {
@@ -544,7 +544,7 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         json.getReview().forEach((element: any) => {
-          ReviewList.add(element.id, element.vote, element.user_comment, element.id_user, element.id_content);
+          reviewList.add(element.id, element.vote, element.user_comment, element.id_user, element.id_content);
         });
         return data.toString();
       },

@@ -10,6 +10,7 @@ import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../services/authentication/authentication.service";
 import { Title } from '@angular/platform-browser';
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ReviewList } from '../utils/reviews';
 
 @Component({
   selector: 'app-kitsu-content',
@@ -20,6 +21,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 })
 export class KitsuContentComponent {
   content: KitsuContent
+  reviews: ReviewList = new ReviewList();
   protected readonly faSquarePlus = faSquarePlus;
   protected readonly faSquareCheck = faSquareCheck;
   protected readonly faSquareCaretRight = faSquareCaretRight;
@@ -81,7 +83,7 @@ export class KitsuContentComponent {
   }
 
   getReviews(){
-    this.api.getReview(this.content.id, this.content.type);
+    this.api.getReview(this.content.id, this.content.type, this.reviews);
   }
 
   protected readonly faTrashCan = faTrashCan;
