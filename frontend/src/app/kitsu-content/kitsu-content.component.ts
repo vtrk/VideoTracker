@@ -83,9 +83,5 @@ export class KitsuContentComponent {
     this.vote = event.target.options[event.target.options.selectedIndex].value;
   }
 
-  getReviews(){
-    this.api.getReview(this.content.id, this.content.type, this.reviews);
-  }
-
   protected readonly faTrashCan = faTrashCan;
 }

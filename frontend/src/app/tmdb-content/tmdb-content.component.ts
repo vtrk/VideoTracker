@@ -15,6 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AuthenticationService} from "../services/authentication/authentication.service";
+import {ReviewList} from "../utils/reviews";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-tmdb-content',
@@ -25,12 +27,16 @@ import {AuthenticationService} from "../services/authentication/authentication.s
 })
 export class TmdbContentComponent {
   content: TMDBContent
+  reviews: ReviewList = new ReviewList();
   protected readonly faEye = faEye;
   protected readonly faSquareCaretRight = faSquareCaretRight;
   protected readonly faSquareCheck = faSquareCheck;
   protected readonly faSquarePlus = faSquarePlus;
   protected readonly faSquareXmark = faSquareXmark;
   protected readonly faStop = faStop;
+
+  input: FormControl;
+  vote: string;
 
   constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private authServ: AuthenticationService) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
@@ -41,7 +47,10 @@ export class TmdbContentComponent {
       api.getTMDBContent(this.content, type, id);
     });
   }
-
+  ngOnInit(): void {
+    this.input = new FormControl('');
+    this.api.getReview(this.content.id, this.content.type, this.reviews);
+  }
   addPlanned(){
     this.api.addToList(this.content.id, 'plan to watch', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
   }
@@ -64,5 +73,15 @@ export class TmdbContentComponent {
 
   show() {return !this.authServ.userIsAuth;}
 
+  updateInput(event: any){
+    this.input = new FormControl(event.target.value);
+  }
+  onSubmit(){
+    this.api.addReview(this.content.id, this.content.type, this.vote, this.input.value);
+  }
+
+  onVoteChange(event: any){
+    this.vote = event.target.options[event.target.options.selectedIndex].value;
+  }
     protected readonly faTrashCan = faTrashCan;
 }
