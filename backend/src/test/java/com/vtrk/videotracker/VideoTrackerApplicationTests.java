@@ -61,11 +61,11 @@ class VideoTrackerApplicationTests {
         System.out.println("TMDB API Test Passed");
     }
 
+    /*
+    * Test to check if functions of UserDao work
+    */
     @Test
-    void DatabaseTest() {
-        System.out.println("Database Test");
-
-        //Texting UserDao
+    void UserDaoTestFunction(){
         System.out.println("Testing UserDao");
         UserDao user = DBManager.getInstance().getUserDao();
         List<User> prova = user.findAll();
@@ -84,7 +84,13 @@ class VideoTrackerApplicationTests {
         }else{
             System.out.println("found");
         }
-        //Texting ContentDao
+    }
+
+     /*
+     * Test to check if functions of ContentDao work
+     */
+    @Test
+     void ContentDaoTestFunction(){
         System.out.println("Testing ContentDao");
         ContentDao content = DBManager.getInstance().getContentDao();
         Content c = content.findById("000_anime");
@@ -99,7 +105,13 @@ class VideoTrackerApplicationTests {
         }else{
             System.out.println("found");
         }
-        //Texting NotificationDao
+    }
+
+    /*
+     * Test to check if functions of NotificationDao work
+     */
+    @Test
+    void NotificationDaoTestFunction(){
         System.out.println("Testing NotificationDao");
         NotificationDao notification =DBManager.getInstance().getNotificationDao();
         Notification e = notification.findById(1);
@@ -108,7 +120,13 @@ class VideoTrackerApplicationTests {
         }else{
             System.out.println("found");
         }
-        //Texting ReviewDao
+    }
+
+    /*
+     * Test to check if functions of ReviewDao work
+     */
+    @Test
+    void ReviewDaoTestFunction(){
         System.out.println("Testing ReviewDao");
         ReviewDao review = DBManager.getInstance().getReviewDao();
         Review h = review.findById(4);
@@ -121,7 +139,13 @@ class VideoTrackerApplicationTests {
         for (Review r : prova3) {
             System.out.println(r.getIdUser());
         }
-        //Texting UserListDao
+    }
+
+    /*
+     * Test to check if functions of UserListDao work
+     */
+    @Test
+    void UserListDaoTestFunction(){
         System.out.println("Testing UserListDao");
         UserListDao userList = DBManager.getInstance().getUserListDao();
         UserList f =userList.findByIdUser(1);
@@ -136,132 +160,62 @@ class VideoTrackerApplicationTests {
         }else{
             System.out.println("found");
         }
+    }
+
+    /*
+     * Test to check if functions of ContainsDao work
+     */
+    @Test
+    void ContainsDaoTestFunction(){
         System.out.println("Testing ContainsDao");
         ContainsDao contains = DBManager.getInstance().getContainsDao();
         List<Contains> provaContains =contains.findContentInList(1);
         for (Contains Cont: provaContains) {
             System.out.println(Cont.getContent().getTitle());
         }
+    }
+
+    /*
+     * Test to check if functions of ReceiveDao work
+     */
+    @Test
+    void ReceiveDaoTestFunction(){
         System.out.println("Testing ReceiveDao");
         ReceiveDao receive = DBManager.getInstance().getReceiveDao();
         List<Notification> provaNotification =receive.findByIdUser(1);
         for (Notification Not: provaNotification) {
             System.out.println(Not.getDescription());
         }
-
     }
 
+    /*
+     * For testing the database add/remove/update functions we are not using the proxy, because we just need to test the query
+     *
+     * Run this test to initialize the database with some data to enter the website
+     */
+
     @Test
-    void testAddToDB(){
+    void initDB(){
+
         UserDao userDao = DBManager.getInstance().getUserDao();
-
-        User user = new User(0, "", "test", "test", false);
-
+        User user = new User(0, "test@test.com", "Test", "test", false);
         userDao.add(user);
-        User user2 = userDao.findByEmail("test", "test");
-        System.out.println(user2.getId());
 
-        //Insert/Update/Delete (Nelle insert tutti gli id devono essere a zero, per chi ha un int, perchè viene fatto in automatico dal db)
-
-        //User
-
-        User u = new User(1, "naruto@konoha.com", "Hokage", "hinata", true);
-        User u1 = new User(2, "email1", "username1", "password1", false);
-        User u2 = new User(0, "email2", "username2", "password2", true);
-        User u3 = new User(3, "email2", "username2", "passwordChanged", false);
-
-        userDao.add(u);
-        userDao.add(u1);
-        userDao.add(u2);
-        /*
-        userDao.update(u3);
-        userDao.remove(u1);
-        */
-
-        //UserList
+        int id_user = userDao.findByEmail("test", "test").getId();
         UserListDao list = DBManager.getInstance().getUserListDao();
-        list.add(3);
-
-        //Content
-        ContentDao content = DBManager.getInstance().getContentDao();
-
-        Content c1 = new Content("001_anime", "Boruto", 24,293, "anime.com");
-        Content c2 = new Content("002_anime", "Naruto", 24,220, "anime.com");
-        Content c3 = new Content("003_anime", "Naruto Shippuden", 24,500, "anime.com");
-        Content c4 = new Content("004_anime", "Made in abyss", 24,48, "anime.com");
-
-        content.add(c1);
-        content.add(c2);
-        content.add(c3);
-        content.add(c4);
-
-        /*
-        c3 = new Content("003anime", "Naruto Shippuden", 22,500, "anime.com");
-
-        content.update(c3);
-
-        content.remove(c4);
-        */
-
-        //Review
-
-        ReviewDao review = DBManager.getInstance().getReviewDao();
-
-        Review r1 = new Review(0, 5,"That's my son!!",1,"001anime");
-        Review r2 = new Review(0, 5,"One of my favourite!",1,"002anime");
-        Review r3 = new Review(6, 5,"Cool",1,"003anime");
-        Review r4 = new Review(7, 2,"Buuuuu",3,"000anime");
-
-        review.add(r1);
-        review.add(r2);
-        review.add(r3);
-        review.add(r4);
-
-        /*r4.setVote(1);
-
-        review.update(r4);
-
-        review.remove(r3);*/
-        //Notification
+        list.add(id_user);
 
         NotificationDao notification = DBManager.getInstance().getNotificationDao();
 
-        Notification n = new Notification(2, "Here something you might be interested in", "Vita di x");
-        Notification n1 = new Notification(4, "Just a test", "just a test");
+        Notification n = new Notification(0, "Here something you might be interested in", "Vita di x");
 
         notification.add(n);
-        n.setDescription("Naruto");
-        notification.add(n);
-        notification.add(n1);
 
-        /*n.setDescription("Boruto");
-        notification.update(n);
-
-        notification.remove(n1);*/
-
-        //Receive
         ReceiveDao receive = DBManager.getInstance().getReceiveDao();
 
-        receive.add(1,2);
-        receive.add(3,1);
-        receive.add(3,3);
-
-        //receive.remove(3,3);
-
-        //Contains
-        ContainsDao contains = DBManager.getInstance().getContainsDao();
-
-        contains.add(1,"001anime","watching");
-        contains.add(1,"002anime","watching");
-        contains.add(1,"003anime","watching");
-        contains.add(2,"000anime","completed");
-        contains.add(2,"001anime","completed");
-
-        /*contains.update(1,"002anime","completed");
-        contains.update(1,"003anime","completed");
-
-        contains.remove(2,"001anime");*/
+        receive.add(id_user,1);
     }
+
 
     @Test
     void testCounting(){
