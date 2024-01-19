@@ -328,7 +328,7 @@ public class RESTfulAPI {
         ContainsDao containsDao = DBManager.getInstance().getContainsDao();
         String completed = containsDao.countByState(list.getId(), "completed");
         String watching = containsDao.countByState(list.getId(), "watching");
-        String on_hold = containsDao.countByState(list.getId(), "on-hold");
+        String on_hold = containsDao.countByState(list.getId(), "on hold");
         String dropped = containsDao.countByState(list.getId(), "dropped");
         String planning = containsDao.countByState(list.getId(), "planning");
         JSONObject response = new JSONObject();
