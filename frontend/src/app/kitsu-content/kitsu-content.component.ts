@@ -38,7 +38,7 @@ export class KitsuContentComponent {
   }
 
   addPlanned(){
-    this.api.addToList(this.content.id, 'planning', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
+    this.api.addToList(this.content.id, 'plan to watch', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
 
   addCompleted(){

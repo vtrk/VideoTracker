@@ -35,7 +35,7 @@ export class TmdbContentComponent {
   }
 
   addPlanned(){
-    this.api.addToList(this.content.id, 'planning', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
+    this.api.addToList(this.content.id, 'plan to watch', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
   }
 
   addCompleted(){
