@@ -47,6 +47,7 @@ export class KitsuContentComponent {
 
   ngOnInit(): void {
     this.input = new FormControl('');
+    this.api.getReview(this.content.id, this.content.type, this.reviews);
   }
 
   addPlanned(){

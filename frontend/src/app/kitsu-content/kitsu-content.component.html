@@ -61,7 +61,7 @@
               </div>
               <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon>
             </div> -->
-            <!-- <div class="card" *ngFor="let revs of ">
+            <div class="card" *ngFor="let revs of reviews.getReviewList()">
               <div class="card-body">
                 <div class="row">
                   <div class="col">
@@ -74,7 +74,7 @@
                 <p id="reviewText">{{revs.user_comment}}</p>
               </div>
               <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')"></fa-icon>
-            </div>-->
+            </div>
           </div>
         </div>
       </div>
