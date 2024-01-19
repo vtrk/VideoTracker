@@ -29,3 +29,7 @@ form{
 #bottom_uname{
   background-color: white;
 }
+
+#deleteForm{
+  padding: 60px;
+}
