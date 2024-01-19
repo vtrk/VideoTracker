@@ -20,7 +20,6 @@
 }
 
 .custom-size{
-  width: 30px;
   height: 30px;
 }
 
@@ -35,7 +34,6 @@ fa-icon:hover{
 .icons a:hover{
   filter:brightness(120%);
 }
-
 
 p{
   color: white;

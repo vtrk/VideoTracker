@@ -1,18 +1,36 @@
-<footer  [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">
+<footer  [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" >
   <div class="footerContainer">
-    <div class="icons justify-content-center">
-      <a href="https://kitsu.io/explore/anime" class="me-auto text-reset">
-        <img src="../../assets/KitsuIcon.png" width="30px" height="30px">
-      </a>
-      <a href="https://github.com/vtrk/VideoTracker" class="me-auto text-reset">
-        <fa-icon [icon]="faGithub" class="fa-lg"></fa-icon>
-      </a>
-      <a href="https://www.themoviedb.org/" class="me-auto text-reset">
-        <img src="../../assets/TMDBIcon.png" width="30px" height="30px">
-      </a>
-    </div>
     <div class="AppInfo">
-      <p>Versione...</p>
+      <div class="row">
+        <div class="col">
+          <div class="icons">
+            <a href="https://github.com/vtrk/VideoTracker" class="me-auto text-reset">
+              <fa-icon [icon]="faGithub" class="fa-2xl"></fa-icon>
+            </a>
+          </div>
+          <p>Client Version: {{client_version}}</p>
+        </div>
+        <div class="col">
+          <div class="icons">
+            <a [routerLink]="['/home']" class="me-auto text-reset">
+              <img src="../../assets/film.svg" class="iconFilter" height="32px">
+            </a>
+          </div>
+          <p [ngClass]="{'hidden': server_version == ''}">Sever Version: {{server_version}}</p>
+        </div>
+        <div class="col">
+          <div class="icons">
+            <a href="https://kitsu.io/explore/anime" class="me-auto text-reset" [hidden]="server_api == 'TMDB' || server_api == ''">
+              <img src="https://kitsu.io/favicon.ico" height="32px">
+            </a>
+            <a href="https://www.themoviedb.org/" class="me-auto text-reset" [hidden]="server_api == 'Kitsu' || server_api == ''">
+              <img src="https://www.themoviedb.org/favicon.ico" height="32px">
+            </a>
+          </div>
+          <fa-icon [icon]="faX" [hidden]="server_api != ''"></fa-icon>
+          <p [ngClass]="{'hidden': server_api == ''}">API: {{server_api}}</p>
+      </div>
+      </div>
     </div>
     <div class="footerBottom">
       <p>Copyright &copy;2024; Designed by <span class="designer">vtrk</span></p>
