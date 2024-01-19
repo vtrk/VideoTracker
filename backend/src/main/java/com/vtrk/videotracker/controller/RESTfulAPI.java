@@ -330,7 +330,7 @@ public class RESTfulAPI {
         String watching = containsDao.countByState(list.getId(), "watching");
         String on_hold = containsDao.countByState(list.getId(), "on hold");
         String dropped = containsDao.countByState(list.getId(), "dropped");
-        String planning = containsDao.countByState(list.getId(), "planning");
+        String planning = containsDao.countByState(list.getId(), "plan to watch");
         JSONObject response = new JSONObject();
         response.put("id", user.getId());
         response.put("email", user.getEmail());
