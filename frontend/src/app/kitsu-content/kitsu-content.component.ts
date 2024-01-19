@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { KitsuContent } from '../utils/content';
-import { ThemeService } from '../theme.service';
+import { ThemeService } from '../services/theme/theme.service';
 import { ServerApiService } from '../services/server-api-service/server-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';

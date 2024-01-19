@@ -19,7 +19,7 @@ import {
   faEnvelope,faUser
 } from '@fortawesome/free-solid-svg-icons';
 import {AuthenticationService} from "../services/authentication-service/authentication.service";
-import {ThemeService} from "../theme.service";
+import {ThemeService} from "../services/theme/theme.service";
 
 @Component({
   selector: 'app-header',

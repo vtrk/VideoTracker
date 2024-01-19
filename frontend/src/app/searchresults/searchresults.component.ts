@@ -6,7 +6,7 @@ import { ServerApiService } from '../services/server-api-service/server-api.serv
 import { SearchBody } from '../utils/data-structures';
 import { Location } from '@angular/common';
 import { ItemListComponent } from '../item-list/item-list.component';
-import {ThemeService} from "../theme.service";
+import {ThemeService} from "../services/theme/theme.service";
 
 @Component({
   selector: 'app-searchresults',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from "../services/authentication-service/authentication.service";
 import { FormsModule, NgForm } from "@angular/forms";
-import { ThemeService } from "../theme.service";
+import { ThemeService } from "../services/theme/theme.service";
 import { CommonModule, NgClass } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
 import { ServerApiService } from "../services/server-api-service/server-api.service";

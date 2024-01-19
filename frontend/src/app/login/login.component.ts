@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthenticationService} from "../services/authentication-service/authentication.service";
-import {ThemeService} from "../theme.service";
+import {ThemeService} from "../services/theme/theme.service";
 import {CommonModule, NgClass} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";

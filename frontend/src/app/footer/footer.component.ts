@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import {ThemeService} from "../theme.service";
+import {ThemeService} from "../services/theme/theme.service";
 import {NgClass} from "@angular/common";
 
 @Component({
