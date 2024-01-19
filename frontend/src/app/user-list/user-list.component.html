@@ -7,22 +7,22 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th id="Default" class="menu-entry">
+            <th id="Default" class="menu-entry" (click)="filterAll()">
               All
             </th>
-            <th id="Watching" class="menu-entry">
+            <th id="Watching" class="menu-entry" (click)="filterWatching()">
               Watching
             </th>
-            <th id="Completed" class="menu-entry">
+            <th id="Completed" class="menu-entry" (click)="filterCompleted()">
               Completed
             </th>
-            <th id="OnHold" class="menu-entry">
+            <th id="OnHold" class="menu-entry" (click)="filterOnHold()">
               On hold
             </th>
-            <th id="Dropped" class="menu-entry">
+            <th id="Dropped" class="menu-entry" (click)="filterDropped()">
               Dropped
             </th>
-            <th id="PTW" class="menu-entry">
+            <th id="PTW" class="menu-entry" (click)="filterPlanToWatch()">
               Plan to watch
           </tr>
           </thead>
@@ -36,7 +36,7 @@
             <th scope="col">Action</th>
           </thead>
           <tbody>
-            <tr *ngFor="let item of userList.getUserList()">
+            <tr *ngFor="let item of retrieveUserList()">
                 <th scope="row">
                 <img src="{{item.poster}}" height="100px" alt="" class="menu-entry" id="{{item.id}}" title="{{item.type}}" (click)="goto($event)">
                 </th>

@@ -27,6 +27,8 @@ export class UserListComponent implements OnInit{
   delete_error: boolean = false;
   delete_error_str: string = "Error while deleting the item.";
 
+  filter: string = 'all';
+
   constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService, private router: Router, private title: Title) {
     this.title.setTitle("Video List");
   }
@@ -78,5 +80,48 @@ export class UserListComponent implements OnInit{
         this.delete_error = true;
       }
     });
+  }
+
+  retrieveUserList(){
+    switch(this.filter){
+      case 'all':
+        return this.userList.getUserList();
+      case 'plan to watch':
+        return this.userList.getPlanToWatchList();
+      case 'completed':
+        return this.userList.getCompletedList();
+      case 'watching':
+        return this.userList.getWatchingList();
+      case 'dropped':
+        return this.userList.getDroppedList();
+      case 'on hold':
+        return this.userList.getOnHoldList();
+      default:
+        return this.userList.getUserList();
+    }
+  }
+
+  filterAll(){
+    this.filter = 'all';
+  }
+
+  filterWatching(){
+    this.filter = 'watching';
+  }
+
+  filterPlanToWatch(){
+    this.filter = 'plan to watch';
+  }
+
+  filterCompleted(){
+    this.filter = 'completed';
+  }
+
+  filterDropped(){
+    this.filter = 'dropped';
+  }
+
+  filterOnHold(){
+    this.filter = 'on hold';
   }
 }

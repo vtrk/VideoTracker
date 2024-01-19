@@ -65,4 +65,44 @@ export class ItemUserList {
     setErrorMessage(message: string) {
         this.errorMessage = message;
     }
+
+    /**
+     * Get the list of completed items.
+     * @returns the list of completed items.
+     */
+    getCompletedList() {
+        return this.list.filter(item => item.status === 'completed');
+    }
+
+    /**
+     * Get the list of watching items.
+     * @returns the list of watching items.
+     */
+    getWatchingList() {
+        return this.list.filter(item => item.status === 'watching');
+    }
+
+    /**
+     * Get the list of plan to watch items.
+     * @returns the list of plan to watch items.
+     */
+    getPlanToWatchList() {
+        return this.list.filter(item => item.status === 'plan to watch');
+    }
+
+    /**
+     * Get the list of dropped items.
+     * @returns the list of dropped items.
+     */
+    getDroppedList() {
+        return this.list.filter(item => item.status === 'dropped');
+    }
+
+    /**
+     * Get the list of on hold items.
+     * @returns the list of on hold items.
+     */
+    getOnHoldList() {
+        return this.list.filter(item => item.status === 'on hold');
+    }
 }
