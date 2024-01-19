@@ -7,7 +7,7 @@ import {faGear} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Router, RouterLink} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
-import { strings } from '../strings';
+import { strings } from '../utils/strings';
 import { Title } from '@angular/platform-browser';
 
 @Component({

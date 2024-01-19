@@ -7,7 +7,7 @@ import { ServerApiService } from "../services/server-api-service/server-api.serv
 import { ItemMailList } from '../utils/mail-list';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { strings } from '../strings';
+import { strings } from '../utils/strings';
 import { CookieService } from 'ngx-cookie-service';
 import { Title } from '@angular/platform-browser';
 @Component({

@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ServerApiService } from '../services/server-api-service/server-api.service';
 import { SearchBody } from '../utils/data-structures';
 import { CommonModule } from '@angular/common';
-import { strings } from '../strings';
+import { strings } from '../utils/strings';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {
   faBookmark,

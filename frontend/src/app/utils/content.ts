@@ -1,4 +1,4 @@
-import { strings } from "../strings";
+import { strings } from "./strings";
 
 /**
  * Generic content representation.

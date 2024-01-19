@@ -7,7 +7,7 @@ import {Router, RouterLink} from "@angular/router";
 import {faHouse} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {ServerApiService} from "../services/server-api-service/server-api.service";
-import { strings } from '../strings';
+import { strings } from '../utils/strings';
 import { CookieService } from 'ngx-cookie-service';
 import { Title } from '@angular/platform-browser';
 

@@ -2,7 +2,7 @@
  * @fileoverview This file contains interfaces and classes for storing and managing items.
  */
 
-import { strings } from "../strings";
+import { strings } from "./strings";
 
 /**
  * Interface for storing an item.

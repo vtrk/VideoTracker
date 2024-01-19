@@ -6,7 +6,7 @@ import { CommonModule, NgClass } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
 import { ServerApiService } from "../services/server-api-service/server-api.service";
 import { Router } from "@angular/router";
-import { strings } from '../strings';
+import { strings } from '../utils/strings';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import { Title } from "@angular/platform-browser";
