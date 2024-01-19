@@ -11,6 +11,7 @@ export class UserData {
     on_hold: string;
     dropped: string;
     plan_to_watch: string;
+    total: string;
 
     errorMessage: string;
 
@@ -27,6 +28,7 @@ export class UserData {
         this.on_hold = on_hold;
         this.dropped = dropped;
         this.plan_to_watch = plan_to_watch;
+        this.total = (parseInt(watching) + parseInt(completed) + parseInt(on_hold) + parseInt(dropped) + parseInt(plan_to_watch)).toString();
     }
 
 
