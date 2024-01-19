@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgClass } from "@angular/common";
 import { ThemeService } from "../theme.service";
-import { ItemListComponent } from "../item-list/item-list.component";
 import { CommonModule } from '@angular/common';
 import { ServerApiService } from "../services/server-api-service/server-api.service";
 import { CookieService } from 'ngx-cookie-service';
@@ -15,7 +14,6 @@ import { Title } from '@angular/platform-browser';
   standalone: true,
   imports: [
     NgClass,
-    ItemListComponent,
     CommonModule,
     FontAwesomeModule
   ],
