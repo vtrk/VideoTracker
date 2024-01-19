@@ -170,7 +170,7 @@ public class RESTfulAPI {
      *
      * A valid JSON request looks like this:<br>
      * {
-     *   "email_username": "email_username",
+     *   "email": "email",
      *   "password": "password"
      * }
      * <br>
@@ -187,11 +187,11 @@ public class RESTfulAPI {
     @CrossOrigin
     public String login(@RequestBody String data, HttpServletRequest request) {
         JSONObject json = new JSONObject(data);
-        String email_username = json.getString("email_username");
+        String email = json.getString("email_username");
         String password = json.getString("password");
 
         UserDao userDao = DBManager.getInstance().getUserDao();
-        User user = userDao.findByEmail(email_username, password);
+        User user = userDao.findByEmail(email, password);
         JSONObject response = new JSONObject();
         if(user.getId() == 0)
             return response.put("response", "0").toString();
