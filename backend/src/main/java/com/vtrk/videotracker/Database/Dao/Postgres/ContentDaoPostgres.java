@@ -1,6 +1,8 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.ContentDao;
+import com.vtrk.videotracker.Database.Dao.Subject;
+import com.vtrk.videotracker.Database.Model.Contains;
 import com.vtrk.videotracker.Database.Model.Content;
 import com.vtrk.videotracker.Database.Model.User;
 
@@ -8,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContentDaoPostgres implements ContentDao{
+public class ContentDaoPostgres implements ContentDao, Subject {
 
     Connection connection = null;
 
@@ -79,5 +81,23 @@ public class ContentDaoPostgres implements ContentDao{
             System.out.println("Error in findAll"+e);
         }
         return true;
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        Content content = (Content) object;
+        switch(choice){
+            case 1:
+                add(content);
+                break;
+            case 2:
+                update(content);
+                break;
+            case 3:
+                remove(content);
+                break;
+            default:
+                break;
+        }
     }
 }

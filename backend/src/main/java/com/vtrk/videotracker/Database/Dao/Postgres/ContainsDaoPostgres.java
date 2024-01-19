@@ -2,6 +2,7 @@ package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.ContainsDao;
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Model.Contains;
 import com.vtrk.videotracker.utils.Properties;
 
@@ -12,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContainsDaoPostgres implements ContainsDao {
+public class ContainsDaoPostgres implements ContainsDao, Subject {
 
     Connection connection = null;
     public ContainsDaoPostgres(Connection connection){ this.connection = connection; }
@@ -112,5 +113,28 @@ public class ContainsDaoPostgres implements ContainsDao {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        if(choice == 4){
+            removeWholeList((int) object);
+        }else{
+            Contains content = (Contains) object;
+            switch(choice){
+                case 1:
+                    add(content.getId_list(), content.getContent().getId(), content.getState());
+                    break;
+                case 2:
+                    update(content.getId_list(), content.getContent().getId(), content.getState());
+                    break;
+                case 3:
+                    remove(content.getId_list(), content.getContent().getId());
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }

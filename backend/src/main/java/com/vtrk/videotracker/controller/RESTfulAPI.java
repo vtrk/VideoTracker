@@ -2,6 +2,7 @@ package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.*;
+import com.vtrk.videotracker.Database.Dao.Proxy.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.VideoTrackerApplication;
 import com.vtrk.videotracker.utils.Properties;
@@ -144,20 +145,22 @@ public class RESTfulAPI {
         String email = json.getString("email");
         String password = json.getString("password");
         User u = new User(0, email, username, password, false);
+        ProxyUser proxyUser = new ProxyUser();
+        ProxyUserList proxyUserList = new ProxyUserList();
         UserDao user = DBManager.getInstance().getUserDao();
+
 
         JSONObject response = new JSONObject();
 
         if(user.emailInUse(email))
             return response.put("response", "email_in_use").toString();
 
-        user.add(u);
+        proxyUser.request(1, u);
+
         User userAdded = user.findByEmail(email, password);
         if(userAdded == null)
             return response.put("response", "registration_failed").toString();
-
-        UserListDao userListDao = DBManager.getInstance().getUserListDao();
-        userListDao.add(userAdded.getId());
+        proxyUserList.request(1,  userAdded.getId());
 
         return response.put("response", Integer.toString(userAdded.getId())).toString();
     }
@@ -381,19 +384,21 @@ public class RESTfulAPI {
             int duration = json.getInt("duration");
             int n_episode = json.getInt("n_episode");
             String link = json.getString("link");
-            Content content = new Content(id_content, title, duration, n_episode, link);
-            contentDao.add(content);
+            ProxyContent proxyContent = new ProxyContent();
+            proxyContent.request(1, new Content(id_content, title, duration, n_episode, link));
         }
 
         UserListDao userListDao = DBManager.getInstance().getUserListDao();
         UserList list = userListDao.findByIdUser(id_user);
-        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
-        if(containsDao.exists(list.getId(), id_content)){
-            containsDao.update(list.getId(), id_content, state);
+
+        ProxyContains proxyContains = new ProxyContains();
+
+        if(DBManager.getInstance().getContainsDao().exists(list.getId(), id_content)){
+            proxyContains.request(2, new Contains(list.getId(),DBManager.getInstance().getContentDao().findById(id_content), state));
             return "1";
         }
-        containsDao.add(list.getId(), id_content, state);
-        if(containsDao.exists(list.getId(), id_content))
+        proxyContains.request(1, new Contains(list.getId(),DBManager.getInstance().getContentDao().findById(id_content), state));
+        if(DBManager.getInstance().getContainsDao().exists(list.getId(), id_content))
             return "1";
         return "0";
     }
@@ -432,15 +437,15 @@ public class RESTfulAPI {
 
         UserListDao userListDao = DBManager.getInstance().getUserListDao();
         UserList list = userListDao.findByIdUser(id_user);
-        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
+        ProxyContains proxyContains = new ProxyContains();
 
         JSONObject response = new JSONObject();
-        if(!containsDao.exists(list.getId(), id_content))
+        if(!DBManager.getInstance().getContainsDao().exists(list.getId(), id_content))
             return response.put("response", "1").toString();
 
-        containsDao.remove(list.getId(), id_content);
+        proxyContains.request(3, new Contains(list.getId(),DBManager.getInstance().getContentDao().findById(id_content), ""));
 
-        if(containsDao.exists(list.getId(), id_content))
+        if(DBManager.getInstance().getContainsDao().exists(list.getId(), id_content))
             return response.put("response", "1").toString();
 
         return response.put("response", "0").toString();
@@ -525,10 +530,11 @@ public class RESTfulAPI {
         int id_user = json.getInt("id_user");
         int id_notification = json.getInt("id_notification");
         ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
+        ProxyReceive proxyReceive = new ProxyReceive();
         JSONObject response = new JSONObject();
         if(!receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
-        receiveDao.remove(id_user, id_notification);
+        proxyReceive.request(3, new Receive(id_user, id_notification));
         if(receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
         return response.put("response", "0").toString();
@@ -620,13 +626,15 @@ public class RESTfulAPI {
         String user_comment = json.getString("user_comment");
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
+
         ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
+        ProxyReview proxyReview = new ProxyReview();
 
         JSONObject response = new JSONObject();
         if(reviewDao.exists(id_user, id_content))
             return response.put("response", "2").toString();
 
-        reviewDao.add(new Review(0, vote, user_comment, id_user, id_content));
+        proxyReview.request(1, new Review(0, vote, user_comment, id_user, id_content));
 
         if(!reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
@@ -665,13 +673,17 @@ public class RESTfulAPI {
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
         ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
+        ProxyReview proxyReview = new ProxyReview();
 
         JSONObject response = new JSONObject();
         if(!reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
-        reviewDao.remove(new Review(0, 0, "", id_user, id_content));
-
+        int id_review = DBManager.getInstance().getReviewDao().findByIdUserAndContent(id_user, id_content);
+        if(id_review != -1){
+            proxyReview.request(3, id_review);
+            return response.put("response", "1").toString();
+        }
         if(reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
@@ -708,10 +720,12 @@ public class RESTfulAPI {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
         String password = json.getString("password");
-        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
+        ProxyContains proxyContains = new ProxyContains();
+        ProxyUserList proxyUserList = new ProxyUserList();
+        ProxyReview proxyReview = new ProxyReview();
+        ProxyReceive proxyReceive = new ProxyReceive();
+        ProxyUser proxyUser = new ProxyUser();
         UserListDao userListDao = DBManager.getInstance().getUserListDao();
-        ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
-        ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
         UserDao userDao = DBManager.getInstance().getUserDao();
         JSONObject response = new JSONObject();
 
@@ -725,11 +739,11 @@ public class RESTfulAPI {
             return response.put("response", "1").toString();
 
         // To remove a user, we need to remove all the content in his list, all his reviews and all his notifications
-        containsDao.removeWholeList(userListDao.findByIdUser(id_user).getId());
-        userListDao.remove(id_user);
-        reviewDao.removeAllReviewsOfAUser(id_user);
-        receiveDao.removeAllForAUser(id_user);
-        userDao.remove(id_user);
+        proxyContains.request(4, userListDao.findByIdUser(id_user).getId());
+        proxyUserList.request(2, id_user);
+        proxyReview.request(4, id_user);
+        proxyReceive.request(3,id_user);
+        proxyUser.request(3, id_user);
 
         return response.put("response", "0").toString();
     }

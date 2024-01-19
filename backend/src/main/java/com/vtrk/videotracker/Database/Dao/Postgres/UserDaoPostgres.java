@@ -1,5 +1,6 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Dao.UserDao;
 import com.vtrk.videotracker.Database.Model.User;
 
@@ -7,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoPostgres implements UserDao {
+public class UserDaoPostgres implements UserDao, Subject {
     Connection connection = null;
 
     public UserDaoPostgres(Connection connection) {
@@ -180,5 +181,24 @@ public class UserDaoPostgres implements UserDao {
             System.out.println("Error in exists"+e);
         }
         return true;
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        if (choice == 3){
+            remove((int)object);
+        }else{
+            User user = (User) object;
+            switch(choice){
+                case 1:
+                    add(user);
+                    break;
+                case 2:
+                    update(user);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

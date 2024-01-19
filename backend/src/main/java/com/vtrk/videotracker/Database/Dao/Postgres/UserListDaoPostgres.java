@@ -1,11 +1,12 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Dao.UserListDao;
 import com.vtrk.videotracker.Database.Model.UserList;
 
 import java.sql.*;
 
-public class UserListDaoPostgres implements UserListDao {
+public class UserListDaoPostgres implements UserListDao, Subject {
     Connection connection = null;
 
     public UserListDaoPostgres(Connection connection) {
@@ -71,6 +72,19 @@ public class UserListDaoPostgres implements UserListDao {
             st.executeQuery(query);
         }catch(SQLException e){
             //System.out.println("Error in add "+e);
+        }
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        int id_user = (int) object;
+        switch(choice){
+            case 1:
+                add(id_user);
+                break;
+            case 2:
+                remove(id_user);
+                break;
         }
     }
 }

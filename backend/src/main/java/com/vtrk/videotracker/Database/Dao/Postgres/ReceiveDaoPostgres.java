@@ -2,7 +2,9 @@ package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.ReceiveDao;
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Model.Notification;
+import com.vtrk.videotracker.Database.Model.Receive;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceiveDaoPostgres implements ReceiveDao {
+public class ReceiveDaoPostgres implements ReceiveDao, Subject {
 
     Connection connection = null;
     public ReceiveDaoPostgres(Connection connection){ this.connection = connection; }
@@ -78,5 +80,24 @@ public class ReceiveDaoPostgres implements ReceiveDao {
             //System.out.println("Error in exists "+e);
         }
         return true;
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        if(choice == 3){
+            removeAllForAUser((int) object);
+        }else{
+            Receive receive = (Receive) object;
+            switch(choice){
+                case 1:
+                    add(receive.getId_user(), receive.getId_notification());
+                    break;
+                case 2:
+                    remove(receive.getId_user(), receive.getId_notification());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

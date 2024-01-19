@@ -1,13 +1,14 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.ReviewDao;
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Model.Review;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewDaoPostgres implements ReviewDao {
+public class ReviewDaoPostgres implements ReviewDao, Subject {
     Connection connection = null;
 
     public ReviewDaoPostgres(Connection connection) {
@@ -33,6 +34,22 @@ public class ReviewDaoPostgres implements ReviewDao {
             System.out.println("Error in findAll"+e);
         }
         return review;
+    }
+
+    @Override
+    public int findByIdUserAndContent(int id_user, String id_content) {
+        int id = -1;
+        try {
+            String query = "SELECT * FROM review WHERE id_user = " + id_user + " AND id_content = "+id_content+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                id = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            //System.out.println("Error in findAll"+e);
+        }
+        return id;
     }
 
     /*
@@ -83,9 +100,9 @@ public class ReviewDaoPostgres implements ReviewDao {
     }
 
     @Override
-    public void remove(Review review) {
+    public void remove(int id) {
         try{
-            String query = "DELETE FROM public.review WHERE id= "+review.getId()+" ;";
+            String query = "DELETE FROM public.review WHERE id= "+id+" ;";
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
@@ -116,5 +133,27 @@ public class ReviewDaoPostgres implements ReviewDao {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        switch(choice){
+            case 1:
+                Review review = (Review) object;
+                add(review);
+                break;
+            case 2:
+                Review reviewUp = (Review) object;
+                update(reviewUp);
+                break;
+            case 3:
+                remove((int)object);
+                break;
+            case 4:
+                removeAllReviewsOfAUser((int) object);
+                break;
+            default:
+                break;
+        }
     }
 }

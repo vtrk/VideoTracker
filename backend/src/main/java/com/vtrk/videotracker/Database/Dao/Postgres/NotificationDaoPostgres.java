@@ -1,6 +1,7 @@
 package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.NotificationDao;
+import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Model.Content;
 import com.vtrk.videotracker.Database.Model.Notification;
 import com.vtrk.videotracker.Database.Model.Review;
@@ -10,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationDaoPostgres implements NotificationDao {
+public class NotificationDaoPostgres implements NotificationDao, Subject {
     Connection connection = null;
 
     public NotificationDaoPostgres(Connection connection) {
@@ -64,6 +65,24 @@ public class NotificationDaoPostgres implements NotificationDao {
             st.executeQuery(query);
         }catch(SQLException e){
             //System.out.println("Error in remove "+e);
+        }
+    }
+
+    @Override
+    public void request(int choice, Object object) {
+        Notification notification = (Notification) object;
+        switch(choice){
+            case 1:
+                add(notification);
+                break;
+            case 2:
+                update(notification);
+                break;
+            case 3:
+                remove(notification);
+                break;
+            default:
+                break;
         }
     }
 }
