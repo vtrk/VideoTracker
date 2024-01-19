@@ -678,4 +678,60 @@ public class RESTfulAPI {
         return response.put("response", "0").toString();
     }
 
+    /**
+     * Removes a user
+     * @param data JSON user data
+     * @returns JSON API response
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *     "id_user": "id_user"
+     *     "password": "password"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if successful</li>
+     *     <li>"1" if it fails</li>
+     * </ul>
+     * {
+     *    "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/removeUser",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String removeUser(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        String password = json.getString("password");
+        ContainsDao containsDao = DBManager.getInstance().getContainsDao();
+        UserListDao userListDao = DBManager.getInstance().getUserListDao();
+        ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
+        ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        JSONObject response = new JSONObject();
+
+        // Check if the user exists
+        if(!userDao.exists(id_user))
+            return response.put("response", "1").toString();
+
+        // Check if password is correct
+        User user = userDao.findById(id_user);
+        if(!user.getPassword().equals(password))
+            return response.put("response", "1").toString();
+
+        // To remove a user, we need to remove all the content in his list, all his reviews and all his notifications
+        containsDao.removeWholeList(userListDao.findByIdUser(id_user).getId());
+        userListDao.remove(id_user);
+        reviewDao.removeAllReviewsOfAUser(id_user);
+        receiveDao.removeAllForAUser(id_user);
+        userDao.remove(id_user);
+
+        return response.put("response", "0").toString();
+    }
+
 }

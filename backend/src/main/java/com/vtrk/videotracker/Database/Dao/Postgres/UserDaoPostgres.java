@@ -84,7 +84,6 @@ public class UserDaoPostgres implements UserDao {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
-                System.out.println(rs.getInt("id"));
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setIs_admin(rs.getBoolean("admin"));
@@ -165,6 +164,20 @@ public class UserDaoPostgres implements UserDao {
                 return false;
         } catch (SQLException e) {
             System.out.println("Error in emailInUse"+e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean exists(int id) {
+        try {
+            String query = "SELECT * FROM user_vt WHERE id = "+id+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in exists"+e);
         }
         return true;
     }

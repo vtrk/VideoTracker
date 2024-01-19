@@ -12,4 +12,5 @@ public interface UserDao {
     void updateFromSettings(int id, String credential, int choice);
     void remove(int id);
     boolean emailInUse(String email);
+    boolean exists(int id);
 }
