@@ -120,3 +120,7 @@ input{
 ::-webkit-scrollbar-thumb {
   background-color: #454a4d;
 }
+
+.spacingForm{
+  padding-top: 5%;
+}

@@ -1,7 +1,8 @@
 <body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" class="vh-100">
-<h1>Settings</h1>
 <div class="container mt-3 d-flex flex-column justify-content-center align-items-center my-auto">
+  <h1 style="padding-bottom: 5%;" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Settings</h1>
   <h3 [hidden]="!server_error" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">{{sever_error_message}}</h3>
+  <!-- Change Password Form -->
   <div class="row d-flex flex-row align-items-start">
     <div class="col">
       <div class="card border-0 shadow" [hidden]="server_error">
@@ -9,34 +10,62 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-fill-lock" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5v-1a2 2 0 0 1 .01-.2 4.49 4.49 0 0 1 1.534-3.693Q8.844 9.002 8 9c-5 0-6 3-6 4m7 0a1 1 0 0 1 1-1v-1a2 2 0 1 1 4 0v1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1zm3-3a1 1 0 0 0-1 1v1h2v-1a1 1 0 0 0-1-1"/>
           </svg>
-          <p [hidden]="show_message_password()" >Passwords don't match</p>
-          <form (ngSubmit)="change_password()" id="password changer" method="post">
-            <input type="password" name="new password" [(ngModel)]="new_password" class="form-control my-3.py-2" placeholder="New Password">
-            <input type="password" name="confirm password" [(ngModel)]="confirm_password"  class="form-control my-3.py-2" placeholder="Confirm Password">
-            <div class="text-center" id="bottom_pw">
-              <button class="btn btn-primary" type="submit" name="change_password_btn">Change Password</button>
+          <h3 [hidden]="!password_mismatch" [ngClass]="{'hidden': !password_mismatch}" [innerHTML]="password_mismatch_message" style="color: red;" ></h3>
+          <form (ngSubmit)="change_password(changePasswordForm)" id="password changer" method="post" #changePasswordForm="ngForm">
+            <div class="spacingForm">
+              <input type="password" name="new_password" ngModel #new_password="ngModel" required class="form-control my-3.py-2" placeholder="New Password">
+              <div class="error" *ngIf="new_password.touched">
+                <p *ngIf="new_password.errors?.['required']" style="color: red;" >Field required</p>
+              </div>
+            </div>
+            <div class="spacingForm">
+              <input type="password" name="confirm_password" ngModel #confirm_password="ngModel" required class="form-control my-3.py-2" placeholder="Confirm Password">
+              <div class="error" *ngIf="confirm_password.touched">
+                <p *ngIf="confirm_password.errors?.['required']" style="color: red;" >Field required</p>
+              </div>
+            </div>
+            <div class="text-center spacingForm" id="bottom_pw">
+              <button class="btn btn-primary" type="submit" name="change_password_btn" [disabled]="changePasswordForm.invalid">Change Password</button>
+            </div>
+            <div class="container" style="padding-top: 5%;" [hidden]="changePasswordForm.invalid">
+              <span class="badge bg-warning">Warning: this will log you out</span>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <!-- Change Email Form -->
     <div class="col">
       <div class="card border-0 shadow" [hidden]="server_error">
         <div class="card-body">
           <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
           </svg>
-          <p [hidden]="show_message_email()" >Emails don't match</p>
-          <form (ngSubmit)="change_email()" method="post">
-            <input type="text" name="new_email" [(ngModel)]="new_email" class="form-control my-3.py-2" placeholder="New Email">
-            <input type="text" name="confirm_email" [(ngModel)]="confirm_email"  class="form-control my-3.py-2" placeholder="Confirm Email">
-            <div class="text-center" id="bottom_em">
-              <button class="btn btn-primary" type="submit" name="change_email_btn">Change E-mail</button>
+          <h3 [hidden]="!emails_dont_match" [ngClass]="{'hidden': !emails_dont_match}" [innerHTML]="emails_dont_match_message" style="color: red;" ></h3>
+          <h3 [hidden]="!error_change_email" [ngClass]="{'hidden': !error_change_email}" [innerHTML]="error_change_email_message" style="color: red;" ></h3>
+          <form (ngSubmit)="change_email(changeMailForm)" method="post" #changeMailForm="ngForm">
+            <div class="spacingForm">
+              <input type="email" name="new_email" ngModel #new_email="ngModel" required email class="form-control my-3.py-2" placeholder="New Email">
+              <div class="error" *ngIf="new_email.touched">
+                <p *ngIf="new_email.errors?.['required']" style="color: red;" >Field required</p>
+                <p *ngIf="new_email.errors?.['email']" style="color: red;" >Not a valid Email</p>
+              </div>
+            </div>
+            <div class="spacingForm">
+              <input type="email" name="confirm_email" ngModel #confirm_email="ngModel" required email  class="form-control my-3.py-2" placeholder="Confirm Email">
+              <div class="error" *ngIf="confirm_email.touched">
+                <p *ngIf="confirm_email.errors?.['required']" style="color: red;" >Field required</p>
+                <p *ngIf="confirm_email.errors?.['email']" style="color: red;" >Not a valid Email</p>
+              </div>
+            </div>
+            <div class="text-center spacingForm" id="bottom_em">
+              <button class="btn btn-primary" type="submit" name="change_email_btn" [disabled]="changeMailForm.invalid">Change E-mail</button>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <!-- Change Username Form -->
     <div class="col">
       <div class="row-12 row-sm-8 row-md-6 m-auto">
         <div class="card border-0 shadow" [hidden]="server_error">
@@ -45,23 +74,14 @@
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
               <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
             </svg>
-            <form (ngSubmit)="change_username()" method="post">
-              <input type="text" name="new_username" [(ngModel)]="new_username"  class="form-control my-3.py-2" placeholder="New Username">
-              <div class="text-center" id="bottom_uname">
-                <button class="btn btn-primary" type="submit" name="change_uname_btn">Change Username</button>
+            <h3 [hidden]="!error_change_username" [ngClass]="{'hidden': !error_change_username}" [innerHTML]="error_change_username_message" style="color: red;" ></h3>
+            <form (ngSubmit)="change_username(changeUsernameForm)" method="post" #changeUsernameForm="ngForm">
+              <input type="text" name="new_username" ngModel #new_username="ngModel" required class="form-control my-3.py-2" placeholder="New Username">
+              <div class="error" *ngIf="new_username.touched">
+                <p *ngIf="new_username.errors?.['required']" style="color: red;" >Field required</p>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col">
-      <div class="row-12 row-sm-8 row-md-6 m-auto">
-        <div class="card border-0 shadow" [hidden]="server_error">
-          <div class="card-body">
-            <form (ngSubmit)="delete_account()" method="post">
-              <div class="text-center" >
-                <button class="btn btn-primary" type="submit" name="delete_btn">Delete Account</button>
+              <div class="text-center spacingForm" id="bottom_uname">
+                <button class="btn btn-primary" type="submit" name="change_uname_btn" [disabled]="changeUsernameForm.invalid">Change Username</button>
               </div>
             </form>
           </div>
@@ -70,4 +90,29 @@
     </div>
   </div>
  </div>
+  <!-- Delete Account Form -->
+  <div class="col">
+    <div class="row-12 row-sm-8 row-md-6 m-auto">
+      <div class="card border-0 shadow" [hidden]="server_error">
+        <div class="card-body">
+          <fa-icon [icon]="faUserMinus" class="fa-2xl"></fa-icon>
+          <h3 [hidden]="!wrong_password_deletion" [ngClass]="{'hidden': !wrong_password_deletion}" [innerHTML]="wrong_password_deletion_message" style="color: red;" ></h3>
+          <form (ngSubmit)="delete_account(deleteForm)" method="post" #deleteForm="ngForm">
+            <div class="spacingForm">
+              <input type="password" name="password" ngModel #password="ngModel" required password class="form-control my-3.py-2" placeholder="Password">
+            </div>
+            <div class="error" *ngIf="password.touched">
+              <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
+            </div>
+            <div class="text-center spacingForm" >
+              <button class="btn btn-danger" type="submit" name="delete_btn" [disabled]="deleteForm.invalid">Delete Account</button>
+            </div>
+            <div class="container" style="padding-top: 5%;" [hidden]="deleteForm.invalid">
+              <span class="badge bg-danger">Warning: this action is irreversible</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

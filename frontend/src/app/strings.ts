@@ -27,4 +27,8 @@ export const strings = {
     NOTIFICATIONS_ERROR: "Error loading notifications",
     ERROR_NOTIFICATIONS_DELETE: "Error deleting notification",
     SERVER_ERROR: "Server error: The server is either down or not responding",
+    WRONG_PASSWORD: "Wrong password",
+    ERROR_CHANGE_USERNAME: "Error changing username",
+    EMAILS_DONT_MATCH: "Emails don't match",
+    ERRIR_CHANGE_EMAIL: "Error changing email",
 };

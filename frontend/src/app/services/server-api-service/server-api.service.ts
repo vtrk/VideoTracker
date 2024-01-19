@@ -372,7 +372,13 @@ export class ServerApiService {
     return this.client.post<string>(url, JSONBody, options);
   }
 
-  changeEmail(id_user : string, email: string):string{
+  /**
+   * Calls the server endpoint to change the email of a user.
+   * @param id_user 
+   * @param email 
+   * @returns an observable of the response from the server
+   */
+  changeEmail(id_user : string, email: string): Observable<String>{
     let url = environment.API_URL + '/update';
     let options = {
       headers: {
@@ -385,21 +391,16 @@ export class ServerApiService {
       credential: email,
       choice: 1
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
-    return '0';
+    return this.client.post<String>(url, JSONBody, options);
   }
 
-  changePassword(id_user : string, password: string):string{
+  /**
+   * Calls the server endpoint to change the password of a user.
+   * @param id_user 
+   * @param password 
+   * @returns an observable of the response from the server
+   */
+  changePassword(id_user : string, password: string): Observable<String>{
     let url = environment.API_URL + '/update';
     let options = {
       headers: {
@@ -412,18 +413,7 @@ export class ServerApiService {
       credential: password,
       choice: 2
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
-    return '0';
+    return this.client.post<String>(url, JSONBody, options);
   }
 
   /**
