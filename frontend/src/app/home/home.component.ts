@@ -4,6 +4,7 @@ import { ServerApiService } from '../services/server-api-service/server-api.serv
 import { CommonModule } from '@angular/common';
 import {ThemeService} from "../theme.service";
 import { ItemListComponent } from '../item-list/item-list.component';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,9 @@ import { ItemListComponent } from '../item-list/item-list.component';
 export class HomeComponent implements OnInit{
   itemList: ItemList = new ItemList();
 
-  constructor(private api: ServerApiService, public themeService: ThemeService) {}
+  constructor(private api: ServerApiService, public themeService: ThemeService, private title: Title) {
+    this.title.setTitle("Home - VideoTracker");
+  }
 
   /**
    * Starting routine

@@ -8,6 +8,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {Router, RouterLink} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import { strings } from '../strings';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-signin',
@@ -41,7 +42,9 @@ export class SigninComponent {
   registration_error: string = strings.registration_error;
   registration: boolean = false;
 
-  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService, private cookieService: CookieService) {}
+  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService, private cookieService: CookieService, private title: Title) {
+    this.title.setTitle("Sign In");
+  }
   signIn(form: NgForm){
     this.email_in_use = false;
     this.password_mismatch = false;

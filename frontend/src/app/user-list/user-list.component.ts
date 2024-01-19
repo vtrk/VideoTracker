@@ -9,6 +9,7 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { ItemUserList } from '../utils/item-user-list';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-user-list',
   standalone: true,
@@ -28,7 +29,9 @@ export class UserListComponent implements OnInit{
   delete_error: boolean = false;
   delete_error_str: string = "Error while deleting the item.";
 
-  constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService, private router: Router) {}
+  constructor(private api: ServerApiService, public themeService: ThemeService, private cookies: CookieService, private router: Router, private title: Title) {
+    this.title.setTitle("Video List");
+  }
 
   ngOnInit(): void{
     this.userList = new ItemUserList();

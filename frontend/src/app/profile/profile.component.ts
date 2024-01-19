@@ -5,6 +5,7 @@ import {ThemeService} from "../theme.service";
 import {ServerApiService} from "../services/server-api-service/server-api.service";
 import {HttpClient} from "@angular/common/http";
 import { UserData } from '../utils/user-data';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +28,8 @@ export class ProfileComponent {
   user: UserData = new UserData();
 
 
-  constructor(private api: ServerApiService, public themeService: ThemeService, private client: HttpClient) {
+  constructor(private api: ServerApiService, public themeService: ThemeService, private client: HttpClient, private title: Title) {
+    this.title.setTitle("Profile");
     this.api.getInfoProfile(this.user);
   }
 

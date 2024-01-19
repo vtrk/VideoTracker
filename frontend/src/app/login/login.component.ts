@@ -9,6 +9,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {ServerApiService} from "../services/server-api-service/server-api.service";
 import { strings } from '../strings';
 import { CookieService } from 'ngx-cookie-service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,9 @@ export class LoginComponent {
   });
 
 
-  constructor(private api: ServerApiService,private router: Router, private authService: AuthenticationService, public themeService: ThemeService, private cookieService: CookieService) {}
+  constructor(private api: ServerApiService,private router: Router, private authService: AuthenticationService, public themeService: ThemeService, private cookieService: CookieService, private title: Title) {
+    this.title.setTitle("Login");
+  }
 
   logIn(form: NgForm){
     this.wrong_credentials = false;

@@ -8,6 +8,7 @@ import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan} from
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../services/authentication-service/authentication.service";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-kitsu-content',
@@ -23,13 +24,14 @@ export class KitsuContentComponent {
   protected readonly faSquareCaretRight = faSquareCaretRight;
   protected readonly faEye = faEye;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService,private authServ: AuthenticationService) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
       let id = params['id'];
       this.content = new KitsuContent();
       this.api.getKitsuContent(this.content, type, id);
+      this.title.setTitle("Content - Kitsu");
     });
   }
 
