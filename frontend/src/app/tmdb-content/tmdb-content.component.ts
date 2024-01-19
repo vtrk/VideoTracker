@@ -4,7 +4,15 @@ import { ThemeService } from '../services/theme/theme.service';
 import { ActivatedRoute } from '@angular/router';
 import { TMDBContent } from '../utils/content';
 import { CommonModule, Location } from '@angular/common';
-import {faEye, faSquareCaretRight, faSquareCheck, faSquarePlus, faSquareXmark, faStop} from "@fortawesome/free-solid-svg-icons";
+import {
+    faEye,
+    faSquareCaretRight,
+    faSquareCheck,
+    faSquarePlus,
+    faSquareXmark,
+    faStop,
+    faTrashCan
+} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AuthenticationService} from "../services/authentication/authentication.service";
 
@@ -56,4 +64,5 @@ export class TmdbContentComponent {
 
   show() {return !this.authServ.userIsAuth;}
 
+    protected readonly faTrashCan = faTrashCan;
 }

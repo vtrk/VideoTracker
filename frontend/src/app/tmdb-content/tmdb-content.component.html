@@ -27,6 +27,51 @@
               <p [innerHTML]="'Episodes: ' + content.episodes" *ngIf="content.episodes"></p>
             </div>
           </div>
+          <div class="card" [hidden]="show()"> <!-- Da nascondere se l'utente ha recensito -->
+            <div class="card-body">
+              <p id="reviewHead">Write review</p>
+              <select class="form-text" id="rating">
+                <option value="0">0/5</option>
+                <option value="1">1/5</option>
+                <option value="2">2/5</option>
+                <option value="3">3/5</option>
+                <option value="4">4/5</option>
+                <option value="5">5/5</option>
+              </select>
+              <form>
+                <textarea id="textarea" name="reviewText" cols="70" placeholder="Leave your review here:"></textarea>
+              </form>
+              <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+            </div>
+          </div>
+          <div class="card"> <!-- Da mettere hidden se l'utente non ha ancora scritto recensioni -->
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <p>User's nickname</p>
+                </div>
+                <div class="col">
+                  <p>Score /5</p>
+                </div>
+              </div>
+              <p id="reviewText">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."</p>
+            </div>
+            <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon>
+          </div>
+          <!-- Qui mettiamo le recensioni degli altri utenti
+          <div class="card" *ngFor="">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <p>User's nickname</p>
+                </div>
+                <div class="col">
+                  <p>Score /5</p>
+                </div>
+              </div>
+              <p id="reviewText">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."</p>
+            </div>
+          </div>-->
         </div>
       </div>
     </div>
