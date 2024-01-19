@@ -7,7 +7,7 @@
             <img [src]="content.poster" class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title">{{content.title}}</h5>
-              <p class="card-text"><small class="text-muted">Release Date:{{content.releaseDate}}</small></p>
+              <p class="card-text"><small class="text-muted">Release Date: {{content.releaseDate}}</small></p>
               <p>Status</p>
               <button [hidden]="show()" title="Plan to watch" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
               <button [hidden]="show()" title="Watching" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
@@ -25,7 +25,6 @@
               <p [innerHTML]="'Runtime: ' + content.runtime" *ngIf="content.runtime"></p>
               <p [innerHTML]="'Seasons: ' + content.seasons" *ngIf="content.seasons"></p>
               <p [innerHTML]="'Episodes: ' + content.episodes" *ngIf="content.episodes"></p>
-              <p class="card-text"><small class="text-muted">{{content.releaseDate}}</small></p>
             </div>
           </div>
         </div>
