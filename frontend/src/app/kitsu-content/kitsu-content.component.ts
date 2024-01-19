@@ -4,7 +4,7 @@ import { ThemeService } from '../services/theme/theme.service';
 import { ServerApiService } from '../services/server-api/server-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan, faSquareXmark, faStop} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../services/authentication/authentication.service";
@@ -23,6 +23,8 @@ export class KitsuContentComponent {
   protected readonly faSquareCheck = faSquareCheck;
   protected readonly faSquareCaretRight = faSquareCaretRight;
   protected readonly faEye = faEye;
+  protected readonly faSquareXmark = faSquareXmark;
+  protected readonly faStop = faStop;
 
   constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
@@ -36,7 +38,7 @@ export class KitsuContentComponent {
   }
 
   addPlanned(){
-    this.api.addToList(this.content.id, 'planned', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
+    this.api.addToList(this.content.id, 'planning', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
 
   addCompleted(){
@@ -47,8 +49,12 @@ export class KitsuContentComponent {
     this.api.addToList(this.content.id, 'watching', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
 
-  addStopped(){
+  addDropped(){
     this.api.addToList(this.content.id, 'dropped', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
+  }
+
+  addOnHold(){
+    this.api.addToList(this.content.id, 'on hold', this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster, this.content.type);
   }
 
   show() {return !this.authServ.userIsAuth;}

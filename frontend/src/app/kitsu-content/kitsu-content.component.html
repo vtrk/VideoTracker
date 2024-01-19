@@ -7,13 +7,15 @@
               <img [src]="content.poster" class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title">{{content.title}}</h5>
-                <p class="card-text">{{content.ageRating}}</p>
-                <p class="card-text"><small class="text-muted">{{content.startDate}}</small></p>
-                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">{{content.endDate}}</small></p>
-                <button [hidden]="show()"  class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="completed" (click)="addCompleted()"><fa-icon [icon]="faSquareCheck"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="stopped" (click)="addStopped()"><fa-icon [icon]="faSquareCaretRight"></fa-icon></button>
-                <button [hidden]="show()" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
+                <p class="card-text">Rating: {{content.ageRating}}</p>
+                <p class="card-text"><small class="text-muted">Release Date: {{content.startDate}}</small></p>
+                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">End Date: {{content.endDate}}</small></p>
+                <p>Status</p>
+                <button [hidden]="show()" title="Plan to watch" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
+                <button [hidden]="show()" title="Watching" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
+                <button [hidden]="show()" title="Completed" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="completed" (click)="addCompleted()"><fa-icon [icon]="faSquareCheck"></fa-icon></button>
+                <button [hidden]="show()" title="On Hold" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="onHold" (click)="addOnHold()"><fa-icon [icon]="faStop"></fa-icon></button>
+                <button [hidden]="show()" title="Dropped" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="dropped" (click)="addDropped()"><fa-icon [icon]="faSquareXmark"></fa-icon></button>
               </div>
             </div>
           </div>
