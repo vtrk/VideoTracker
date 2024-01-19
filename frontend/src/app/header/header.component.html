@@ -49,8 +49,17 @@
             </select>
             <select class="form-select" id="category" (change)="onKitsuCategoryChange($event)" [hidden]="apiIs('TMDB')">
               <option value="none" selected>Select a category</option>
+              <option value="action">Action</option>
               <option value="adventure">Adventure</option>
+              <option value="comedy">Comedy</option>
+              <option value="crime">Crime</option>
+              <option value="drama">Drama</option>
               <option value="horror">Horror</option>
+              <option value="mystery">Mystery</option>
+              <option value="romance">Romance</option>
+              <option value="fantasy">Sci-Fi</option>
+              <option value="sports">Sports</option>
+              <option value="thriller">Thriller</option>
             </select>
           </div>
         </form>
