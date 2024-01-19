@@ -9,11 +9,12 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {CookieService} from "ngx-cookie-service";
 import {AuthenticationService} from "../services/authentication/authentication.service";
 import { Title } from '@angular/platform-browser';
+import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-kitsu-content',
   standalone: true,
-  imports: [CommonModule, FaIconComponent],
+  imports: [CommonModule, FaIconComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './kitsu-content.component.html',
   styleUrl: './kitsu-content.component.css'
 })
@@ -26,6 +27,10 @@ export class KitsuContentComponent {
   protected readonly faSquareXmark = faSquareXmark;
   protected readonly faStop = faStop;
 
+  input: FormControl;
+  vote: string;
+  CookieService: CookieService;
+
   constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
@@ -34,7 +39,12 @@ export class KitsuContentComponent {
       this.content = new KitsuContent();
       this.api.getKitsuContent(this.content, type, id);
       this.title.setTitle("Content - Kitsu");
+      this.CookieService = cookieService;
     });
+  }
+
+  ngOnInit(): void {
+    this.input = new FormControl('');
   }
 
   addPlanned(){
@@ -58,6 +68,21 @@ export class KitsuContentComponent {
   }
 
   show() {return !this.authServ.userIsAuth;}
+
+  updateInput(event: any){
+    this.input = new FormControl(event.target.value);
+  }
+  onSubmit(){
+    this.api.addReview(this.content.id, this.content.type, this.vote, this.input.value);
+  }
+
+  onVoteChange(event: any){
+    this.vote = event.target.options[event.target.options.selectedIndex].value;
+  }
+
+  getReviews(){
+    this.api.getReview(this.content.id, this.content.type);
+  }
 
   protected readonly faTrashCan = faTrashCan;
 }

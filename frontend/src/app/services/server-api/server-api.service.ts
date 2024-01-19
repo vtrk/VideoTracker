@@ -10,7 +10,7 @@ import { ItemUserList } from '../../utils/item-user-list';
 import { UserData } from '../../utils/user-data';
 import { Observable } from 'rxjs';
 import { ItemMailList } from '../../utils/mail-list';
-
+import { ReviewList } from '../../utils/reviews';
 
 /**
  * Service for interacting with the server API.
@@ -595,5 +595,6 @@ export class ServerApiService {
     };
     return this.client.post<String>(url, JSONBody, options);
   }
+
 
 }
