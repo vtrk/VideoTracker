@@ -12,14 +12,32 @@
             <h3 class="text-center" [hidden]="user.getErrorMessage() == ''">{{user.errorMessage}}</h3>
             <div [hidden]="user.getErrorMessage() != ''">
               <h1 class="text-center">Your Profile</h1>
-              <label [innerHTML]="'Username: ' + user.username"></label><br>
-              <label [innerHTML]="'Email: ' + user.email"></label>
+              <h5 class="mb-1">{{user.username}}</h5>
+              <p class="mb-2 pb-1" style="color: #2b2a2a;">{{user.email}}</p>
               <h3>Stats</h3>
-              <label [innerHTML]="'Completed: ' + user.completed"></label><br>
-              <label [innerHTML]="'Watching: ' + user.watching"></label><br>
-              <label [innerHTML]="'Plan to watch: ' + user.plan_to_watch"></label><br>
-              <label [innerHTML]="'On hold: ' + user.on_hold"></label><br>
-              <label [innerHTML]="'Dropped: ' + user.dropped"></label>
+              <div class="d-flex justify-content-between rounded-3 p-2 mb-2"
+                style="background-color: #efefef;">
+                <div>
+                  <p class="small text-muted mb-1">Completed</p>
+                  <p class="mb-0">{{user.completed}}</p>
+                </div>
+                <div class="px-3">
+                  <p class="small text-muted mb-1">Watching</p>
+                  <p class="mb-0">{{user.watching}}</p>
+                </div>
+                <div>
+                  <p class="small text-muted mb-1">Plan to watch</p>
+                  <p class="mb-0">{{user.plan_to_watch}}</p>
+                </div>
+                <div>
+                  <p class="small text-muted mb-1">On Hold</p>
+                  <p class="mb-0">{{user.on_hold}}</p>
+                </div>
+                <div>
+                  <p class="small text-muted mb-1">Dropped</p>
+                  <p class="mb-0">{{user.dropped}}</p>
+                </div>
+            </div>
             </div>
           </div>
         </div>
