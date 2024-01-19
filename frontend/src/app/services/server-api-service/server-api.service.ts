@@ -44,7 +44,12 @@ export class ServerApiService {
     });
   }
 
-
+  /**
+   * Gets the content of an item from the server (TMDB API).
+   * @param item Content object to add data to
+   * @param type type of content
+   * @param id id of content
+   */
   getKitsuContent(item: KitsuContent, type: string, id: string){
     // Since the type of content is known, the API is known so no need to request the API type from the server.
     let url = environment.API_URL + '/content/' + id + '?type=' + type;
@@ -421,7 +426,13 @@ export class ServerApiService {
     return '0';
   }
 
-  changeUsername(id_user: string,username : string):string{
+  /**
+   * Calls the server endpoint to change the username of a user.
+   * @param id_user 
+   * @param username 
+   * @returns an observable of the response from the server
+   */
+  changeUsername(id_user: string, username : string): Observable<string>{
     let url = environment.API_URL + '/update';
     let options = {
       headers: {
@@ -434,20 +445,13 @@ export class ServerApiService {
       credential: username,
       choice: 3
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
-    return '0';
+    return this.client.post<string>(url, JSONBody, options);
   }
 
+  /**
+   * Gets the profile info of a user from the server.
+   * @param user data structure to add data to
+   */
   getInfoProfile(user: UserData){
     let url = environment.API_URL + '/profile';
     let options = {
@@ -472,7 +476,16 @@ export class ServerApiService {
     });
   }
 
-
+  /**
+   * Adds an item to the user's list.
+   * @param id_content
+   * @param status 
+   * @param title 
+   * @param duration 
+   * @param n_episode 
+   * @param link 
+   * @param type 
+   */
   addToList(id_content : string, status : string, title : string, duration: string, n_episode: string, link: string, type: string){
     let url = environment.API_URL + '/addToList';
     let options = {
@@ -503,6 +516,12 @@ export class ServerApiService {
     });
   }
 
+  /**
+   * Removes an item from the user's list.
+   * @param id_user 
+   * @param id_content 
+   * @returns an observable of the response from the server
+   */
   removeFromList(id_user : string, id_content: string): Observable<String>{
     let url = environment.API_URL + '/removeFromList';
     let options = {
@@ -570,25 +589,19 @@ export class ServerApiService {
     });
   }
 
-  deleteAccount(){
-    let url = environment.API_URL + '/deleteAccount';
+  deleteAccount(password: string): Observable<String>{
+    let url = environment.API_URL + '/removeUser';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
         'Accept': 'text/plain'
       }
     };
-    this.client.post(url, {id_user: this.cookieService.get('id_user')}, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
+    let JSONBody = {
+      id_user: this.cookieService.get('id_user'),
+      password: password
+    };
+    return this.client.post<String>(url, JSONBody, options);
   }
 
 }
