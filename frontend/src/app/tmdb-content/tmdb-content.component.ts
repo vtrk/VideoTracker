@@ -17,6 +17,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AuthenticationService} from "../services/authentication/authentication.service";
 import {ReviewList} from "../utils/reviews";
 import {FormControl} from "@angular/forms";
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tmdb-content',
@@ -38,18 +39,21 @@ export class TmdbContentComponent {
   input: FormControl;
   vote: string;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private authServ: AuthenticationService) {
+  CookieService: CookieService;
+
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private authServ: AuthenticationService, private cookieService: CookieService) {
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
       let id = params['id'];
       this.content = new TMDBContent();
       api.getTMDBContent(this.content, type, id);
+      api.getReview(id + "_" + type, this.reviews);
+      this.CookieService = cookieService;
     });
   }
   ngOnInit(): void {
     this.input = new FormControl('');
-    this.api.getReview(this.content.id, this.content.type, this.reviews);
   }
   addPlanned(){
     this.api.addToList(this.content.id, 'plan to watch', this.content.title, this.content.runtime, this.content.episodes, this.content.poster, this.content.type);
@@ -73,11 +77,24 @@ export class TmdbContentComponent {
 
   show() {return !this.authServ.userIsAuth;}
 
+
+  showReview(){
+    if(this.authServ.userIsAuth){
+      let show: boolean = false;
+      this.reviews.getReviewList().forEach(review => {
+        if(review.id_user == this.CookieService.get('id_user'))
+          show = true;
+      });
+      return show;
+    }
+    return !this.authServ.userIsAuth;
+  }
+
   updateInput(event: any){
     this.input = new FormControl(event.target.value);
   }
   onSubmit(){
-    this.api.addReview(this.content.id, this.content.type, this.vote, this.input.value);
+    this.api.addReview(this.content.id, this.content.type, this.vote, this.input.value, this.content.title, this.content.runtime, this.content.episodes, this.content.poster);
   }
 
   onVoteChange(event: any){

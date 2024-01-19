@@ -9,7 +9,7 @@
                 <h5 class="card-title">{{content.title}}</h5>
                 <p class="card-text">Rating: {{content.ageRating}}</p>
                 <p class="card-text"><small class="text-muted">Release Date: {{content.startDate}}</small></p>
-                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie'">End Date: {{content.endDate}}</small></p>
+                <p class="card-text"><small class="text-muted" [hidden]="content.showType=='movie' || content.endDate == undefined">End Date: {{content.endDate}}</small></p>
                 <p>Status</p>
                 <button [hidden]="show()" title="Plan to watch" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="planned" (click)="addPlanned()"><fa-icon [icon]="faSquarePlus"></fa-icon></button>
                 <button [hidden]="show()" title="Watching" class="btn btn-outline-success my-2 my-sm-0" type="submit" value="watching" (click)="addWatching()"><fa-icon [icon]="faEye"></fa-icon></button>
@@ -30,10 +30,10 @@
                 <p [innerHTML]="'Status: ' + content.status"></p>
               </div>
             </div>
-            <div class="card" [hidden]="show()"> <!-- Da nascondere se l'utente ha recensito -->
+            <div class="card" [hidden]="showReview()"> <!-- Da nascondere se l'utente ha recensito -->
               <div class="card-body">
                 <p id="reviewHead">Write review</p>
-                <form (ngSubmit)="onSubmit()">
+                <form (ngSubmit)="onSubmit(reviewForm)" #reviewForm="ngForm">
                   <select class="form-text" id="rating" (change)="onVoteChange($event)">
                     <option value="0">0/5</option>
                     <option value="1">1/5</option>
@@ -42,25 +42,14 @@
                     <option value="4">4/5</option>
                     <option value="5">5/5</option>
                   </select>
-                  <textarea class="form-control mr-sm-2" id="textarea" name="reviewText" placeholder="Leave your review here:" [formControl]="input"></textarea>
-                  <button class="btn btn-primary" type="submit" id="submit">Submit</button>
+                  <textarea class="form-control mr-sm-2" id="reviewText" name="reviewText" placeholder="Leave your review here:" ngModel #reviewText="ngModel" required></textarea>
+                  <div class="error" *ngIf="reviewText.touched">
+                    <p *ngIf="reviewText.errors?.['required']" style="color: red;" >Field required</p>
+                  </div>
+                  <button class="btn btn-primary" type="submit" id="submit" [disabled]="reviewForm.invalid">Submit</button>
                 </form>
               </div>
             </div>
-            <!-- <div class="card"> Da mettere hidden se l'utente non ha ancora scritto recensioni
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <p>User's nickname</p>
-                  </div>
-                  <div class="col">
-                    <p>Score /5</p>
-                  </div>
-                </div>
-                <p id="reviewText">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."</p>
-              </div>
-              <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon>
-            </div> -->
             <div class="card" *ngFor="let revs of reviews.getReviewList()">
               <div class="card-body">
                 <div class="row">

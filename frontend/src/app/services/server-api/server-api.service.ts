@@ -63,7 +63,7 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
           item.setValues(json.data.id, json.data.attributes.titles.en_jp, json.data.attributes.synopsis, json.data.attributes.posterImage.original, json.data.attributes.episodeCount, json.data.attributes.episodeLength, json.data.attributes.showType, json.data.attributes.status, json.data.attributes.startDate, json.data.attributes.endDate, json.data.attributes.ageRating, '');
-        return;
+          return;
       },
       error: error => {
         console.log(error);
@@ -528,8 +528,13 @@ export class ServerApiService {
     return this.client.post<String>(url, JSONBody, options);
   }
 
-  getReview(id_content : string, type: string, reviewList: ReviewList){
-    let url = environment.API_URL + '/getReview';
+  /**
+   * Gets the reviews of a content from the server.
+   * @param id_content the id of the content
+   * @param reviewList the list to add the reviews to
+   */
+  getReview(id_content : string, reviewList: ReviewList){
+    let url = environment.API_URL + '/reviews';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -537,13 +542,12 @@ export class ServerApiService {
       }
     };
     let JSONBody = {
-      id_user: this.cookieService.get('id_user'),
-      id_content: id_content + '_' + type
+      id_content: id_content
     };
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        json.getReview().forEach((element: any) => {
+        json.reviews.forEach((element: any) => {
           reviewList.add(element.id, element.vote, element.user_comment, element.id_user, element.id_content);
         });
         return data.toString();
@@ -555,7 +559,7 @@ export class ServerApiService {
     });
   }
 
-  addReview(id_content : string, type: string, vote: string, user_comment: string){
+  addReview(id_content : string, type: string, vote: string, user_comment: string, title: string, duration: string, n_episode: string, link: string){
     let url = environment.API_URL + '/addReview';
     let options = {
       headers: {
@@ -567,8 +571,11 @@ export class ServerApiService {
       vote: vote,
       user_comment: user_comment,
       id_user: this.cookieService.get('id_user'),
-      id_content: id_content + '_' + type
-
+      id_content: id_content + '_' + type,
+      title: title,
+      duration: duration,
+      n_episode: n_episode,
+      link: link
     };
     this.client.post(url, JSONBody, options).subscribe({
       next: data => {
