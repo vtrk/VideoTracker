@@ -25,12 +25,6 @@ public class VideoTrackerApplication {
             throw new RuntimeException("API not found");
         }
         ConfigurableApplicationContext context =SpringApplication.run(VideoTrackerApplication.class, args);
-        /*DashboardController dashboardController = context.getBean(DashboardController.class);
-        UserDaoPostgres userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
-        List<User> user = userDaoPostgres.findAll() ;
-        String result = dashboardController.showDashboard(user,);*/
-
-
         logger.info("Version: " + Properties.getInstance().getProperty("VERSION"));
     }
 
