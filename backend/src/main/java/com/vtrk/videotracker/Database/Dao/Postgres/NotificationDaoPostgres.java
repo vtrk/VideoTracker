@@ -38,9 +38,12 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
     public void add(Notification notification) {
         //
         try{
-            String query = "INSERT INTO public.notification (id, title, description) VALUES(nextval('notification_id_seq'::regclass), '"+notification.getTitle()+"', '"+notification.getDescription()+"');";
+            String query = "INSERT INTO public.notification (id, title, description) VALUES(nextval('notification_id_seq'::regclass), '"+notification.getTitle()+"', '"+notification.getDescription()+"') RETURNING id;";
             Statement st = connection.createStatement();
-            st.executeQuery(query);
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                notification.setId(rs.getInt("id"));
+            }
         }catch(SQLException e){
             //System.out.println("Error in add "+e);
         }

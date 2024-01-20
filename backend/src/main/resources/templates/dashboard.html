@@ -59,15 +59,16 @@
 
     <div class="d-flex flex-column min-vh-75 justify-content-center text-center mt-5 pb-lg-5">
         <h1>Send notification</h1>
-        <form id="notificationForm" class="form-text">
+        <form id="notificationForm" class="form-text" th:action="@{/sendNotification}" method="post">
             <p>
                 <label for="title" class="visually-hidden">Title</label>
                 <input id="title" type="text" name="title" placeholder="Title" required autofocus class="form-control" />
             </p>
             <p>
-                <textarea form="notificationForm" class="form-control" placeholder="Message" style="resize: none; height: 100px" required></textarea>
+                <label for="message" class="visually-hidden">Message</label>
+                    <textarea id="message" name="message" form="notificationForm" class="form-control" placeholder="Message" style="resize: none; height: 100px" required ></textarea>
             </p>
-            <button onclick="sendNotification()" type="submit" value="Send" class="btn btn-primary">Send Notification</button>
+            <button type="submit" value="Send" class="btn btn-primary">Send Notification</button>
         </form>
     </div>
 
@@ -83,6 +84,7 @@
             alert('Visualizzazione del file di log');
         }
     </script>
+
 </div>
 <div class="footer mt-auto pt-lg-3 bg-transparent">
     <footer>

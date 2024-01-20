@@ -1,7 +1,10 @@
 package com.vtrk.videotracker.controller;
 
 import com.vtrk.videotracker.Database.DBManager;
+import com.vtrk.videotracker.Database.Dao.NotificationDao;
+import com.vtrk.videotracker.Database.Dao.ReceiveDao;
 import com.vtrk.videotracker.Database.Dao.UserDao;
+import com.vtrk.videotracker.Database.Model.Notification;
 import com.vtrk.videotracker.Database.Model.User;
 import com.vtrk.videotracker.utils.Properties;
 import jakarta.servlet.http.Cookie;
@@ -92,4 +95,26 @@ public class DashboardController {
         userDao.ban(Integer.parseInt(userId));
         return "redirect:/";
     }
+
+    @RequestMapping(
+            value = "/sendNotification",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    @CrossOrigin
+    public String sendNotification(@RequestParam MultiValueMap<String, String> paramMap, HttpServletRequest request, HttpServletResponse response) {
+        String title = paramMap.get("title").get(0);
+        String message = paramMap.get("message").get(0);
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        List<User> users = userDao.findAll();
+        NotificationDao notificationDao = DBManager.getInstance().getNotificationDao();
+        Notification notification = new Notification(0, title, message);
+        notificationDao.add(notification);
+        ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
+        for(User user : users) {
+            receiveDao.add(user.getId(), notification.getId());
+        }
+        return "redirect:/";
+    }
+
 }
