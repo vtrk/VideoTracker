@@ -377,16 +377,7 @@ public class RESTfulAPI {
         String id_content = json.getString("id_content");
         String state = json.getString("status");
 
-        // Add content to database if it doesn't exist
-        ContentDao contentDao = DBManager.getInstance().getContentDao();
-        if(!contentDao.exists(id_content)){
-            String title = json.getString("title");
-            int duration = json.getInt("duration");
-            int n_episode = json.getInt("n_episode");
-            String link = json.getString("link");
-            ProxyContent proxyContent = new ProxyContent();
-            proxyContent.request(1, new Content(id_content, title, duration, n_episode, link));
-        }
+        RESTfulAPI.saveIfNotExist(id_content, json);
 
         UserListDao userListDao = DBManager.getInstance().getUserListDao();
         UserList list = userListDao.findByIdUser(id_user);
@@ -602,6 +593,10 @@ public class RESTfulAPI {
      *   "user_comment": "user_comment",
      *   "id_user": "id_user",
      *   "id_content": "id_content"
+     *   "title": "title",
+     *   "duration": "duration",
+     *   "n_episode": "n_episode",
+     *   "link": "link"
      * }
      * <br>
      * <h4>Response</h4>
@@ -626,6 +621,8 @@ public class RESTfulAPI {
         String user_comment = json.getString("user_comment");
         int id_user = json.getInt("id_user");
         String id_content = json.getString("id_content");
+
+        RESTfulAPI.saveIfNotExist(id_content, json);
 
         ReviewDao reviewDao = DBManager.getInstance().getReviewDao();
         ProxyReview proxyReview = new ProxyReview();
@@ -746,6 +743,19 @@ public class RESTfulAPI {
         proxyUser.request(3, id_user);
 
         return response.put("response", "0").toString();
+    }
+
+    private static void saveIfNotExist(String id_content, JSONObject json){
+        // Add content to database if it doesn't exist
+        ContentDao contentDao = DBManager.getInstance().getContentDao();
+        if(!contentDao.exists(id_content)){
+            String title = json.getString("title");
+            int duration = json.getInt("duration");
+            int n_episode = json.getInt("n_episode");
+            String link = json.getString("link");
+            ProxyContent proxyContent = new ProxyContent();
+            proxyContent.request(1, new Content(id_content, title, duration, n_episode, link));
+        }
     }
 
 }
