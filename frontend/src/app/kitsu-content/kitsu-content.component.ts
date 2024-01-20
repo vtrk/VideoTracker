@@ -53,6 +53,7 @@ export class KitsuContentComponent {
 
   ngOnInit(): void {
     this.input = new FormControl('');
+    this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
   }
 
   addPlanned(){
@@ -95,6 +96,10 @@ export class KitsuContentComponent {
 
   updateInput(event: any){
     this.input = new FormControl(event.target.value);
+  }
+
+  reload(){
+    location.href = ('/kitsu/' + this.content.type + '/' + this.content.id);
   }
   onSubmit(form: NgForm){
     this.add_review = false;
