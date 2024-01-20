@@ -1,6 +1,10 @@
 <body [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}" style="padding-top: 65px;">
-    <section>
-      <div class="container mt-4 pt-5">
+  <div *ngIf="content.getErrorString() != ''">
+    <h3 class="text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">{{content.getErrorString()}}</h3>
+  </div>
+    <section [hidden]="content.getErrorString() != ''">
+      <h3 [hidden]="content.id != undefined" class="text-center" [ngClass]="{'dark-mode':this.themeService.isDarkTheme()}">Loading content</h3>
+      <div class="container mt-4 pt-5" [hidden]="content.id == undefined">
         <div class="row">
           <div class="col-md-4">
             <div class="card">

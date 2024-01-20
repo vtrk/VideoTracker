@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { KitsuContent } from '../utils/content';
 import { ThemeService } from '../services/theme/theme.service';
 import { ServerApiService } from '../services/server-api/server-api.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan, faSquareXmark, faStop} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
@@ -38,7 +38,8 @@ export class KitsuContentComponent {
 
   CookieService: CookieService;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private cookieService: CookieService,private authServ: AuthenticationService, private title: Title, private router: Router) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
+    this.input = new FormControl('');
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
       location.replaceState('/content');
       let type = params['type'];
@@ -51,8 +52,8 @@ export class KitsuContentComponent {
     });
   }
 
-  ngOnInit(): void {
-    this.input = new FormControl('');
+  loadReviews(): void {
+    this.reviews = new ReviewList();
     this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
   }
 
@@ -110,8 +111,7 @@ export class KitsuContentComponent {
       next: (data) => {
         let json = JSON.parse(JSON.stringify(data));
         if(json.response == '0'){
-          this.reviews = new ReviewList();
-          this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
+          this.loadReviews();
         }
         else{
           this.add_review = true;

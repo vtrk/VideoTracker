@@ -571,11 +571,10 @@ export class ServerApiService {
         json.reviews.forEach((element: any) => {
           reviewList.add(element.id, element.vote, element.user_comment, element.id_user, element.id_content);
         });
-        return data.toString();
       },
       error: error => {
         console.log(error);
-        return error.toString();
+        reviewList.setErrorString(strings.REVIEW_ERROR);
       }
     });
   }
