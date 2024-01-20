@@ -49,6 +49,7 @@ export class KitsuContentComponent {
 
   ngOnInit(): void {
     this.input = new FormControl('');
+    this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
   }
 
   addPlanned(){
@@ -88,11 +89,16 @@ export class KitsuContentComponent {
   updateInput(event: any){
     this.input = new FormControl(event.target.value);
   }
+
+  reload(){
+    location.href = ('/kitsu/' + this.content.type + '/' + this.content.id);
+  }
   onSubmit(form: NgForm){
     if(this.vote == undefined)
       this.vote = '0';
     this.api.addReview(this.content.id, this.content.type, this.vote, form.value.reviewText, this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster);
     this.router.navigate(['/kitsu', this.content.type, this.content.id]);
+    this.ngOnInit();
   }
 
   onVoteChange(event: any){
