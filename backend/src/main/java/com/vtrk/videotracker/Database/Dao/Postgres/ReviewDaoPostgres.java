@@ -40,7 +40,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
     public int findByIdUserAndContent(int id_user, String id_content) {
         int id = -1;
         try {
-            String query = "SELECT * FROM review WHERE id_user = " + id_user + " AND id_content = "+id_content+";";
+            String query = "SELECT * FROM review WHERE id_user = " + id_user + " AND id_content = '"+id_content+"';";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()){
