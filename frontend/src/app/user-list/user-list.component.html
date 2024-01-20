@@ -42,7 +42,7 @@
                 <td class="menu-entry" id="{{item.id}}" title="{{item.type}}" (click)="goto($event)">{{item.title}}</td>
                 <td>{{item.status}}</td>
                 <td>
-                  <div id="{{item.id + '_' + item.type}}" (click)="remove($event)"><fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon></div>
+                  <fa-icon [icon]="faTrashCan" id="{{item.id + '_' + item.type}}" (click)="remove($event)" class="menu-entry" id="delete"></fa-icon>
                 </td>
             </tr>
           </tbody>

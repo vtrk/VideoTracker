@@ -60,7 +60,14 @@ export class UserListComponent implements OnInit{
   remove(event: any){
     this.delete_error = false;
 
-    var id = event.target.attributes.fill.ownerElement.parentNode.parentNode.parentNode.attributes.id.nodeValue;
+    var id;
+    if(event.target.attributes.id == undefined)
+      if(event.target.attributes.fill == undefined)
+        id = event.target.attributes.role.ownerElement.parentNode.attributes.id.nodeValue;
+      else
+        id = event.target.attributes.fill.ownerElement.parentNode.parentNode.attributes.id.nodeValue;
+    else
+      id = event.target.attributes.id.nodeValue;
 
     this.api.removeFromList(this.cookies.get('id_user'), id).subscribe({
       next: data => {

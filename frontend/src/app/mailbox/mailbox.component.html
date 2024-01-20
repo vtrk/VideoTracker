@@ -24,7 +24,7 @@
                         <td scope="row">{{item.title}}</td>
                         <td scope="row">{{item.description}}</td>
                         <td scope="row">
-                          <div id="{{item.id}}" (click)="remove($event)"><fa-icon [icon]="faTrashCan" class="menu-entry"></fa-icon></div>
+                          <fa-icon [icon]="faTrashCan" id="{{item.id}}" (click)="remove($event)" class="menu-entry"></fa-icon>
                         </td>
                       </tr>
                     </tbody>
