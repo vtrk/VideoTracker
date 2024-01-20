@@ -19,6 +19,7 @@ export const strings = {
     SERVER_ERROR: "Server error: The server is either down or not responding",
     ERROR_CHANGE_USERNAME: "Error changing username",
     ERRIR_CHANGE_EMAIL: "Error changing email",
+    BAN_ERROR: "User is banned",
 
     // General
     trending: "Trending",

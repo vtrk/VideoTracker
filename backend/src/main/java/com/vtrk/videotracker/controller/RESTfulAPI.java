@@ -177,7 +177,7 @@ public class RESTfulAPI {
      *   "password": "password"
      * }
      * <br>
-     * Response: "0" if login fails, the user id otherwise
+     * Response: "0" if login fails, -1 if the user is banned, the user id otherwise
      * {
      *     "response": "response"
      * }
@@ -198,6 +198,8 @@ public class RESTfulAPI {
         JSONObject response = new JSONObject();
         if(user.getId() == 0)
             return response.put("response", "0").toString();
+        if(user.isBanned())
+            return response.put("response", "-1").toString();
         return response.put("response", Integer.toString(user.getId())).toString();
     }
 
@@ -750,6 +752,46 @@ public class RESTfulAPI {
         return response.put("response", "0").toString();
     }
 
+
+    /**
+     * Check if user is banned
+     * @param data JSON user data
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *     "id_user": "id_user"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if the user is not banned</li>
+     *     <li>"1" if the user is banned</li>
+     * </ul>
+     * {
+     *    "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/isBanned",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String isBanned(@RequestBody String data) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        JSONObject response = new JSONObject();
+        if(userDao.isBanned(id_user))
+            return response.put("response", "1").toString();
+        return response.put("response", "0").toString();
+    }
+
+    /**
+     * Check if content exists in database. If it doesn't, add it.
+     * @param id_content
+     * @param json
+     */
     private static void saveIfNotExist(String id_content, JSONObject json){
         // Add content to database if it doesn't exist
         ContentDao contentDao = DBManager.getInstance().getContentDao();

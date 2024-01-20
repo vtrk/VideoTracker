@@ -219,4 +219,23 @@ public class UserDaoPostgres implements UserDao, Subject {
             //System.out.println("Error in ban "+e);
         }
     }
+
+    /**
+     * Check if user is banned
+     * @param id
+     * @return true if user is banned, false otherwise
+     */
+    @Override
+    public boolean isBanned(int id) {
+        try {
+            String query = "SELECT * FROM user_vt WHERE id = "+id+" AND banned = true;";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            System.out.println("Error in isBanned "+e);
+        }
+        return true;
+    }
 }

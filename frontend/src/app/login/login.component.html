@@ -12,7 +12,7 @@
               <form #logInForm="ngForm" (ngSubmit)="logIn(logInForm)" id="loginForm" method="post">
                 <h3 [hidden]="!wrong_credentials" [ngClass]="{'hidden': !wrong_credentials}" [innerHTML]="wrong_credentials_str" style="color: red;" ></h3>
                 <h3 [hidden]="!login_error" [ngClass]="{'hidden': !login_error}" [innerHTML]="login_error_str" style="color: red;" ></h3>
-                
+                <h3 [hidden]="!ban_error" [ngClass]="{'hidden': !ban_error}" [innerHTML]="ban_banned_str" style="color: red;" ></h3>
                 <div class="spacingForm">
                   <input type="email" name="email" ngModel #email="ngModel" required email  class="form-control my-3.py-2" placeholder="Email">
                   <div class="error" *ngIf="email.touched">

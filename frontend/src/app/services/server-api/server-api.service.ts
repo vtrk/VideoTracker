@@ -656,4 +656,20 @@ export class ServerApiService {
     };
     return this.client.post<String>(url, JSONBody, options);
   }
+
+  /**
+   * Calls the server endpoint to check if the given user is banned.
+   * @param id_user
+   * @returns an observable of the response from the server
+   */
+  isBanned(id_user: string): Observable<String>{
+    let url = environment.API_URL + '/isBanned';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return this.client.post<String>(url, {id_user: id_user}, options);
+  }
 }

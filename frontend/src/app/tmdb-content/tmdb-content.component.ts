@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ServerApiService } from '../services/server-api/server-api.service';
 import { ThemeService } from '../services/theme/theme.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TMDBContent } from '../utils/content';
 import { CommonModule, Location } from '@angular/common';
 import {
@@ -19,6 +19,7 @@ import {ReviewList} from "../utils/reviews";
 import {FormControl, FormsModule, NgForm} from "@angular/forms";
 import { CookieService } from 'ngx-cookie-service';
 import { strings } from '../utils/strings';
+import { checkBan } from '../utils/check-ban';
 
 @Component({
   selector: 'app-tmdb-content',
@@ -48,8 +49,10 @@ export class TmdbContentComponent {
 
   CookieService: CookieService;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private authServ: AuthenticationService, private cookieService: CookieService) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, router: Router, private authServ: AuthenticationService, private cookieService: CookieService) {
+    this.input = new FormControl('');
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
+      checkBan(this.cookieService.get('id_user'), this.authServ, router , this.api, this.cookieService);
       location.replaceState('/content');
       let type = params['type'];
       let id = params['id'];

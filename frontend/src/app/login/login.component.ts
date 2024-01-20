@@ -32,6 +32,9 @@ export class LoginComponent {
   login_error: boolean = false;
   login_error_str: string = strings.login_error;
 
+  ban_error: boolean = false;
+  ban_banned_str: string = strings.BAN_ERROR;
+
   protected readonly faHouse = faHouse;
 
   form = new FormGroup({
@@ -47,6 +50,7 @@ export class LoginComponent {
   logIn(form: NgForm){
     this.wrong_credentials = false;
     this.login_error = false;
+    this.ban_error = false;
 
     let email = form.form.controls['email'].value;
     let password = form.form.controls['password'].value;
@@ -61,6 +65,8 @@ export class LoginComponent {
         let json = JSON.parse(JSON.stringify(data));
         if(json.response == "0"){
           this.wrong_credentials = true;
+        }else if(json.response == "-1"){
+          this.ban_error = true;
         }else{
           this.cookieService.set('id_user', json.response);
           this.router.navigate(['/home']);
@@ -72,17 +78,6 @@ export class LoginComponent {
       }
     });
   }
-
-  /*
-  verify(){
-    console.log(this.email_username, this.password);
-    if(this.authService.login(this.email_username, this.password)){
-      console.log('Login successful');
-      this.router.navigate(['/home']);
-    }else{
-      this.wrong_credentials = false;
-    }
-  }*/
 
   show_message(){
     return this.wrong_credentials;

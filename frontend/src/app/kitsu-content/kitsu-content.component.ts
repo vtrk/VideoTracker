@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { KitsuContent } from '../utils/content';
 import { ThemeService } from '../services/theme/theme.service';
 import { ServerApiService } from '../services/server-api/server-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 import {faSquarePlus, faSquareCheck, faSquareCaretRight, faEye, faTrashCan, faSquareXmark, faStop} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
@@ -12,6 +12,7 @@ import { Title } from '@angular/platform-browser';
 import {FormControl, FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import { ReviewList } from '../utils/reviews';
 import { strings } from '../utils/strings';
+import { checkBan } from '../utils/check-ban';
 
 @Component({
   selector: 'app-kitsu-content',
@@ -41,9 +42,10 @@ export class KitsuContentComponent {
 
   CookieService: CookieService;
 
-  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, private cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
+  constructor(public themeService: ThemeService, private route: ActivatedRoute, private api: ServerApiService, location: Location, router: Router, private cookieService: CookieService,private authServ: AuthenticationService, private title: Title) {
     this.input = new FormControl('');
     this.route.params.subscribe(params => { //Receives the request body as a stringified JSON object.
+      checkBan(this.cookieService.get('id_user'), this.authServ, router , this.api, this.cookieService);
       location.replaceState('/content');
       let type = params['type'];
       let id = params['id'];
