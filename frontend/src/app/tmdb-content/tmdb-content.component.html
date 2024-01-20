@@ -30,25 +30,29 @@
           <div class="card" [hidden]="showReview()"> <!-- Da nascondere se l'utente ha recensito -->
             <div class="card-body">
               <p id="reviewHead">Write review</p>
-              <select class="form-text" id="rating">
-                <option value="0">0/5</option>
-                <option value="1">1/5</option>
-                <option value="2">2/5</option>
-                <option value="3">3/5</option>
-                <option value="4">4/5</option>
-                <option value="5">5/5</option>
-              </select>
-              <form>
-                <textarea id="textarea" name="reviewText" cols="70" placeholder="Leave your review here:"></textarea>
+              <h3 [hidden]="!add_review" [ngClass]="{'hidden': !add_review}" [innerHTML]="add_review_error_message" style="color: red;" ></h3>
+              <form (ngSubmit)="onSubmit(reviewForm)" #reviewForm="ngForm">
+                <select class="form-text" id="rating" (change)="onVoteChange($event)">
+                  <option value="0">0/5</option>
+                  <option value="1">1/5</option>
+                  <option value="2">2/5</option>
+                  <option value="3">3/5</option>
+                  <option value="4">4/5</option>
+                  <option value="5">5/5</option>
+                </select>
+                <textarea class="form-control mr-sm-2" id="reviewText" name="reviewText" placeholder="Leave your review here:" ngModel #reviewText="ngModel" required></textarea>
+                <div class="error" *ngIf="reviewText.touched">
+                  <p *ngIf="reviewText.errors?.['required']" style="color: red;" >Field required</p>
+                </div>
+                <button class="btn btn-primary" type="submit" id="submit" [disabled]="reviewForm.invalid">Submit</button>
               </form>
-              <button class="btn btn-primary" type="submit" id="submit">Submit</button>
             </div>
           </div>
           <div class="card" *ngFor="let revs of reviews.getReviewList()">
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <p>User: {{revs.id_user}}</p>
+                  <p style="color: gray;"><b style="color: black;">{{revs.username}}</b>#{{revs.id_user}}</p>
                 </div>
                 <div class="col">
                   <p>Score {{revs.vote}}/5</p>
@@ -56,7 +60,10 @@
               </div>
               <p id="reviewText">{{revs.user_comment}}</p>
             </div>
-            <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')"></fa-icon>
+            <div *ngIf="this.CookieService.get('id_user') == revs.id_user">
+              <h3 [hidden]="!remove_review" [ngClass]="{'hidden': !add_review}" [innerHTML]="remove_review_error_message" style="color: red;" ></h3>
+              <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')" (click)="removeReview($event)"></fa-icon>
+            </div>
           </div>
         </div>
       </div>

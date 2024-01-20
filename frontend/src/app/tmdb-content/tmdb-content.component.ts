@@ -16,13 +16,14 @@ import {
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {AuthenticationService} from "../services/authentication/authentication.service";
 import {ReviewList} from "../utils/reviews";
-import {FormControl} from "@angular/forms";
+import {FormControl, FormsModule, NgForm} from "@angular/forms";
 import { CookieService } from 'ngx-cookie-service';
+import { strings } from '../utils/strings';
 
 @Component({
   selector: 'app-tmdb-content',
   standalone: true,
-  imports: [CommonModule, FaIconComponent],
+  imports: [CommonModule, FaIconComponent, FormsModule],
   templateUrl: './tmdb-content.component.html',
   styleUrl: './tmdb-content.component.css'
 })
@@ -35,6 +36,12 @@ export class TmdbContentComponent {
   protected readonly faSquarePlus = faSquarePlus;
   protected readonly faSquareXmark = faSquareXmark;
   protected readonly faStop = faStop;
+
+  add_review: boolean = false;
+  add_review_error_message: string = strings.add_review_error;
+
+  remove_review: boolean = false;
+  remove_review_error_message: string = strings.remove_review_error;
 
   input: FormControl;
   vote: string;
@@ -52,6 +59,12 @@ export class TmdbContentComponent {
       this.CookieService = cookieService;
     });
   }
+
+  loadReviews(): void {
+    this.reviews = new ReviewList();
+    this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
+  }
+
   ngOnInit(): void {
     this.input = new FormControl('');
   }
@@ -90,13 +103,48 @@ export class TmdbContentComponent {
     return !this.authServ.userIsAuth;
   }
 
+  removeReview(event: any){
+    this.remove_review = false;
+    this.api.removeReview(this.cookieService.get('id_user'), this.content.id, this.content.type).subscribe({
+      next: (data) => {
+        let json = JSON.parse(JSON.stringify(data));
+        if(json.response == '0')
+          this.loadReviews();
+        else
+          this.remove_review = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.remove_review = true;
+      },
+    });
+  }
+
   updateInput(event: any){
     this.input = new FormControl(event.target.value);
   }
-  onSubmit(){
-    this.api.addReview(this.content.id, this.content.type, this.vote, this.input.value, this.content.title, this.content.runtime, this.content.episodes, this.content.poster);
-  }
 
+  onSubmit(form: NgForm){
+    this.add_review = false;
+    
+    if(this.vote == undefined)
+      this.vote = '0';
+    this.api.addReview(this.content.id, this.content.type, this.vote, form.value.reviewText, this.content.title, this.content.runtime, this.content.episodes, this.content.poster).subscribe({
+      next: (data) => {
+        let json = JSON.parse(JSON.stringify(data));
+        if(json.response == '0'){
+          this.loadReviews();
+          form.reset();
+        }
+        else
+          this.add_review = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.add_review = true;
+      },
+    });
+  }
   onVoteChange(event: any){
     this.vote = event.target.options[event.target.options.selectedIndex].value;
   }

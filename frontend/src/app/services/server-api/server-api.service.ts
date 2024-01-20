@@ -623,7 +623,7 @@ export class ServerApiService {
       }
     };
     if(duration == undefined) duration = '-1';
-    console.log(id_content + '_' + type)
+    if(n_episode == undefined) n_episode = '-1';
     let JSONBody = {
       vote: vote,
       user_comment: user_comment,
