@@ -43,7 +43,7 @@ export class LoginComponent {
   });
 
 
-  constructor(private api: ServerApiService,private router: Router, private authService: AuthenticationService, public themeService: ThemeService, private cookieService: CookieService, private title: Title) {
+  constructor(private api: ServerApiService,private router: Router, public themeService: ThemeService, private cookieService: CookieService, private title: Title) {
     this.title.setTitle("Login");
   }
 
