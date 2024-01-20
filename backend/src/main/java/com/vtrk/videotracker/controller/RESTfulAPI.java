@@ -550,6 +550,7 @@ public class RESTfulAPI {
      *      "id": "id",
      *      "vote": "vote",
      *      "user_comment": "user_comment",
+     *      "username": "username",
      *      "id_user": "id_user",
      *      "id_content": "id_content"
      *    }
@@ -569,11 +570,14 @@ public class RESTfulAPI {
         List<Review> reviews = reviewDao.findByIdContent(id_content);
         JSONObject response = new JSONObject();
         JSONArray responseArray = new JSONArray();
+        UserDao userDao = DBManager.getInstance().getUserDao();
         for(Review review : reviews){
             JSONObject reviewJSON = new JSONObject();
+            User user = userDao.findById(review.getIdUser());
             reviewJSON.put("id", review.getId());
             reviewJSON.put("vote", review.getVote());
             reviewJSON.put("user_comment", review.getUserComment());
+            reviewJSON.put("username", user.getUsername());
             reviewJSON.put("id_user", review.getIdUser());
             reviewJSON.put("id_content", review.getIdContent());
             responseArray.put(reviewJSON);
@@ -673,14 +677,15 @@ public class RESTfulAPI {
         ProxyReview proxyReview = new ProxyReview();
 
         JSONObject response = new JSONObject();
+
         if(!reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
-        int id_review = DBManager.getInstance().getReviewDao().findByIdUserAndContent(id_user, id_content);
-        if(id_review != -1){
+        int id_review = reviewDao.findByIdUserAndContent(id_user, id_content);
+
+        if(id_review != -1)
             proxyReview.request(3, id_review);
-            return response.put("response", "1").toString();
-        }
+
         if(reviewDao.exists(id_user, id_content))
             return response.put("response", "1").toString();
 
