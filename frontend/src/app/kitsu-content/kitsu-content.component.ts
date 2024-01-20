@@ -11,6 +11,7 @@ import {AuthenticationService} from "../services/authentication/authentication.s
 import { Title } from '@angular/platform-browser';
 import {FormControl, FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import { ReviewList } from '../utils/reviews';
+import { strings } from '../utils/strings';
 
 @Component({
   selector: 'app-kitsu-content',
@@ -28,6 +29,9 @@ export class KitsuContentComponent {
   protected readonly faEye = faEye;
   protected readonly faSquareXmark = faSquareXmark;
   protected readonly faStop = faStop;
+
+  add_review: boolean = false;
+  add_review_error_message: string = strings.add_review_error;
 
   input: FormControl;
   vote: string;
@@ -85,14 +89,35 @@ export class KitsuContentComponent {
     return !this.authServ.userIsAuth;
   }
 
+  removeReview(event: any){
+    //this.router.navigate(['/kitsu', this.content.type, this.content.id]);
+  }
+
   updateInput(event: any){
     this.input = new FormControl(event.target.value);
   }
   onSubmit(form: NgForm){
+    this.add_review = false;
+
     if(this.vote == undefined)
       this.vote = '0';
-    this.api.addReview(this.content.id, this.content.type, this.vote, form.value.reviewText, this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster);
-    this.router.navigate(['/kitsu', this.content.type, this.content.id]);
+    this.api.addReview(this.content.id, this.content.type, this.vote, form.value.reviewText, this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster).subscribe({
+      next: (data) => {
+        let json = JSON.parse(JSON.stringify(data));
+        if(json.response == '0'){
+          this.reviews = new ReviewList();
+          this.api.getReview(this.content.id + "_" + this.content.type, this.reviews);
+        }
+        else{
+          this.add_review = true;
+          this.add_review_error_message = strings.add_review_error;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.add_review = true;
+      },
+    });
   }
 
   onVoteChange(event: any){

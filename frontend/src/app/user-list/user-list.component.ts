@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit{
   ngOnInit(): void{
     this.userList = new ItemUserList();
     // Get the list of items.
-    this.api.getDbList(this.userList, this.cookies.get('id_user'));
+    this.api.getList(this.userList, this.cookies.get('id_user'));
   }
 
   goto(event: any){

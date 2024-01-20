@@ -258,7 +258,12 @@ export class ServerApiService {
     });
   }
 
-  getDbList(userList: ItemUserList, id_user: string){
+  /**
+   * Gets the list of items of a user from the server.
+   * @param userList 
+   * @param id_user 
+   */
+  getList(userList: ItemUserList, id_user: string){
     let url = environment.API_URL + '/list';
     let options = {
       headers: {
@@ -292,6 +297,10 @@ export class ServerApiService {
     });
   }
 
+  /**
+   * Gets the notifications of a user from the server.
+   * @param itemMailList 
+   */
   getNotifications(itemMailList: ItemMailList){
     let url = environment.API_URL + '/notifications';
     let options = {
@@ -319,6 +328,12 @@ export class ServerApiService {
     });
   }
 
+  /**
+   * Calls the server endpoint to add a notification to a user.
+   * @param id_user 
+   * @param id_notification 
+   * @returns an observable of the response from the server
+   */
   removeNotification(id_user: string, id_notification: string): Observable<String>{
     let url = environment.API_URL + '/removeNotification';
     let options = {
@@ -334,6 +349,12 @@ export class ServerApiService {
     return this.client.post<String>(url, JSONBody, options);
   }
 
+  /**
+   * Calls the server endpoint to login a user.
+   * @param email_username 
+   * @param password 
+   * @returns an observable of the response from the server
+   */
   login(email_username: string,  password: string): Observable<string>{
     let url = environment.API_URL + '/login';
     let options = {
@@ -559,7 +580,41 @@ export class ServerApiService {
     });
   }
 
-  addReview(id_content : string, type: string, vote: string, user_comment: string, title: string, duration: string, n_episode: string, link: string){
+  /**
+   * Removes a review from a content.
+   * @param id_user
+   * @param id_content
+   * @returns an observable of the response from the server
+   */
+  removeReview(id_user : string, id_content: string): Observable<String>{
+    let url = environment.API_URL + '/removeReview';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    let JSONBody = {
+      id_user: id_user,
+      id_content: id_content
+    };
+    return this.client.post<String>(url, JSONBody, options);
+  }
+
+  /**
+   * Adds a review to a content.
+   * @param id_content 
+   * @param type 
+   * @param vote 
+   * @param user_comment
+   * <br>
+   * Parameters used to add the content to the database if it doesn't exist
+   * @param title 
+   * @param duration 
+   * @param n_episode 
+   * @param link 
+   */
+  addReview(id_content : string, type: string, vote: string, user_comment: string, title: string, duration: string, n_episode: string, link: string): Observable<String>{
     let url = environment.API_URL + '/addReview';
     let options = {
       headers: {
@@ -567,6 +622,8 @@ export class ServerApiService {
         'Accept': 'text/plain'
       }
     };
+    if(duration == undefined) duration = '-1';
+    console.log(id_content + '_' + type)
     let JSONBody = {
       vote: vote,
       user_comment: user_comment,
@@ -577,19 +634,14 @@ export class ServerApiService {
       n_episode: n_episode,
       link: link
     };
-    this.client.post(url, JSONBody, options).subscribe({
-      next: data => {
-        let json = JSON.parse(JSON.stringify(data));
-        console.log(data);
-        return data.toString();
-      },
-      error: error => {
-        console.log(error);
-        return error.toString();
-      }
-    });
+    return this.client.post<String>(url, JSONBody, options);
   }
 
+  /**
+   * Deletes the account of a user.
+   * @param password 
+   * @returns 
+   */
   deleteAccount(password: string): Observable<String>{
     let url = environment.API_URL + '/removeUser';
     let options = {
@@ -604,6 +656,4 @@ export class ServerApiService {
     };
     return this.client.post<String>(url, JSONBody, options);
   }
-
-
 }

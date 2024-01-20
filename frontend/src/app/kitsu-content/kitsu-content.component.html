@@ -33,6 +33,7 @@
             <div class="card" [hidden]="showReview()"> <!-- Da nascondere se l'utente ha recensito -->
               <div class="card-body">
                 <p id="reviewHead">Write review</p>
+                <h3 [hidden]="!add_review" [ngClass]="{'hidden': !add_review}" [innerHTML]="add_review_error_message" style="color: red;" ></h3>
                 <form (ngSubmit)="onSubmit(reviewForm)" #reviewForm="ngForm">
                   <select class="form-text" id="rating" (change)="onVoteChange($event)">
                     <option value="0">0/5</option>
@@ -62,7 +63,7 @@
                 </div>
                 <p id="reviewText">{{revs.user_comment}}</p>
               </div>
-              <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')"></fa-icon>
+              <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')" (click)="removeReview($event)"></fa-icon>
             </div>
           </div>
         </div>
