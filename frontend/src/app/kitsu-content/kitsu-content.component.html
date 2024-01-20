@@ -29,7 +29,7 @@
                 <h5 class="card-title">{{content.title}}</h5>
                 <p class="card-text">{{content.synopsis}}</p>
                 <p [innerHTML]="'Episodes: ' + content.episodeCount" *ngIf="content.episodeCount" [hidden]="content.showType=='movie'"></p>
-                <p [innerHTML]="'Episode Length: ' + content.episodeLength"></p>
+                <p [innerHTML]="'Episode Length: ' + content.episodeLength" [hidden]="content.episodeLength == null"></p>
                 <p [innerHTML]="'Show Type: ' + content.showType"></p>
                 <p [innerHTML]="'Status: ' + content.status"></p>
               </div>
@@ -59,7 +59,7 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col">
-                    <p>User: {{revs.id_user}}</p>
+                    <p style="color: gray;"><b style="color: black;">{{revs.username}}</b>#{{revs.id_user}}</p>
                   </div>
                   <div class="col">
                     <p>Score {{revs.vote}}/5</p>
@@ -67,7 +67,10 @@
                 </div>
                 <p id="reviewText">{{revs.user_comment}}</p>
               </div>
-              <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')" (click)="removeReview($event)"></fa-icon>
+              <div *ngIf="this.CookieService.get('id_user') == revs.id_user">
+                <h3 [hidden]="!remove_review" [ngClass]="{'hidden': !add_review}" [innerHTML]="remove_review_error_message" style="color: red;" ></h3>
+                <fa-icon [icon]="faTrashCan" class="menu-entry" id="delete" [hidden]="revs.id_user!=this.CookieService.get('id_user')" (click)="removeReview($event)"></fa-icon>
+              </div>
             </div>
           </div>
         </div>

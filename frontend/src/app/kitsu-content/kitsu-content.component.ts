@@ -33,6 +33,9 @@ export class KitsuContentComponent {
   add_review: boolean = false;
   add_review_error_message: string = strings.add_review_error;
 
+  remove_review: boolean = false;
+  remove_review_error_message: string = strings.remove_review_error;
+
   input: FormControl;
   vote: string;
 
@@ -92,7 +95,20 @@ export class KitsuContentComponent {
   }
 
   removeReview(event: any){
-    //this.router.navigate(['/kitsu', this.content.type, this.content.id]);
+    this.remove_review = false;
+    this.api.removeReview(this.cookieService.get('id_user'), this.content.id, this.content.type).subscribe({
+      next: (data) => {
+        let json = JSON.parse(JSON.stringify(data));
+        if(json.response == '0')
+          this.loadReviews();
+        else
+          this.remove_review = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.remove_review = true;
+      },
+    });
   }
 
   updateInput(event: any){
@@ -102,6 +118,7 @@ export class KitsuContentComponent {
   reload(){
     location.href = ('/kitsu/' + this.content.type + '/' + this.content.id);
   }
+
   onSubmit(form: NgForm){
     this.add_review = false;
 
@@ -110,13 +127,10 @@ export class KitsuContentComponent {
     this.api.addReview(this.content.id, this.content.type, this.vote, form.value.reviewText, this.content.title, this.content.episodeLength, this.content.episodeCount, this.content.poster).subscribe({
       next: (data) => {
         let json = JSON.parse(JSON.stringify(data));
-        if(json.response == '0'){
+        if(json.response == '0')
           this.loadReviews();
-        }
-        else{
+        else
           this.add_review = true;
-          this.add_review_error_message = strings.add_review_error;
-        }
       },
       error: (err) => {
         console.log(err);

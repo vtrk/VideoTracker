@@ -37,6 +37,7 @@ export const strings = {
     login_error: "Error logging in",
     wrong_credentials: "Wrong email or password",
     add_review_error: "Error adding review",
+    remove_review_error: "Error removing review",
     WRONG_PASSWORD: "Wrong password",
     EMAILS_DONT_MATCH: "Emails don't match",
 };

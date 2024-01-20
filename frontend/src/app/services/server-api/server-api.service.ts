@@ -569,7 +569,7 @@ export class ServerApiService {
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         json.reviews.forEach((element: any) => {
-          reviewList.add(element.id, element.vote, element.user_comment, element.id_user, element.id_content);
+          reviewList.add(element.id, element.vote, element.user_comment, element.username, element.id_user, element.id_content);
         });
       },
       error: error => {
@@ -583,9 +583,10 @@ export class ServerApiService {
    * Removes a review from a content.
    * @param id_user
    * @param id_content
+   * @param type
    * @returns an observable of the response from the server
    */
-  removeReview(id_user : string, id_content: string): Observable<String>{
+  removeReview(id_user : string, id_content: string, type: String): Observable<String>{
     let url = environment.API_URL + '/removeReview';
     let options = {
       headers: {
@@ -595,7 +596,7 @@ export class ServerApiService {
     };
     let JSONBody = {
       id_user: id_user,
-      id_content: id_content
+      id_content: id_content + '_' + type
     };
     return this.client.post<String>(url, JSONBody, options);
   }
