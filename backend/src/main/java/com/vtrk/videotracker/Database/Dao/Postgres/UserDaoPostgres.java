@@ -204,4 +204,19 @@ public class UserDaoPostgres implements UserDao, Subject {
             }
         }
     }
+
+    /**
+     * Ban or unban user
+     * @param id
+     */
+    @Override
+    public void ban(int id) {
+        try{
+            String query = "UPDATE public.user_vt SET banned= NOT banned WHERE id="+id+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in ban "+e);
+        }
+    }
 }
