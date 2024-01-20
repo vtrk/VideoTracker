@@ -534,7 +534,7 @@ public class RESTfulAPI {
         JSONObject response = new JSONObject();
         if(!receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
-        proxyReceive.request(3, new Receive(id_user, id_notification));
+        proxyReceive.request(2, new Receive(id_user, id_notification));
         if(receiveDao.exists(id_user, id_notification))
             return response.put("response", "1").toString();
         return response.put("response", "0").toString();
