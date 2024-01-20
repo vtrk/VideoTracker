@@ -65,4 +65,5 @@ public class User {
         this.is_admin = is_admin;
     }
     public boolean isBanned() {return is_banned;}
+    public void setIs_banned(boolean is_banned) {this.is_banned = is_banned;}
 }
