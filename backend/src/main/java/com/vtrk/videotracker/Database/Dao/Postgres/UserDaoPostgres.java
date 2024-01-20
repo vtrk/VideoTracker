@@ -36,7 +36,8 @@ public class UserDaoPostgres implements UserDao, Subject {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 boolean admin = rs.getBoolean("admin");
-                User user = new User(id, email, username, password, admin);
+                boolean banned = rs.getBoolean("banned");
+                User user = new User(id, email, username, password, admin, banned);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -64,6 +65,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setUsername(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
                 user.setIs_admin(rs.getBoolean("admin"));
+                user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
             System.out.println("Error in findById"+e);
@@ -88,6 +90,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setId(rs.getInt("id"));
                 user.setUsername(rs.getString("username"));
                 user.setIs_admin(rs.getBoolean("admin"));
+                user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
             System.out.println("Error in findByEmail"+e);
@@ -199,6 +202,21 @@ public class UserDaoPostgres implements UserDao, Subject {
                 default:
                     break;
             }
+        }
+    }
+
+    /**
+     * Ban or unban user
+     * @param id
+     */
+    @Override
+    public void ban(int id) {
+        try{
+            String query = "UPDATE public.user_vt SET banned= NOT banned WHERE id="+id+";";
+            Statement st = connection.createStatement();
+            st.executeQuery(query);
+        }catch(SQLException e){
+            //System.out.println("Error in ban "+e);
         }
     }
 }

@@ -6,6 +6,7 @@ public class User {
     private String username;
     private String password;
     private boolean is_admin;
+    private boolean is_banned;
 
     public User(int id, String email, String username, String password, boolean is_admin) {
         this.id = id;
@@ -13,6 +14,15 @@ public class User {
         this.username = username;
         this.password = password;
         this.is_admin = is_admin;
+    }
+
+    public User(int id, String email, String username, String password, boolean is_admin, boolean is_banned) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.is_admin = is_admin;
+        this.is_banned = is_banned;
     }
 
     public int getId() {
@@ -54,4 +64,6 @@ public class User {
     public void setIs_admin(boolean is_admin) {
         this.is_admin = is_admin;
     }
+    public boolean isBanned() {return is_banned;}
+    public void setIs_banned(boolean is_banned) {this.is_banned = is_banned;}
 }

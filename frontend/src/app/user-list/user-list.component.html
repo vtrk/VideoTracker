@@ -2,7 +2,6 @@
   <div class="container mt-4 pt-5">
     <div class="row">
       <div class="col-12">
-        <!-- <p [innerHTML]="user.username">'s list</p> -->
         <h3 [hidden]="!delete_error" [ngClass]="{'hidden': !delete_error}" [innerHTML]="delete_error_str" style="color: red;" ></h3>
         <table class="table table-striped">
           <thead>
@@ -41,7 +40,7 @@
                 <img src="{{item.poster}}" height="100px" alt="" class="menu-entry" id="{{item.id}}" title="{{item.type}}" (click)="goto($event)">
                 </th>
                 <td class="menu-entry" id="{{item.id}}" title="{{item.type}}" (click)="goto($event)">{{item.title}}</td>
-                <td>{{item.status}}</td> <!-- qui andrebbe fatto uno switch che consente di cambiare lo stato dell'anime mostrando l'icona dello stato corrente-->
+                <td>{{item.status}}</td>
                 <td>
                   <div id="{{item.id + '_' + item.type}}" (click)="remove($event)"><fa-icon [icon]="faTrashCan" class="menu-entry" id="delete"></fa-icon></div>
                 </td>
