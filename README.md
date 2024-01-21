@@ -40,7 +40,7 @@ The default port is 8080
 Only users with the [admin](https://github.com/vtrk/VideoTracker/blob/main/database.sql#L6) flag set in the database table [user_vt](https://github.com/vtrk/VideoTracker/blob/main/database.sql#L1-L9) can access the dashboard
 
 ## Running the [frontend](https://github.com/vtrk/VideoTracker/tree/main/frontend)
-- Open frontend in a terminal
+- Open the frontend folder in a terminal
 - Run ```npm install``` to download project dependencies
 - Run ```ng-serve``` to run the frontend
 
