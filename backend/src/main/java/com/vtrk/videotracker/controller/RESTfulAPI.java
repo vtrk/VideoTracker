@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -25,6 +26,8 @@ import java.util.logging.Level;
 @RestController
 @EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 public class RESTfulAPI {
+
+    private final BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
 
     /**
      * Get API info
@@ -151,7 +154,7 @@ public class RESTfulAPI {
         String username = json.getString("username");
         String email = json.getString("email");
         String password = json.getString("password");
-        User u = new User(0, email, username, password, false);
+        User u = new User(0, email, username, bc.encode(password), false);
         ProxyUser proxyUser = new ProxyUser();
         ProxyUserList proxyUserList = new ProxyUserList();
         UserDao user = DBManager.getInstance().getUserDao();
@@ -205,9 +208,9 @@ public class RESTfulAPI {
         String password = json.getString("password");
         Logger.getInstance().logREST("Attempting to login user " + email, java.util.logging.Level.INFO, request);
         UserDao userDao = DBManager.getInstance().getUserDao();
-        User user = userDao.findByEmail(email, password);
+        User user = userDao.findByEmailOnly(email);
         JSONObject response = new JSONObject();
-        if(user.getId() == 0) {
+        if(user.getId() == 0 || !bc.matches(password, user.getPassword())) {
             Logger.getInstance().logREST("Login failed", java.util.logging.Level.WARNING, request);
             return response.put("response", "0").toString();
         }

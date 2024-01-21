@@ -35,7 +35,7 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
                 notification.setDescription(rs.getString("description"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return notification;
     }
@@ -55,7 +55,7 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
                 notification.setId(rs.getInt("id"));
             }
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -70,7 +70,7 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in update "+e);
+            //System.out.println("Error in update "+e);
         }
     }
 
@@ -85,7 +85,7 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 

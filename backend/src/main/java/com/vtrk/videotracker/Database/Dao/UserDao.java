@@ -15,4 +15,5 @@ public interface UserDao {
     boolean exists(int id);
     void ban(int id);
     boolean isBanned(int id);
+    User findByEmailOnly(String email);
 }

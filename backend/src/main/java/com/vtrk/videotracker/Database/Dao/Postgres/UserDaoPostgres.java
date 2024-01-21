@@ -39,7 +39,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 users.add(user);
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+ e);
+            //System.out.println("Error in findAll "+ e);
         }
         return users;
     }
@@ -66,13 +66,13 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findById "+ e);
+            //System.out.println("Error in findById "+ e);
         }
         return user;
     }
 
     /**
-        This function finds a user by email or username and password.<br>
+        This function finds a user by email and password.<br>
         If the user is found, it returns the user.<br>
         Otherwise, it returns a user with id = 0.<br>
         Check id to see if the user is found.<br>
@@ -94,7 +94,35 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findByEmail "+ e);
+            //System.out.println("Error in findByEmail "+ e);
+        }
+        return user;
+    }
+
+    /**
+        This function finds a user by email.<br>
+        If the user is found, it returns the user.<br>
+        Otherwise, it returns a user with id = 0.<br>
+        Check id to see if the user is found.<br>
+        @param email email
+        @return user
+    */
+    @Override
+    public User findByEmailOnly(String email) {
+        User user = new User(0, email,"", "",false);
+        try {
+            String query = "SELECT * FROM user_vt WHERE email = '"+email+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                user.setId(rs.getInt("id"));
+                user.setUsername(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setIs_admin(rs.getBoolean("admin"));
+                user.setIs_banned(rs.getBoolean("banned"));
+            }
+        } catch (SQLException e) {
+            //System.out.println("Error in findByEmail "+ e);
         }
         return user;
     }
@@ -110,7 +138,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -125,7 +153,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in update "+e);
+            //System.out.println("Error in update "+e);
         }
     }
 
@@ -153,7 +181,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in updateFromSettings "+e);
+            //System.out.println("Error in updateFromSettings "+e);
         }
     }
 
@@ -168,7 +196,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -186,7 +214,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             if (!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in emailInUse "+ e);
+            //System.out.println("Error in emailInUse "+ e);
         }
         return true;
     }
@@ -205,7 +233,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+ e);
+            //System.out.println("Error in findAll "+ e);
         }
         return true;
     }
@@ -245,7 +273,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in ban "+e);
+            //System.out.println("Error in ban "+e);
         }
     }
 
@@ -263,7 +291,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in isBanned "+ e);
+            //System.out.println("Error in isBanned "+ e);
         }
         return true;
     }

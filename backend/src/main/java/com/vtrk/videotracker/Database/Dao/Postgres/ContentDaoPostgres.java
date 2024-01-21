@@ -100,7 +100,7 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return true;
     }

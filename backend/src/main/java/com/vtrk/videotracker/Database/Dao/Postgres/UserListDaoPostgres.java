@@ -30,7 +30,7 @@ public class UserListDaoPostgres implements UserListDao, Subject {
                 user_list.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return user_list;
     }
@@ -52,7 +52,7 @@ public class UserListDaoPostgres implements UserListDao, Subject {
                 user_list.setIdUser(rs.getInt("id_user"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return user_list;
     }
@@ -68,7 +68,7 @@ public class UserListDaoPostgres implements UserListDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -83,7 +83,7 @@ public class UserListDaoPostgres implements UserListDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 

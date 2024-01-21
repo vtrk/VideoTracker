@@ -28,16 +28,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  * Dashboard controller
  */
 @Controller
 public class DashboardController {
 
+    private final String cookieName = "user";
+    private final BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+
     /**
      * Show dashboard
-     * @param model
-     * @param request
+     * @param model model
+     * @param request request
      * @return dashboard page if cookie is valid, otherwise redirect to login page
      */
     @GetMapping
@@ -45,11 +50,11 @@ public class DashboardController {
     public String showDashboard(Model model, HttpServletRequest request) {
         Logger.getInstance().logREST("Requested dashboard", Level.INFO, request);
         model.addAttribute("title", "Dashboard");
-        if(Arrays.stream(request.getCookies()).noneMatch(cookie -> cookie.getName().equals("user"))) {
+        if(Arrays.stream(request.getCookies()).noneMatch(cookie -> cookie.getName().equals(cookieName))) {
             Logger.getInstance().logREST("Client not logged in", Level.WARNING, request);
             return "redirect:/login";
         }
-        String userId = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("user")).findFirst().get().getValue();
+        String userId = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals(cookieName)).findFirst().get().getValue();
         UserDao userDao = DBManager.getInstance().getUserDao();
         User user = userDao.findById(Integer.parseInt(userId));
         if(user.getEmail().isEmpty()){
@@ -66,8 +71,8 @@ public class DashboardController {
 
     /**
      * Show login page
-     * @param variableName
-     * @param model
+     * @param variableName error message
+     * @param model model
      * @return login page
      */
     @GetMapping("/login")
@@ -80,9 +85,9 @@ public class DashboardController {
 
     /**
      * Login
-     * @param paramMap
-     * @param request
-     * @param response
+     * @param paramMap parameters
+     * @param request request
+     * @param response response
      * @return redirect to dashboard
      */
     @RequestMapping(
@@ -96,13 +101,13 @@ public class DashboardController {
         Logger.getInstance().logREST("Logging in user " + email, Level.INFO, request);
         String password = paramMap.get("password").get(0);
         UserDao userDao = DBManager.getInstance().getUserDao();
-        User user = userDao.findByEmail(email, password);
-        if(user.getId() == 0 || !user.isIs_admin()) {
+        User user = userDao.findByEmailOnly(email);
+        if(user.getId() == 0 || !user.isIs_admin() || !bc.matches(password, user.getPassword())) {
             Logger.getInstance().logREST(email + ": Invalid email or password", Level.WARNING, request);
             return "redirect:/login?error=Invalid email or password";
         }
         else {
-            Cookie cookie = new Cookie("user", Integer.toString(user.getId()));
+            Cookie cookie = new Cookie(cookieName, Integer.toString(user.getId()));
             cookie.setMaxAge(86400);
             response.addCookie(cookie);
             Logger.getInstance().logREST("Logged in user with id " + user.getId(), Level.INFO, request);
@@ -112,8 +117,8 @@ public class DashboardController {
 
     /**
      * Logout
-     * @param request
-     * @param response
+     * @param request request
+     * @param response response
      * @return redirect to login page
      */
     @RequestMapping(
@@ -123,7 +128,7 @@ public class DashboardController {
     @CrossOrigin
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Logger.getInstance().logREST("User logged out", Level.INFO, request);
-        Cookie cookie = new Cookie("user", null);
+        Cookie cookie = new Cookie(cookieName, null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         return "redirect:/login";
@@ -131,9 +136,9 @@ public class DashboardController {
 
     /**
      * Ban user
-     * @param paramMap
-     * @param request
-     * @param response
+     * @param paramMap parameters
+     * @param request request
+     * @param response response
      * @return redirect to dashboard
      */
     @RequestMapping(
@@ -152,10 +157,10 @@ public class DashboardController {
 
     /**
      * Send notification to all users
-     * @param paramMap
-     * @param request
-     * @param response
-     * @return
+     * @param paramMap parameters
+     * @param request request
+     * @param response response
+     * @return redirect to dashboard
      */
     @RequestMapping(
             value = "/sendNotification",

@@ -35,7 +35,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
                 contents.add(content);
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return contents;
     }
@@ -63,7 +63,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
                 counted = rs.getString("count");
             }
         }catch(SQLException e){
-            System.out.println("Error in countByState "+e);
+            //System.out.println("Error in countByState "+e);
         }
         return counted;
     }
@@ -81,7 +81,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -98,7 +98,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in update "+e);
+            //System.out.println("Error in update "+e);
         }
     }
 
@@ -114,7 +114,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -129,7 +129,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in removeWholeList "+e);
+            //System.out.println("Error in removeWholeList "+e);
         }
     }
 
@@ -148,7 +148,7 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+ e);
+            //System.out.println("Error in findAll "+ e);
             return false;
         }
         return true;

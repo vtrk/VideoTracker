@@ -36,7 +36,7 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
                 receive.add(notification);
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return receive;
     }
@@ -53,7 +53,7 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -69,7 +69,7 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -84,7 +84,7 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -103,7 +103,7 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         }catch(SQLException e){
-            System.out.println("Error in exists "+e);
+            //System.out.println("Error in exists "+e);
         }
         return true;
     }

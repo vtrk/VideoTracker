@@ -34,7 +34,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
                 review.setIdContent(rs.getString("id_content"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return review;
     }
@@ -56,7 +56,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
                 id = rs.getInt("id");
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return id;
     }
@@ -83,7 +83,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
                 reviews.add(new Review(id, vote, user_comment, id_user, id_content));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return reviews;
     }
@@ -99,7 +99,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
     }
 
@@ -114,7 +114,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in update "+e);
+            //System.out.println("Error in update "+e);
         }
     }
 
@@ -129,7 +129,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -143,7 +143,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
@@ -161,7 +161,7 @@ public class ReviewDaoPostgres implements ReviewDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
             return false;
         }
         return true;

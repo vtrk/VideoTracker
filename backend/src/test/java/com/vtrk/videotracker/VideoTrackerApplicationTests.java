@@ -8,12 +8,12 @@ import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.utils.Properties;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = Kitsu.class)
 class VideoTrackerApplicationTests {
@@ -226,6 +226,27 @@ class VideoTrackerApplicationTests {
         System.out.println(count);
         System.out.println(count1);
         System.out.println(count2);
+    }
+
+    @Test
+    void passwordEncryptionTest(){
+        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+
+        String p1 = bc.encode("password");
+        String p2 = bc.encode("password");
+        String p3 = bc.encode("password");
+
+        assertNotEquals(p1, p2);
+        assertNotEquals(p1, p3);
+        assertNotEquals(p2, p3);
+
+        assertTrue(bc.matches("password", p1));
+        assertTrue(bc.matches("password", p2));
+        assertTrue(bc.matches("password", p3));
+
+        System.out.println(p1);
+        System.out.println(p2);
+        System.out.println(p3);
     }
 
 }
