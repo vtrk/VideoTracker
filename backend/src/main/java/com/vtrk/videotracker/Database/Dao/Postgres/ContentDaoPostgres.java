@@ -35,7 +35,7 @@ public class ContentDaoPostgres implements ContentDao, Subject {
                 content.setN_episode(rs.getInt("n_episode"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll "+e);
+            //System.out.println("Error in findAll "+e);
         }
         return content;
     }
@@ -51,7 +51,7 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in add "+e);
+            //System.out.println("Error in add "+e);
         }
 
     }
@@ -67,7 +67,7 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in update "+e);
+            //System.out.println("Error in update "+e);
         }
     }
 
@@ -82,7 +82,7 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            System.out.println("Error in remove "+e);
+            //System.out.println("Error in remove "+e);
         }
     }
 
