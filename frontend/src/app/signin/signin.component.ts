@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from "@angular/forms";
+import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
 import {ThemeService} from "../services/theme/theme.service";
 import {CommonModule, NgClass} from "@angular/common";
 import {AuthenticationService} from "../services/authentication/authentication.service";
@@ -25,12 +25,6 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './signin.component.css'
 })
 export class SigninComponent {
-  form = new FormGroup({ 
-    "email": new FormControl("", Validators.required), 
-    "username": new FormControl("", Validators.required), 
-    "password": new FormControl("", Validators.required), 
-    "confirmPassword": new FormControl("", Validators.required)});
-
   protected readonly faGear = faGear;
 
   email_in_use_error: string = strings.email_in_use;

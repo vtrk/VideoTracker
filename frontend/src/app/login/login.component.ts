@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators} from "@angular/forms";
+import { FormsModule, NgForm, ReactiveFormsModule } from "@angular/forms";
 import {ThemeService} from "../services/theme/theme.service";
 import {CommonModule, NgClass} from "@angular/common";
 import {Router, RouterLink} from "@angular/router";
@@ -35,12 +35,6 @@ export class LoginComponent {
   ban_banned_str: string = strings.BAN_ERROR;
 
   protected readonly faHouse = faHouse;
-
-  form = new FormGroup({
-    "email": new FormControl("", Validators.required),
-    "password": new FormControl("", Validators.required)
-  });
-
 
   constructor(private api: ServerApiService,private router: Router, public themeService: ThemeService, private cookieService: CookieService, private title: Title) {
     this.title.setTitle("Login");
