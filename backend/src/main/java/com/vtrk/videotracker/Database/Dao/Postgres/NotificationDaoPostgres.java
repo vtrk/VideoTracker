@@ -17,6 +17,12 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
     public NotificationDaoPostgres(Connection connection) {
         this.connection = connection;
     }
+
+    /**
+     * Find notification by id
+     * @param id id
+     * @return notification
+     */
     @Override
     public Notification findById(int id) {
         Notification notification = new Notification(id, "","");
@@ -29,11 +35,15 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
                 notification.setDescription(rs.getString("description"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return notification;
     }
 
+    /**
+     * Add notification
+     * @param notification notification
+     */
     @Override
     public void add(Notification notification) {
         //
@@ -45,10 +55,14 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
                 notification.setId(rs.getInt("id"));
             }
         }catch(SQLException e){
-            //System.out.println("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
     }
 
+    /**
+     * Update notification
+     * @param notification notification
+     */
     @Override
     public void update(Notification notification) {
         try{
@@ -56,10 +70,14 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in update "+e);
+            System.out.println("Error in update "+e);
         }
     }
 
+    /**
+     * Remove notification
+     * @param notification notification
+     */
     @Override
     public void remove(Notification notification) {
         try{
@@ -67,10 +85,15 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in remove "+e);
+            System.out.println("Error in remove "+e);
         }
     }
 
+    /**
+     * Request based on given choice
+     * @param choice choice
+     * @param object object
+     */
     @Override
     public void request(int choice, Object object) {
         Notification notification = (Notification) object;

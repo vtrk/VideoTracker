@@ -17,6 +17,12 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
 
     Connection connection = null;
     public ReceiveDaoPostgres(Connection connection){ this.connection = connection; }
+
+    /**
+     * Find all notifications received by a user
+     * @param id_user id of the user
+     * @return list of notifications
+     */
     @Override
     public List<Notification> findByIdUser(int id_user) {
         List<Notification> receive = new ArrayList<Notification>();
@@ -30,11 +36,16 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
                 receive.add(notification);
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return receive;
     }
 
+    /**
+     * Add a notification to a user
+     * @param id_user id of the user
+     * @param id_notification id of the notification
+     */
     @Override
     public void add(int id_user, int id_notification) {
         try{
@@ -42,10 +53,15 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
     }
 
+    /**
+     * Remove a notification from a user
+     * @param id_user id of the user
+     * @param id_notification id of the notification
+     */
     @Override
     public void remove(int id_user, int id_notification) {
         try{
@@ -53,10 +69,14 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in remove "+e);
+            System.out.println("Error in remove "+e);
         }
     }
 
+    /**
+     * Remove all notifications from a user
+     * @param id_user id of the user
+     */
     @Override
     public void removeAllForAUser(int id_user) {
         try{
@@ -64,10 +84,16 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in remove "+e);
+            System.out.println("Error in remove "+e);
         }
     }
 
+    /**
+     * Check if a notification is already received by a user
+     * @param id_user id of the user
+     * @param id_notification id of the notification
+     * @return true if the notification is already received by the user, false otherwise
+     */
     @Override
     public boolean exists(int id_user, int id_notification) {
         try{
@@ -77,11 +103,16 @@ public class ReceiveDaoPostgres implements ReceiveDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         }catch(SQLException e){
-            //System.out.println("Error in exists "+e);
+            System.out.println("Error in exists "+e);
         }
         return true;
     }
 
+    /**
+     * Request based on the given choice
+     * @param choice choice
+     * @param object object
+     */
     @Override
     public void request(int choice, Object object) {
         if(choice == 3){

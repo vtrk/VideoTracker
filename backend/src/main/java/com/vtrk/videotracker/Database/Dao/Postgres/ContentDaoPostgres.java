@@ -16,6 +16,11 @@ public class ContentDaoPostgres implements ContentDao, Subject {
 
     public ContentDaoPostgres(Connection connection) {this.connection = connection;}
 
+    /**
+     * Find all contents
+     * @param id id
+     * @return content
+     */
     @Override
     public Content findById(String id) {
         Content content = new Content(id, "",0,0,"");
@@ -30,11 +35,15 @@ public class ContentDaoPostgres implements ContentDao, Subject {
                 content.setN_episode(rs.getInt("n_episode"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return content;
     }
 
+    /**
+     * Add content
+     * @param content
+     */
     @Override
     public void add(Content content) {
         try{
@@ -42,11 +51,15 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
 
     }
 
+    /**
+     * Update content
+     * @param content
+     */
     @Override
     public void update(Content content) {
         try{
@@ -54,10 +67,14 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in update "+e);
+            System.out.println("Error in update "+e);
         }
     }
 
+    /**
+     * Remove content
+     * @param content content
+     */
     @Override
     public void remove(Content content) {
         try{
@@ -65,10 +82,15 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in remove "+e);
+            System.out.println("Error in remove "+e);
         }
     }
 
+    /**
+     * Check if content exists
+     * @param id
+     * @return true if exists, false otherwise
+     */
     @Override
     public boolean exists(String id) {
         try {
@@ -78,11 +100,16 @@ public class ContentDaoPostgres implements ContentDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return true;
     }
 
+    /**
+     * Request action to be performed
+     * @param choice choice
+     * @param object object
+     */
     @Override
     public void request(int choice, Object object) {
         Content content = (Content) object;

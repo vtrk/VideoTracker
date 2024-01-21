@@ -15,13 +15,11 @@ public class UserDaoPostgres implements UserDao, Subject {
         this.connection = connection;
     }
 
-    /*
-        This function finds all users in the database and returns a list of users.
+    /**
+        This function finds all users in the database and returns a list of users.<br>
         If there are no users, it returns an empty list.
-
-        Still to decide if we need to leave this function here or not.
+        @return list of users
     */
-
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<User>();
@@ -41,18 +39,18 @@ public class UserDaoPostgres implements UserDao, Subject {
                 users.add(user);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error in findAll "+e);
+            System.out.println("Error in findAll "+ e);
         }
         return users;
     }
 
-    /*
-        This function finds a user by id.
-        If the user is found, it returns the user.
-        Otherwise, it returns a user with email/username/password = "".
+    /**
+        This function finds a user by id.<br>
+        If the user is found, it returns the user.<br>
+        Otherwise, it returns a user with email/username/password = "".<br>
         Check the parameters above to see if the user is found.
+        @param id id
     */
-
     @Override
     public User findById(int id) {
         User user = new User(id, "","", "",false);
@@ -68,16 +66,19 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error in findById "+e);
+            System.out.println("Error in findById "+ e);
         }
         return user;
     }
 
-    /*
-        This function finds a user by email or username and password.
-        If the user is found, it returns the user.
-        Otherwise, it returns a user with id = 0.
-        Check id to see if the user is found.
+    /**
+        This function finds a user by email or username and password.<br>
+        If the user is found, it returns the user.<br>
+        Otherwise, it returns a user with id = 0.<br>
+        Check id to see if the user is found.<br>
+        @param email email
+        @param password password
+        @return user
     */
     @Override
     public User findByEmail(String email, String password) {
@@ -93,11 +94,15 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setIs_banned(rs.getBoolean("banned"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error in findByEmail "+e);
+            System.out.println("Error in findByEmail "+ e);
         }
         return user;
     }
 
+    /**
+     * Add user
+     * @param user user
+     */
     @Override
     public void add(User user) {
         try{
@@ -105,10 +110,14 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            throw new RuntimeException("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
     }
 
+    /**
+     * Update user
+     * @param user user
+     */
     @Override
     public void update(User user) {
         try{
@@ -116,10 +125,16 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            throw new RuntimeException("Error in update "+e);
+            System.out.println("Error in update "+e);
         }
     }
 
+    /**
+     * Update user from settings
+     * @param id user id
+     * @param credential new credential
+     * @param choice choice
+     */
     @Override
     public void updateFromSettings(int id, String credential, int choice) {
         String query = "";
@@ -138,10 +153,14 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            throw new RuntimeException("Error in updateFromSettings "+e);
+            System.out.println("Error in updateFromSettings "+e);
         }
     }
 
+    /**
+     * Remove user
+     * @param id user id
+     */
     @Override
     public void remove(int id) {
         try{
@@ -149,7 +168,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            throw new RuntimeException("Error in remove "+e);
+            System.out.println("Error in remove "+e);
         }
     }
 
@@ -167,11 +186,16 @@ public class UserDaoPostgres implements UserDao, Subject {
             if (!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            throw new RuntimeException("Error in emailInUse "+e);
+            System.out.println("Error in emailInUse "+ e);
         }
         return true;
     }
 
+    /**
+     * Check if user exists
+     * @param id user id
+     * @return true if user exists, false otherwise
+     */
     @Override
     public boolean exists(int id) {
         try {
@@ -181,11 +205,16 @@ public class UserDaoPostgres implements UserDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            throw new RuntimeException("Error in exists "+e);
+            System.out.println("Error in findAll "+ e);
         }
         return true;
     }
 
+    /**
+     * Request action to be performed
+     * @param choice action
+     * @param object object
+     */
     @Override
     public void request(int choice, Object object) {
         if (choice == 3){
@@ -207,7 +236,7 @@ public class UserDaoPostgres implements UserDao, Subject {
 
     /**
      * Ban or unban user
-     * @param id
+     * @param id user id
      */
     @Override
     public void ban(int id) {
@@ -216,13 +245,13 @@ public class UserDaoPostgres implements UserDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            throw new RuntimeException("Error in ban "+e);
+            System.out.println("Error in ban "+e);
         }
     }
 
     /**
      * Check if user is banned
-     * @param id
+     * @param id user id
      * @return true if user is banned, false otherwise
      */
     @Override
@@ -234,7 +263,7 @@ public class UserDaoPostgres implements UserDao, Subject {
             if(!rs.isBeforeFirst())
                 return false;
         } catch (SQLException e) {
-            throw new RuntimeException("Error in isBanned "+e);
+            System.out.println("Error in isBanned "+ e);
         }
         return true;
     }

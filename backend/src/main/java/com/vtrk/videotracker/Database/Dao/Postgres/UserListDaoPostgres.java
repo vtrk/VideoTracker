@@ -13,9 +13,11 @@ public class UserListDaoPostgres implements UserListDao, Subject {
         this.connection = connection;
     }
 
-    /*
+    /**
         This function finds the list of the user by the id of the user.
         Check id to see if the list is found.
+        @param id_user id of the user
+        @return UserList
     */
     @Override
     public UserList findByIdUser(int id_user) {
@@ -28,14 +30,16 @@ public class UserListDaoPostgres implements UserListDao, Subject {
                 user_list.setId(rs.getInt("id"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return user_list;
     }
 
-    /*
+    /**
         This function finds the list of the user by the id of the list.
         Check id_user to see if the list is found.
+        @param id id of the list
+        @return UserList
     */
     @Override
     public UserList findById(int id) {
@@ -48,11 +52,15 @@ public class UserListDaoPostgres implements UserListDao, Subject {
                 user_list.setIdUser(rs.getInt("id_user"));
             }
         } catch (SQLException e) {
-            System.out.println("Error in findAll"+e);
+            System.out.println("Error in findAll "+e);
         }
         return user_list;
     }
 
+    /**
+     * This function adds a list to the database.
+     * @param id_user id of the user
+     */
     @Override
     public void add(int id_user) {
         try{
@@ -60,10 +68,14 @@ public class UserListDaoPostgres implements UserListDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
     }
 
+    /**
+     * This function removes a list from the database.
+     * @param id_user id of the user
+     */
     @Override
     public void remove(int id_user) {
         try{
@@ -71,10 +83,15 @@ public class UserListDaoPostgres implements UserListDao, Subject {
             Statement st = connection.createStatement();
             st.executeQuery(query);
         }catch(SQLException e){
-            //System.out.println("Error in add "+e);
+            System.out.println("Error in add "+e);
         }
     }
 
+    /**
+     * This function adds or removes a list from the database based on the given choice.
+     * @param choice choice
+     * @param object object
+     */
     @Override
     public void request(int choice, Object object) {
         int id_user = (int) object;
