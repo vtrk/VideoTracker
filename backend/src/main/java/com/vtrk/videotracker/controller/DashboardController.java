@@ -6,16 +6,23 @@ import com.vtrk.videotracker.Database.Dao.ReceiveDao;
 import com.vtrk.videotracker.Database.Dao.UserDao;
 import com.vtrk.videotracker.Database.Model.Notification;
 import com.vtrk.videotracker.Database.Model.User;
+import com.vtrk.videotracker.utils.Logger;
 import com.vtrk.videotracker.utils.Properties;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +34,7 @@ public class DashboardController {
     @CrossOrigin
     public String showDashboard(Model model, HttpServletRequest request) {
         model.addAttribute("title", "Dashboard");
-        if(request.getCookies() == null)
+        if(Arrays.stream(request.getCookies()).noneMatch(cookie -> cookie.getName().equals("user")))
             return "redirect:/login";
         String userId = Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("user")).findFirst().get().getValue();
         UserDao userDao = DBManager.getInstance().getUserDao();
@@ -115,6 +122,28 @@ public class DashboardController {
             receiveDao.add(user.getId(), notification.getId());
         }
         return "redirect:/";
+    }
+
+    /**
+     * Download log file
+     * @return log file if exists, otherwise 404
+     */
+    @GetMapping("/log")
+    @CrossOrigin
+    public ResponseEntity<Resource> getLog() {
+        if(Logger.getInstance().getLog() == null)
+            return ResponseEntity.notFound().build();
+        InputStreamResource resource;
+        try {
+             resource = new InputStreamResource(new FileInputStream(Logger.getInstance().getLog()));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=" + Logger.getInstance().getLog().getName())
+                .contentLength(Logger.getInstance().getLog().length())
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
     }
 
 }

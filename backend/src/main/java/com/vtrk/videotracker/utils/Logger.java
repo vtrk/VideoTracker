@@ -91,5 +91,14 @@ public class Logger {
         }
     }
 
+    /**
+     * Get log
+     * @return log
+     */
+    public File getLog() {
+        if(logFilePath.isEmpty())
+            return null;
+        return new File(logFilePath);
+    }
 
 }
