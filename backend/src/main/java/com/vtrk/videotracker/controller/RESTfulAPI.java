@@ -250,6 +250,8 @@ public class RESTfulAPI {
         int choice = json.getInt("choice");
         Logger.getInstance().logREST("Attempting to update user " + id, java.util.logging.Level.INFO, request);
         UserDao userDao = DBManager.getInstance().getUserDao();
+        if(choice == 2)
+            credential = bc.encode(credential);
         userDao.updateFromSettings(id, credential, choice);
         return "1";
     }
