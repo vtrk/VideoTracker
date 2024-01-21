@@ -53,7 +53,7 @@ public class RESTfulAPI {
     @CrossOrigin
     public String content(@RequestParam String type, HttpServletRequest request) throws IOException {
         String contentID = request.getRequestURI().substring(9);
-        Logger.getInstance().logREST("Content requested: " + contentID, java.util.logging.Level.INFO, request);
+        Logger.getInstance().logREST("Content requested: " + contentID + " Type: "+ type, java.util.logging.Level.INFO, request);
         return VideoTrackerApplication.API_MANAGER.getById(contentID, type);
     }
 
@@ -844,7 +844,7 @@ public class RESTfulAPI {
             Logger.getInstance().logREST("User with id " + id_user + " is banned", java.util.logging.Level.INFO, request);
             return response.put("response", "1").toString();
         }
-        Logger.getInstance().logREST("User with id" + id_user + " is not banned", java.util.logging.Level.INFO, request);
+        Logger.getInstance().logREST("User with id " + id_user + " is not banned", java.util.logging.Level.INFO, request);
         return response.put("response", "0").toString();
     }
 
