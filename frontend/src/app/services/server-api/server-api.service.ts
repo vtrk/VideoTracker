@@ -114,7 +114,7 @@ export class ServerApiService {
 
   /**
    * Sends and fetches data from a search query to the server.
-   * @param searchBody JSON body of the search request
+   * @param body JSON body of the search request
    * @param itemList list to add items to
    *
    * This function has a wrapper @see {@link getSearch}
@@ -174,7 +174,6 @@ export class ServerApiService {
    * Fetches the trending items from the server.
    * @param type content type
    * @param itemList list to add items to
-   * @param trendingString string to set to trending
    *
    * This function has a wrapper @see {@link getTrending}
    */
@@ -640,7 +639,7 @@ export class ServerApiService {
   /**
    * Deletes the account of a user.
    * @param password 
-   * @returns 
+   * @returns an observable of the response from the server
    */
   deleteAccount(password: string): Observable<String>{
     let url = environment.API_URL + '/removeUser';

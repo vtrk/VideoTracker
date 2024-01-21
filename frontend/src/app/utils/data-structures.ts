@@ -1,7 +1,7 @@
 /**
  * Contains various JSON interfaces and classes that represent data structures for client-server communication.
 **/
-
+import { ServerApiService } from '../services/server-api/server-api.service';
 /**
  * The response of the server from /api endpoint.
  * 
@@ -13,7 +13,7 @@
  * 
  * @param API The API string of the server.
  * 
- * @see {@link ServerService}
+ * @see {@link ServerApiService}
  */
 export interface ServerAPIResponse {
     Version: string;

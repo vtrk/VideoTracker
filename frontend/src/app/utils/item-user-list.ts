@@ -1,7 +1,7 @@
 /**
  * Class that represents an item of a user list.
  */
-class ListItem {
+export class ListItem {
     id: string;
     poster: string;
     title: string;
@@ -20,6 +20,7 @@ class ListItem {
 
 /**
  * Class that represents the list of a user.
+ * @see {@link ListItem}
  */
 export class ItemUserList {
 

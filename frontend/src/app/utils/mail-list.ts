@@ -1,7 +1,7 @@
 /**
  * Representation of a mail (notification)
  */
-class Mail {
+export class Mail {
     id: string;
     description: string;
     title: string;
@@ -9,6 +9,7 @@ class Mail {
 
 /**
  * Representation of a list of mails (list of notifications)
+ * @see {@link Mail}
  */
 export class ItemMailList {
     list: Mail[];

@@ -28,7 +28,7 @@ export class ItemListComponent {
     constructor(private router: Router) {}
 
     /**
-   * TODO: Loads the content of the item clicked on.
+   * Loads the content of the item clicked on.
    * @param event
    */
     goto(event: any){

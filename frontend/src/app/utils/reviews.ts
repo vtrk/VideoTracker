@@ -1,4 +1,7 @@
-class Review{
+/**
+ * Object that represents a review
+ */
+export class Review{
   id: string;
   vote: string;
   user_comment: string;
@@ -7,6 +10,10 @@ class Review{
   id_content: string;
 }
 
+/**
+ * Object that represents a list of reviews
+ * @see {@link Review}
+ */
 export class ReviewList{
   list: Review[];
 
