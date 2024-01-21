@@ -19,13 +19,18 @@ The [application.properties](https://github.com/vtrk/VideoTracker/blob/main/back
 * [VERSION](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L1): version of the server
 * [API](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L2): API to use
   * Values
-    * ```Kitsu``` for anime
+    * ```Kitsu``` for anime - (Default)
     * ```TMDB``` for movies and tv shows (requires API key to use)
 * [TMDB_API_KEY](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L3): API key for TMDB (optional, only mandatory when using TMDB as the API)
 * [DB_HOST](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L4): dbms host location
     * Format: ```hostname:port/postgres```
+    * Default ```localhost:5432/postgres```
 * [DB_USER](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L5): username of dbms user
+   * Default: ```postgres```
 * [DB_PASSWORD](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L6): password of dbms user
+   * Default: ```postgres```
+* [LOG_FILE_PATH](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L7): path to the log file, if empty the server does not log to file
+   * Default: ```VideoTracker.log``` 
 
 ### Backend Dashboard
 The dashboard is accessible at ```hostname:port/```
@@ -36,6 +41,7 @@ Only users with the [admin](https://github.com/vtrk/VideoTracker/blob/main/datab
 
 ## Running the [frontend](https://github.com/vtrk/VideoTracker/tree/main/frontend)
 - Open frontend in a terminal
-- Run ```ng-serve```
+- Run ```npm install``` to download project dependencies
+- Run ```ng-serve``` to run the frontend
 
   By default, the frontend will be served at port 4200
