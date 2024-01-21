@@ -7,6 +7,10 @@ Requirements
 - Intellij IDEA
 - Postgresql
 - Angular-cli
+- Angular 17
+- Node.js (19.3.0 recommended)
+
+[Angular version compatibility](https://angular.io/guide/versions)
 
 ## Running the [backend](https://github.com/vtrk/VideoTracker/tree/main/backend)
 - Import the [database](https://github.com/vtrk/VideoTracker/blob/main/database.sql)
