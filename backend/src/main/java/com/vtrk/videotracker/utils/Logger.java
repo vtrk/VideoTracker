@@ -1,6 +1,7 @@
 package com.vtrk.videotracker.utils;
 
 import com.vtrk.videotracker.VideoTrackerApplication;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -51,6 +52,16 @@ public class Logger {
             instance = new Logger();
         }
         return instance;
+    }
+
+    /**
+     * Log message for REST API
+     * @param message message
+     * @param logLevel log level
+     *
+     */
+    public void logREST(String message, java.util.logging.Level logLevel, HttpServletRequest request){
+        log("Client " + request.getRemoteAddr() + " " + request.getMethod() + " " + request.getRequestURI() + " " + request.getProtocol() + " " + request.getHeader("User-Agent") + " " + logLevel.toString() + " " + message, logLevel);
     }
 
     /**
