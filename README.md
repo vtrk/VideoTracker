@@ -8,7 +8,7 @@ Requirements
 - Postgresql
 - Angular-cli
 - Angular 17
-- Node.js (19.3.0 recommended)
+- Node.js (v20.11.0 lts/iron recommended)
 
 [Angular version compatibility](https://angular.io/guide/versions)
 
