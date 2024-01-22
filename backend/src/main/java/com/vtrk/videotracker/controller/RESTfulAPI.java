@@ -169,11 +169,12 @@ public class RESTfulAPI {
         }
         proxyUser.request(1, u);
 
-        User userAdded = user.findByEmail(email, password);
+        User userAdded = user.findByEmailOnly(email);
         if(userAdded == null) {
             Logger.getInstance().logREST("Registration failed", java.util.logging.Level.WARNING, request);
             return response.put("response", "registration_failed").toString();
         }
+
         proxyUserList.request(1,  userAdded.getId());
         Logger.getInstance().logREST("Registration successful. User ID: " + userAdded.getId(), java.util.logging.Level.INFO, request);
         return response.put("response", Integer.toString(userAdded.getId())).toString();
