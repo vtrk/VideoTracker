@@ -25,6 +25,10 @@ export class AuthenticationService {
   }
 
   get userIsAuth(){
+    let cookie = this.cookieService.get('id_user');
+    if(!cookie)
+      return this.userIsAuthenticated;
+    
     if(this.cookieService.get('id_user') != "0"){
       this.userIsAuthenticated = true;
     }
