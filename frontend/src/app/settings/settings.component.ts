@@ -45,14 +45,29 @@ export class SettingsComponent implements OnInit{
 
   faUserMinus = faUserMinus;
 
+  notificationByEmail: boolean = false;
+
   constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService, private title: Title) {
     this.title.setTitle("Settings");
+    this.api.wantNotification(this.cookieService.get('id_user')).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        if(json.response == '1'){
+          this.notificationByEmail = true;
+        }else{
+          this.notificationByEmail = false;
+        }
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
   }
 
   /**
    * Send a request to the server to change the password
-   * @param form 
-   * @returns 
+   * @param form
+   * @returns
    */
   change_password(form: NgForm){
     this.password_mismatch = false;
@@ -76,8 +91,8 @@ export class SettingsComponent implements OnInit{
 
   /**
    * Send a request to the server to change the email
-   * @param form 
-   * @returns 
+   * @param form
+   * @returns
    */
   change_email(form: NgForm){
     this.emails_dont_match = false;
@@ -102,8 +117,8 @@ export class SettingsComponent implements OnInit{
 
   /**
    * Send a request to the server to change the username
-   * @param form 
-   * @returns 
+   * @param form
+   * @returns
    */
   change_username(form: NgForm){
     this.error_change_username = false;
@@ -124,8 +139,8 @@ export class SettingsComponent implements OnInit{
 
   /**
    * Send a request to the server to delete the account
-   * @param form 
-   * @returns 
+   * @param form
+   * @returns
    */
   delete_account(form: NgForm){
     this.wrong_password_deletion = false;
@@ -151,7 +166,7 @@ export class SettingsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    
+
     // Check if server is responding, if not, display error message
     this.api.getServerInfoObservable().subscribe(
       {
@@ -161,6 +176,15 @@ export class SettingsComponent implements OnInit{
         },
       }
     );
+  }
+
+  setNotificationByEmail(){
+    this.api.setWantNotification(this.cookieService.get('id_user'));
+    this.router.navigate(['/settings']);
+  }
+
+  isChecked():boolean{
+    return this.notificationByEmail;
   }
 
 }
