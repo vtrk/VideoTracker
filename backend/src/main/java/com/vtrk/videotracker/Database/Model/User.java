@@ -7,23 +7,28 @@ public class User {
     private String password;
     private boolean is_admin;
     private boolean is_banned;
+    private boolean notification_by_email;
 
-    public User(int id, String email, String username, String password, boolean is_admin) {
+    public User(int id, String email, String username, String password, boolean is_admin, boolean notification_by_email) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
         this.is_admin = is_admin;
+        this.notification_by_email = notification_by_email;
     }
 
-    public User(int id, String email, String username, String password, boolean is_admin, boolean is_banned) {
+    public User(int id, String email, String username, String password, boolean is_admin, boolean is_banned, boolean notification_by_email) {
         this.id = id;
         this.email = email;
         this.username = username;
         this.password = password;
         this.is_admin = is_admin;
         this.is_banned = is_banned;
+        this.notification_by_email = notification_by_email;
     }
+
+
 
     public int getId() {
         return id;
@@ -66,4 +71,6 @@ public class User {
     }
     public boolean isBanned() {return is_banned;}
     public void setIs_banned(boolean is_banned) {this.is_banned = is_banned;}
+    public boolean isNotification_by_email() {return notification_by_email;}
+    public void setNotification_by_email(boolean notification_by_email) {this.notification_by_email = notification_by_email;}
 }

@@ -35,7 +35,8 @@ public class UserDaoPostgres implements UserDao, Subject {
                 String password = rs.getString("password");
                 boolean admin = rs.getBoolean("admin");
                 boolean banned = rs.getBoolean("banned");
-                User user = new User(id, email, username, password, admin, banned);
+                boolean notification_by_email = rs.getBoolean("notificationByEmail");
+                User user = new User(id, email, username, password, admin, banned,notification_by_email);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -53,7 +54,7 @@ public class UserDaoPostgres implements UserDao, Subject {
     */
     @Override
     public User findById(int id) {
-        User user = new User(id, "","", "",false);
+        User user = new User(id, "","", "",false,true);
         try {
             String query = "SELECT * FROM user_vt WHERE id = "+id+";";
             Statement prst = connection.createStatement();
@@ -64,6 +65,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setPassword(rs.getString("password"));
                 user.setIs_admin(rs.getBoolean("admin"));
                 user.setIs_banned(rs.getBoolean("banned"));
+                user.setNotification_by_email(rs.getBoolean("notificationByEmail"));
             }
         } catch (SQLException e) {
             //System.out.println("Error in findById "+ e);
@@ -82,7 +84,7 @@ public class UserDaoPostgres implements UserDao, Subject {
     */
     @Override
     public User findByEmail(String email, String password) {
-        User user = new User(0, email,"", password,false);
+        User user = new User(0, email,"", password,false, true);
         try {
             String query = "SELECT * FROM user_vt WHERE email = '"+email+"' and password = '"+password+"';";
             Statement st = connection.createStatement();
@@ -92,11 +94,36 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setUsername(rs.getString("username"));
                 user.setIs_admin(rs.getBoolean("admin"));
                 user.setIs_banned(rs.getBoolean("banned"));
+                user.setNotification_by_email(rs.getBoolean("notificationByEmail"));
             }
         } catch (SQLException e) {
             //System.out.println("Error in findByEmail "+ e);
         }
         return user;
+    }
+
+    /**
+     This function return the value of notificationByEmail by user id.<br>
+     If the user is found, it returns the value.<br>
+     Otherwise, it returns false.<br>
+     @param id id
+     @return notification_by_email
+     */
+
+    @Override
+    public boolean getNotificationByEmail(int id) {
+        boolean notification_by_email = false;
+        try {
+            String query = "SELECT * FROM user_vt WHERE id = "+id+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                notification_by_email = rs.getBoolean("notificationByEmail");
+            }
+        } catch (SQLException e) {
+            //System.out.println("Error in getNotificationByEmail "+ e);
+        }
+        return notification_by_email;
     }
 
     /**
@@ -109,7 +136,7 @@ public class UserDaoPostgres implements UserDao, Subject {
     */
     @Override
     public User findByEmailOnly(String email) {
-        User user = new User(0, email,"", "",false);
+        User user = new User(0, email,"", "",false,true);
         try {
             String query = "SELECT * FROM user_vt WHERE email = '"+email+"';";
             Statement st = connection.createStatement();
@@ -120,6 +147,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 user.setPassword(rs.getString("password"));
                 user.setIs_admin(rs.getBoolean("admin"));
                 user.setIs_banned(rs.getBoolean("banned"));
+                user.setNotification_by_email(rs.getBoolean("notificationByEmail"));
             }
         } catch (SQLException e) {
             //System.out.println("Error in findByEmail "+ e);
@@ -175,6 +203,11 @@ public class UserDaoPostgres implements UserDao, Subject {
                 break;
             case 3:
                 query = "UPDATE public.user_vt SET username='"+credential+"' WHERE id="+id+";";
+                break;
+            case 4:
+                query = "UPDATE public.user_vt SET notificationByEmail = NOT notificationByEmail WHERE id="+id+";";
+                break;
+            default:
                 break;
         }
         try{
