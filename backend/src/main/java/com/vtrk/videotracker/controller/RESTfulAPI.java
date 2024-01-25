@@ -154,7 +154,7 @@ public class RESTfulAPI {
         String username = json.getString("username");
         String email = json.getString("email");
         String password = json.getString("password");
-        User u = new User(0, email, username, bc.encode(password), false);
+        User u = new User(0, email, username, bc.encode(password), false,true);
         ProxyUser proxyUser = new ProxyUser();
         ProxyUserList proxyUserList = new ProxyUserList();
         UserDao user = DBManager.getInstance().getUserDao();
@@ -869,6 +869,62 @@ public class RESTfulAPI {
             ProxyContent proxyContent = new ProxyContent();
             proxyContent.request(1, new Content(id_content, title, duration, n_episode, link));
         }
+    }
+
+    /**
+     * Check if user wants notification by email
+     * @param data JSON user data
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *     "id_user": "id_user"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * <ul>
+     *     <li>"0" if the user does not want notification by email</li>
+     *     <li>"1" if the user wants notification by email</li>
+     * </ul>
+     * {
+     *    "response": "response"
+     * }
+     */
+    @RequestMapping(
+            value = "/wantNotification",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public String  wantNotification (@RequestBody String data, HttpServletRequest request) {
+        JSONObject json = new JSONObject(data);
+        int id_user = json.getInt("id_user");
+        Logger.getInstance().logREST("Checking if user with id " + id_user + " wants notification by email", java.util.logging.Level.INFO, request);
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        JSONObject response = new JSONObject();
+        if(userDao.getNotificationByEmail(id_user)) {
+            Logger.getInstance().logREST("User with id " + id_user + " wants notification by email", java.util.logging.Level.INFO, request);
+            return response.put("response", "1").toString();
+        }
+        Logger.getInstance().logREST("User with id " + id_user + " does not want notification by email", java.util.logging.Level.INFO, request);
+        return response.put("response", "0").toString();
+    }
+
+    /**
+     * Check if user wants notification by email
+     * @param id_user
+     */
+    @RequestMapping(
+            value = "/setWantNotification",
+            method = RequestMethod.POST,
+            consumes = "text/plain"
+    )
+    @CrossOrigin
+    public void  setWantNotification (@RequestBody String id_user, HttpServletRequest request) {
+        JSONObject json = new JSONObject(id_user);
+        int id = json.getInt("id_user");
+        Logger.getInstance().logREST("Setting  if user with id " + id + " wants notification by email", java.util.logging.Level.INFO, request);
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        userDao.updateFromSettings(id, "", 4);
     }
 
 }
