@@ -1,11 +1,12 @@
 CREATE TABLE public.user_vt (
-	id serial NOT NULL,
-	email varchar NULL,
-	"password" varchar NULL,
-	username varchar NULL,
-	"admin" boolean NULL,
-	"banned" boolean default false,
-	CONSTRAINT user_pk PRIMARY KEY (id)
+    id serial NOT NULL,
+    email varchar NULL,
+    "password" varchar NULL,
+    username varchar NULL,
+    "admin" boolean NULL,
+    "banned" boolean default false,
+	"notificationByEmail" boolean dafault true,
+    CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE public.content(
