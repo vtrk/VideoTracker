@@ -198,7 +198,7 @@ class VideoTrackerApplicationTests {
     void initDB(){
 
         UserDao userDao = DBManager.getInstance().getUserDao();
-        User user = new User(0, "test@test.com", "Test", "test", false);
+        User user = new User(0, "test@test.com", "Test", "test", false,true);
         userDao.add(user);
 
         int id_user = userDao.findByEmail("test", "test").getId();
