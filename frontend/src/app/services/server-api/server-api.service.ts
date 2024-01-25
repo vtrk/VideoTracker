@@ -259,8 +259,8 @@ export class ServerApiService {
 
   /**
    * Gets the list of items of a user from the server.
-   * @param userList 
-   * @param id_user 
+   * @param userList
+   * @param id_user
    */
   getList(userList: ItemUserList, id_user: string){
     let url = environment.API_URL + '/list';
@@ -298,7 +298,7 @@ export class ServerApiService {
 
   /**
    * Gets the notifications of a user from the server.
-   * @param itemMailList 
+   * @param itemMailList
    */
   getNotifications(itemMailList: ItemMailList){
     let url = environment.API_URL + '/notifications';
@@ -329,8 +329,8 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to add a notification to a user.
-   * @param id_user 
-   * @param id_notification 
+   * @param id_user
+   * @param id_notification
    * @returns an observable of the response from the server
    */
   removeNotification(id_user: string, id_notification: string): Observable<String>{
@@ -350,8 +350,8 @@ export class ServerApiService {
 
   /**
    * Calls the server endpoint to login a user.
-   * @param email_username 
-   * @param password 
+   * @param email_username
+   * @param password
    * @returns an observable of the response from the server
    */
   login(email_username: string,  password: string): Observable<string>{
@@ -602,16 +602,16 @@ export class ServerApiService {
 
   /**
    * Adds a review to a content.
-   * @param id_content 
-   * @param type 
-   * @param vote 
+   * @param id_content
+   * @param type
+   * @param vote
    * @param user_comment
    * <br>
    * Parameters used to add the content to the database if it doesn't exist
-   * @param title 
-   * @param duration 
-   * @param n_episode 
-   * @param link 
+   * @param title
+   * @param duration
+   * @param n_episode
+   * @param link
    */
   addReview(id_content : string, type: string, vote: string, user_comment: string, title: string, duration: string, n_episode: string, link: string): Observable<String>{
     let url = environment.API_URL + '/addReview';
@@ -638,7 +638,7 @@ export class ServerApiService {
 
   /**
    * Deletes the account of a user.
-   * @param password 
+   * @param password
    * @returns an observable of the response from the server
    */
   deleteAccount(password: string): Observable<String>{
@@ -671,4 +671,35 @@ export class ServerApiService {
     };
     return this.client.post<String>(url, {id_user: id_user}, options);
   }
+
+  /**
+   * Calls the server endpoint to check if the given user wants notification by email.
+   * @param id_user
+   * @returns an observable of the response from the server
+   */
+  wantNotification(id_user: string): Observable<String>{
+    let url = environment.API_URL + '/wantNotification';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+    return this.client.post<String>(url, {id_user: id_user}, options);
+  }
+
+  /**
+   * Calls the server endpoint to set the right parameter if the user wants notification by email or not.
+   * @param id_user
+   */
+  setWantNotification(id_user: string){
+    let url = environment.API_URL + '/setWantNotification';
+    let options = {
+      headers: {
+        'Content-Type': 'text/plain',
+        'Accept': 'text/plain'
+      }
+    };
+  }
+
 }
