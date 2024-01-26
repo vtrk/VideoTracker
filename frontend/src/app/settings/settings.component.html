@@ -13,8 +13,9 @@
           <h3 [hidden]="!password_mismatch" [ngClass]="{'hidden': !password_mismatch}" [innerHTML]="password_mismatch_message" style="color: red;" ></h3>
           <form (ngSubmit)="change_password(changePasswordForm)" id="password changer" method="post" #changePasswordForm="ngForm">
             <div class="spacingForm">
-              <input type="password" name="new_password" ngModel #new_password="ngModel" minlength="8" required class="form-control my-3.py-2" placeholder="New Password">
+              <input type="password" name="new_password" ngModel #new_password="ngModel" minlength="8" required class="form-control my-3.py-2" placeholder="New Password" (input)="checkPassword(new_password.value)">
               <div class="error" *ngIf="new_password.touched">
+                <p *ngIf="passwordErrors.length > 0" style="color: red;" > {{passwordErrors.join('\n')}} </p>
                 <p *ngIf="new_password.errors?.['minlength']" style="color: red;" >Password must be at least 8 characters long</p>
                 <p *ngIf="new_password.errors?.['required']" style="color: red;" >Field required</p>
               </div>

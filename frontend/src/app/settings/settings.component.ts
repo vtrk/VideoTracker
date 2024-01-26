@@ -10,6 +10,7 @@ import { strings } from '../utils/strings';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faUserMinus } from '@fortawesome/free-solid-svg-icons';
 import { Title } from "@angular/platform-browser";
+import {PasswordValidationService} from "../services/authentication/password-validation.service";
 
 @Component({
   selector: 'app-settings',
@@ -47,7 +48,9 @@ export class SettingsComponent implements OnInit{
 
   notificationByEmail: boolean = false;
 
-  constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService, private title: Title) {
+  passwordErrors: string[] = [];
+
+  constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService, private title: Title, private passwordValidationService: PasswordValidationService) {
     this.title.setTitle("Settings");
     this.api.wantNotification(this.cookieService.get('id_user')).subscribe({
       next: data => {
@@ -185,6 +188,10 @@ export class SettingsComponent implements OnInit{
 
   isChecked():boolean{
     return this.notificationByEmail;
+  }
+
+  checkPassword(password: string){
+    this.passwordErrors= this.passwordValidationService.validatePassword(password);
   }
 
 }
