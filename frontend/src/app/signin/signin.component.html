@@ -29,8 +29,9 @@
               </div>
 
               <div class="spacingForm">
-                <input type="password" name="password" ngModel #password="ngModel" minlength="8" required password class="form-control my-3.py-2" placeholder="Password">
-                <div class="error" *ngIf="password.touched">
+                <input type="password" name="password" ngModel #password="ngModel" minlength="8" required password class="form-control my-3.py-2" placeholder="Password" (input)="checkPassword(password.value)">
+                <div class="error" *ngIf="password.touched || passwordErrors.length >0">
+                  <p *ngIf="passwordErrors.length > 0" style="color: red; white-space: pre-line;"> {{passwordErrors.join('\n')}}</p>
                   <p *ngIf="password.errors?.['minlength']" style="color: red;" >Password must be at least 8 characters long</p>
                   <p *ngIf="password.errors?.['required']" style="color: red;" >Field required</p>
                 </div>
@@ -43,7 +44,7 @@
                 </div>
               </div>
               <div class="text-center spacingForm" id="bottom">
-                <button type="submit" [disabled]="signInForm.invalid" class="btn btn-primary">Submit</button>
+                <button type="submit" [disabled]="signInForm.invalid || !isPasswordValid" class="btn btn-primary">Submit</button>
                 <a [routerLink]="['/login']" class="nav-link spacingForm">Already have an account?</a>
               </div>
              </form>

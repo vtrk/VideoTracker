@@ -14,8 +14,8 @@
           <form (ngSubmit)="change_password(changePasswordForm)" id="password changer" method="post" #changePasswordForm="ngForm">
             <div class="spacingForm">
               <input type="password" name="new_password" ngModel #new_password="ngModel" minlength="8" required class="form-control my-3.py-2" placeholder="New Password" (input)="checkPassword(new_password.value)">
-              <div class="error" *ngIf="new_password.touched">
-                <p *ngIf="passwordErrors.length > 0" style="color: red;" > {{passwordErrors.join('\n')}} </p>
+              <div class="error" *ngIf="new_password.touched || passwordErrors.length >0">
+                <p *ngIf="passwordErrors.length > 0" style="color: red; white-space: pre-line;"> {{passwordErrors.join('\n')}}</p>
                 <p *ngIf="new_password.errors?.['minlength']" style="color: red;" >Password must be at least 8 characters long</p>
                 <p *ngIf="new_password.errors?.['required']" style="color: red;" >Field required</p>
               </div>
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="text-center spacingForm" id="bottom_pw">
-              <button class="btn btn-primary" type="submit" name="change_password_btn" [disabled]="changePasswordForm.invalid">Change Password</button>
+              <button class="btn btn-primary" type="submit" name="change_password_btn" [disabled]="changePasswordForm.invalid || !isPasswordValid">Change Password</button>
             </div>
             <div class="container" style="padding-top: 5%;" [hidden]="changePasswordForm.invalid">
               <span class="badge bg-warning">Warning: this will log you out</span>

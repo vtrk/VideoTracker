@@ -9,6 +9,7 @@ import {Router, RouterLink} from "@angular/router";
 import {CookieService} from "ngx-cookie-service";
 import { strings } from '../utils/strings';
 import { Title } from '@angular/platform-browser';
+import {PasswordValidationService} from "../services/authentication/password-validation.service";
 
 @Component({
   selector: 'app-signin',
@@ -36,7 +37,10 @@ export class SigninComponent {
   registration_error: string = strings.registration_error;
   registration: boolean = false;
 
-  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService, private cookieService: CookieService, private title: Title) {
+  passwordErrors: string[] = [];
+  isPasswordValid: boolean = false;
+
+  constructor(private router: Router, public themeService: ThemeService, private authService: AuthenticationService, private cookieService: CookieService, private title: Title, private passwordValidationService: PasswordValidationService) {
     this.title.setTitle("Sign In");
   }
   signIn(form: NgForm){
@@ -79,5 +83,10 @@ export class SigninComponent {
         this.registration = true;
       }
     });
+  }
+  checkPassword(password: string){
+    this.passwordErrors= this.passwordValidationService.validatePassword(password);
+
+    this.isPasswordValid = (this.passwordErrors.length == 0);
   }
 }

@@ -49,6 +49,7 @@ export class SettingsComponent implements OnInit{
   notificationByEmail: boolean = false;
 
   passwordErrors: string[] = [];
+  isPasswordValid: boolean = false;
 
   constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService, private title: Title, private passwordValidationService: PasswordValidationService) {
     this.title.setTitle("Settings");
@@ -192,6 +193,9 @@ export class SettingsComponent implements OnInit{
 
   checkPassword(password: string){
     this.passwordErrors= this.passwordValidationService.validatePassword(password);
+
+    this.isPasswordValid = (this.passwordErrors.length == 0);
   }
+
 
 }
