@@ -8,6 +8,7 @@ public interface UserDao {
     User findById(int id);
     User findByEmail(String email, String password);
     boolean getNotificationByEmail(int id);
+    List<User> findWhoWantsNotificationByEmail();
     void add(User user);
     void update(User user);
     void updateFromSettings(int id, String credential, int choice);

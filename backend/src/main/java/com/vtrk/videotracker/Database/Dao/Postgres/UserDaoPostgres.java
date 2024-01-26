@@ -126,6 +126,30 @@ public class UserDaoPostgres implements UserDao, Subject {
         return notification_by_email;
     }
 
+    @Override
+    public List<User> findWhoWantsNotificationByEmail() {
+        List<User> users = new ArrayList<User>();
+        try {
+            Statement st = connection.createStatement();
+            String query = "SELECT * FROM user_vt WHERE notificationbyemail = true and banned = false;";
+
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String email = rs.getString("email");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                boolean admin = rs.getBoolean("admin");
+                boolean notification_by_email = rs.getBoolean("notificationByEmail");
+                User user = new User(id, email, username, password, admin, false, notification_by_email);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            //System.out.println("Error in findAll "+ e);
+        }
+        return users;
+    }
+
     /**
         This function finds a user by email.<br>
         If the user is found, it returns the user.<br>
