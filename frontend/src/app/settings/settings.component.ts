@@ -183,7 +183,15 @@ export class SettingsComponent implements OnInit{
   }
 
   setNotificationByEmail(){
-    this.api.setWantNotification(this.cookieService.get('id_user'));
+    this.api.setWantNotification(this.cookieService.get('id_user')).subscribe({
+      next: data => {
+        let json = JSON.parse(JSON.stringify(data));
+        this.notificationByEmail = !this.notificationByEmail;
+      },
+      error: error => {
+        console.log(error);
+      }
+    });
     this.router.navigate(['/settings']);
   }
 

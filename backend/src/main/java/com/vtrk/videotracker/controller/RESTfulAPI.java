@@ -919,12 +919,14 @@ public class RESTfulAPI {
             consumes = "text/plain"
     )
     @CrossOrigin
-    public void  setWantNotification (@RequestBody String id_user, HttpServletRequest request) {
+    public String setWantNotification (@RequestBody String id_user, HttpServletRequest request) {
         JSONObject json = new JSONObject(id_user);
         int id = json.getInt("id_user");
         Logger.getInstance().logREST("Setting  if user with id " + id + " wants notification by email", java.util.logging.Level.INFO, request);
         UserDao userDao = DBManager.getInstance().getUserDao();
         userDao.updateFromSettings(id, "", 4);
+        JSONObject response = new JSONObject();
+        return response.put("response", "1").toString();
     }
 
 }

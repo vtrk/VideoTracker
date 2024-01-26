@@ -205,7 +205,7 @@ public class UserDaoPostgres implements UserDao, Subject {
                 query = "UPDATE public.user_vt SET username='"+credential+"' WHERE id="+id+";";
                 break;
             case 4:
-                query = "UPDATE public.user_vt SET notificationByEmail = NOT notificationByEmail WHERE id="+id+";";
+                query = "UPDATE public.user_vt SET notificationbyemail = NOT notificationbyemail WHERE id="+id+";";
                 break;
             default:
                 break;

@@ -700,6 +700,7 @@ export class ServerApiService {
         'Accept': 'text/plain'
       }
     };
+    return this.client.post<String>(url, {id_user: id_user}, options);
   }
 
 }

@@ -249,4 +249,10 @@ class VideoTrackerApplicationTests {
         System.out.println(p3);
     }
 
+    @Test
+    void testUpdateFromSettings(){
+        UserDao userDao = DBManager.getInstance().getUserDao();
+        userDao.updateFromSettings(1,"", 4);
+    }
+
 }
