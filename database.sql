@@ -5,7 +5,7 @@ CREATE TABLE public.user_vt (
     username varchar NULL,
     "admin" boolean NULL,
     "banned" boolean default false,
-	"notificationByEmail" boolean dafault true,
+    "notificationbyemail" boolean dafault true,
     CONSTRAINT user_pk PRIMARY KEY (id)
 );
 
