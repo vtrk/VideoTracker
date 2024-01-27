@@ -46,6 +46,6 @@ Only users with the [admin](https://github.com/vtrk/VideoTracker/blob/main/datab
 ## Running the [frontend](https://github.com/vtrk/VideoTracker/tree/main/frontend)
 - Open the frontend folder in a terminal
 - Run ```npm install``` to download project dependencies
-- Run ```ng-serve``` to run the frontend
+- Run ```ng serve``` to run the frontend
 
   By default, the frontend will be served at port 4200
