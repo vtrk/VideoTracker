@@ -6,12 +6,14 @@ import com.vtrk.videotracker.Database.Dao.ReceiveDao;
 import com.vtrk.videotracker.Database.Dao.UserDao;
 import com.vtrk.videotracker.Database.Model.Notification;
 import com.vtrk.videotracker.Database.Model.User;
+import com.vtrk.videotracker.utils.EmailService;
 import com.vtrk.videotracker.utils.Logger;
 import com.vtrk.videotracker.utils.Properties;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
@@ -38,6 +40,9 @@ public class DashboardController {
 
     private final String cookieName = "user";
     private final BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      * Show dashboard
@@ -157,6 +162,8 @@ public class DashboardController {
 
     /**
      * Send notification to all users
+     * <br>
+     * If email notifications are enabled, send email notifications to users who want to receive them
      * @param paramMap parameters
      * @param request request
      * @param response response
@@ -174,12 +181,25 @@ public class DashboardController {
         String message = paramMap.get("message").get(0);
         UserDao userDao = DBManager.getInstance().getUserDao();
         List<User> users = userDao.findAll();
+        //Remove banned users
+        users.removeIf(User::isBanned);
         NotificationDao notificationDao = DBManager.getInstance().getNotificationDao();
         Notification notification = new Notification(0, title, message);
         notificationDao.add(notification);
         ReceiveDao receiveDao = DBManager.getInstance().getReceiveDao();
-        for(User user : users) {
-            receiveDao.add(user.getId(), notification.getId());
+
+        if(Properties.getInstance().getProperty("EMAILS_ENABLED").equals("false"))
+            for(User user : users) {
+                receiveDao.add(user.getId(), notification.getId());
+            }
+        else {
+            Logger.getInstance().logREST("Sending email notifications", Level.INFO, request);
+            //Remove users who don't want to receive email notifications
+            users.removeIf(User::emailNotificationOptOut);
+            for (User user : users) {
+                receiveDao.add(user.getId(), notification.getId());
+                emailService.sendEmail(user.getEmail(), title, message);
+            }
         }
         return "redirect:/";
     }
@@ -210,4 +230,5 @@ public class DashboardController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(resource);
     }
+
 }
