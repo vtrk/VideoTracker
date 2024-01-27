@@ -34,6 +34,10 @@ form{
   padding: 60px;
 }
 
+#emailnotification{
+  padding: 60px;
+}
+
 p{
   font-size: 12px;
 }
