@@ -4,6 +4,7 @@ import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.ContainsDao;
 import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Model.Contains;
+import com.vtrk.videotracker.Database.Model.Content;
 import com.vtrk.videotracker.utils.Properties;
 
 import java.sql.Connection;
