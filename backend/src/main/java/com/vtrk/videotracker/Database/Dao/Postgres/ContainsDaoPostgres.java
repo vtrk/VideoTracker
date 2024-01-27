@@ -40,6 +40,21 @@ public class ContainsDaoPostgres implements ContainsDao, Subject {
         return contents;
     }
 
+    public Contains findByIDListAndIDContent(int id_list, Content content){
+        Contains contains = new Contains(id_list, content, "");
+        try {
+            String query = "SELECT * FROM contains WHERE id_list = '"+id_list+"' AND id_content = '"+content.getId()+";";
+            Statement prst = connection.createStatement();
+            ResultSet rs = prst.executeQuery(query);
+            while (rs.next()){
+                contains.setState(rs.getString("state"));
+            }
+        } catch (SQLException e) {
+            //System.out.println("Error in findById "+ e);
+        }
+        return contains;
+    }
+
     /**
      * This function counts all contents in a list by state and returns the number of contents.
      * @param id_list id_list

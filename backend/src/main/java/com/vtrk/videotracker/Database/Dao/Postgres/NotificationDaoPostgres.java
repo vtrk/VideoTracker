@@ -89,6 +89,19 @@ public class NotificationDaoPostgres implements NotificationDao, Subject {
         }
     }
 
+    public boolean exists(int id) {
+        try {
+            String query = "SELECT * FROM public.notification WHERE id = '"+id+"';";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        } catch (SQLException e) {
+            //System.out.println("Error in findAll "+e);
+        }
+        return true;
+    }
+
     /**
      * Request based on given choice
      * @param choice choice

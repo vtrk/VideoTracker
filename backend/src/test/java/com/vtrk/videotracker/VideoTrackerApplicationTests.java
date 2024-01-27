@@ -6,20 +6,31 @@ import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.utils.Properties;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.util.List;
 import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
+
 
 @SpringBootTest(classes = Kitsu.class)
 class VideoTrackerApplicationTests {
-    @Test
-    void contextLoads() {
-    }
+
+    private Contains contains;
+    private ContainsDaoPostgres containsDaoPostgres;
+    private Content content;
+    private ContentDaoPostgres contentDaoPostgres;
+    private Notification notification;
+    private NotificationDaoPostgres notificationDaoPostgres;
+    private Receive receive;
+    private ReceiveDaoPostgres receiveDaoPostgres;
+    private Review review;
+    private ReviewDaoPostgres reviewDaoPostgres;
+    private User user;
+    private UserDaoPostgres userDaoPostgres;
+    private UserList userList;
+    private UserListDaoPostgres userListDaoPostgres;
 
     @Test
     void KitsuAPITest() {
@@ -248,11 +259,130 @@ class VideoTrackerApplicationTests {
         System.out.println(p2);
         System.out.println(p3);
     }
-
     @Test
     void testUpdateFromSettings(){
         UserDao userDao = DBManager.getInstance().getUserDao();
         userDao.updateFromSettings(1,"", 4);
+    }
+
+
+    @BeforeEach
+    void setUp(){
+        content = new Content("ID000", "TestTitle", 0, 0, "testLink");
+        notification = new Notification(0, "TestTitle", "TestDescription");
+        user = new User(000, "test@test.it", "UsernameTest", "PasswordTest", false, false, false);
+        userList = new UserList(0, 000);
+        contains = new Contains(0,content,"TestState");
+        receive = new Receive(000, 0);
+        review = new Review(0, 0, "TestComment", 000, "ID000");
+
+        containsDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        contentDaoPostgres = new ContentDaoPostgres(DBManager.getInstance().getConnection());
+        notificationDaoPostgres = new NotificationDaoPostgres(DBManager.getInstance().getConnection());
+        receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
+        reviewDaoPostgres = new ReviewDaoPostgres(DBManager.getInstance().getConnection());
+        userDaoPostgres = new UserDaoPostgres(DBManager.getInstance().getConnection());
+        userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+    }
+
+    @Test
+    void testAddUpdateAndRemoveContainsOnDB(){
+        //add
+        containsDaoPostgres.add(contains.getId_list(), contains.getContent(), contains.getState());
+        assertTrue(containsDaoPostgres.exists(user.getId(), contains.getContent().getId()));
+        //update
+        contains.setState("TestState2");
+        containsDaoPostgres.update(contains.getId_list(), contains.getContent().getId(), contains.getState());
+        assertEquals(contains, containsDaoPostgres.findByIDListAndIDContent(contains.getId_list(), contains.getContent()));
+        //remove
+        containsDaoPostgres.remove(contains.getId_list(), contains.getContent().getId());
+        assertFalse(containsDaoPostgres.exists(user.getId()), contains.getContent().getId());
+    }
+
+    @Test
+    void testAddUpdateAndRemoveContentOnDB(){
+        //add
+        contentDaoPostgres.add(content);
+        assertTrue(contentDaoPostgres.exists(content.getId()));
+        //update
+        content.setTitle("TestTitle2");
+        content.setDuration(1);
+        content.setN_episode(1);
+        content.setLink("TestLink2");
+        contentDaoPostgres.update(content);
+        assertEquals(content, contentDaoPostgres.findById(content.getId()));
+        //remove
+        contentDaoPostgres.remove(content);
+        assertFalse(contentDaoPostgres.exists(content.getId()));
+    }
+
+    @Test
+    void testAddUpdateAndRemoveNotificationOnDB(){
+        //add
+        contentDaoPostgres.add(notification);
+        assertTrue(contentDaoPostgres.exists(notification.getId()));
+        //update
+        notification.setTitle("TestTitle2");
+        notification.setDescription("TestDescription2");
+        notificationDaoPostgres.update(notification);
+        assertEquals(notification, notificationDaoPostgres.findById(notification.getId()));
+        //remove
+        contentDaoPostgres.remove(notification);
+        assertFalse(contentDaoPostgres.exists(notification.getId()));
+    }
+
+    @Test
+    void testAddAndRemoveReceiveOnDB(){
+        //add
+        receiveDaoPostgres.add(receive.getId_user(), receive.getId_notification());
+        assertTrue(receiveDaoPostgres.exists(receive.getId_user(), receive.getId_notification()));
+        //remove
+        receiveDaoPostgres.remove(receive.getId_user(), receive.getId_notification());
+        assertFalse(receiveDaoPostgres.exists(receive.getId_user(), receive.getId_notification()));
+    }
+
+    @Test
+    void testAddUpdateAndRemoveReviewOnDB(){
+        //add
+        reviewDaoPostgres.add(review);
+        assertTrue(reviewDaoPostgres.exists(review.getIdUser(), review.getIdContent()));
+        //update
+        review.setVote(1);
+        review.setUserComment("TestComment1");
+        review.setIdUser(111);
+        review.setIdContent("ID111");
+        reviewDaoPostgres.update(review);
+        assertEquals(review, reviewDaoPostgres.findById(review.getId()));
+        //remove
+        reviewDaoPostgres.remove(review.getId());
+        assertFalse(reviewDaoPostgres.exists(review.getIdUser(), review.getIdContent()));
+    }
+
+    @Test
+    void testAddUpdateAndRemoveUserOnDB(){
+        //add
+        userDaoPostgres.add(user);
+        assertTrue(userDaoPostgres.exists(user.getId()));
+        //update
+        user.setEmail("test2@test.it");
+        user.setPassword("Password2Test");
+        user.setUsername("Username2Test");
+        user.setIs_admin(true);
+        userDaoPostgres.update(user);
+        assertEquals(user, userDaoPostgres.findById(user.getId()));
+        //delete
+        userDaoPostgres.remove(user.getId());
+        assertFalse(userDaoPostgres.exists(user.getId()));
+    }
+
+    @Test
+    void testAddAndRemoveUserListOnDB(){
+        //add
+        userListDaoPostgres.add(userList.getIdUser());
+        assertTrue(userListDaoPostgres.exists(userList.getIdUser()));
+        //remove
+        userListDaoPostgres.remove(userList.getIdUser());
+        assertFalse(userListDaoPostgres.exists(userList.getIdUser()));
     }
 
 }

@@ -87,6 +87,19 @@ public class UserListDaoPostgres implements UserListDao, Subject {
         }
     }
 
+    public boolean exists(int id_user) {
+        try{
+            String query = "SELECT * FROM public.list WHERE id_user="+id_user+";";
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            if(!rs.isBeforeFirst())
+                return false;
+        }catch(SQLException e){
+            //System.out.println("Error in exists "+e);
+        }
+        return true;
+    }
+
     /**
      * This function adds or removes a list from the database based on the given choice.
      * @param choice choice
