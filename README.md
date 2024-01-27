@@ -15,7 +15,7 @@ Requirements
 ## Running the [backend](https://github.com/vtrk/VideoTracker/tree/main/backend)
 - Import the [database](https://github.com/vtrk/VideoTracker/blob/main/database.sql)
 - Open the backend folder in intellij
-- For changing settings, check [application.properties](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties) (the default settings work for a locally confiigured dmbs)
+- For changing settings, check [application.properties](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties) (the default settings work for a locally configured dmbs)
 - Build and run the server
 
 ### Properties file
