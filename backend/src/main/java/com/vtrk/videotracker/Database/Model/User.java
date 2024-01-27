@@ -73,4 +73,5 @@ public class User {
     public void setIs_banned(boolean is_banned) {this.is_banned = is_banned;}
     public boolean isNotification_by_email() {return notification_by_email;}
     public void setNotification_by_email(boolean notification_by_email) {this.notification_by_email = notification_by_email;}
+    public boolean emailNotificationOptOut() {return !notification_by_email;}
 }
