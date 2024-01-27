@@ -7,7 +7,6 @@ import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Dao.Postgres.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.utils.Properties;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.List;
