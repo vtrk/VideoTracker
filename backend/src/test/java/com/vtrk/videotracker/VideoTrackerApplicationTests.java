@@ -285,6 +285,7 @@ class VideoTrackerApplicationTests {
         userListDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
     }
 
+    //test on DB
     @Test
     void testAddUpdateAndRemoveContainsOnDB(){
         //add
@@ -384,5 +385,4 @@ class VideoTrackerApplicationTests {
         userListDaoPostgres.remove(userList.getIdUser());
         assertFalse(userListDaoPostgres.exists(userList.getIdUser()));
     }
-
 }
