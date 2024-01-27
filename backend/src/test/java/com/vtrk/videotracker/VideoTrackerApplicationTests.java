@@ -4,8 +4,10 @@ import com.vtrk.videotracker.API.Kitsu;
 import com.vtrk.videotracker.API.TMDB;
 import com.vtrk.videotracker.Database.DBManager;
 import com.vtrk.videotracker.Database.Dao.*;
+import com.vtrk.videotracker.Database.Dao.Postgres.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.utils.Properties;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.List;
@@ -276,7 +278,7 @@ class VideoTrackerApplicationTests {
         receive = new Receive(000, 0);
         review = new Review(0, 0, "TestComment", 000, "ID000");
 
-        containsDaoPostgres = new UserListDaoPostgres(DBManager.getInstance().getConnection());
+        containsDaoPostgres = new ContainsDaoPostgres(DBManager.getInstance().getConnection());
         contentDaoPostgres = new ContentDaoPostgres(DBManager.getInstance().getConnection());
         notificationDaoPostgres = new NotificationDaoPostgres(DBManager.getInstance().getConnection());
         receiveDaoPostgres = new ReceiveDaoPostgres(DBManager.getInstance().getConnection());
@@ -289,7 +291,7 @@ class VideoTrackerApplicationTests {
     @Test
     void testAddUpdateAndRemoveContainsOnDB(){
         //add
-        containsDaoPostgres.add(contains.getId_list(), contains.getContent(), contains.getState());
+        containsDaoPostgres.add(contains.getId_list(), contains.getContent().getId(), contains.getState());
         assertTrue(containsDaoPostgres.exists(user.getId(), contains.getContent().getId()));
         //update
         contains.setState("TestState2");
@@ -297,7 +299,7 @@ class VideoTrackerApplicationTests {
         assertEquals(contains, containsDaoPostgres.findByIDListAndIDContent(contains.getId_list(), contains.getContent()));
         //remove
         containsDaoPostgres.remove(contains.getId_list(), contains.getContent().getId());
-        assertFalse(containsDaoPostgres.exists(user.getId()), contains.getContent().getId());
+        assertFalse(containsDaoPostgres.exists(user.getId(), contains.getContent().getId()));
     }
 
     @Test
@@ -320,16 +322,16 @@ class VideoTrackerApplicationTests {
     @Test
     void testAddUpdateAndRemoveNotificationOnDB(){
         //add
-        contentDaoPostgres.add(notification);
-        assertTrue(contentDaoPostgres.exists(notification.getId()));
+        notificationDaoPostgres.add(notification);
+        assertTrue(notificationDaoPostgres.exists(notification.getId()));
         //update
         notification.setTitle("TestTitle2");
         notification.setDescription("TestDescription2");
         notificationDaoPostgres.update(notification);
         assertEquals(notification, notificationDaoPostgres.findById(notification.getId()));
         //remove
-        contentDaoPostgres.remove(notification);
-        assertFalse(contentDaoPostgres.exists(notification.getId()));
+        notificationDaoPostgres.remove(notification);
+        assertFalse(notificationDaoPostgres.exists(notification.getId()));
     }
 
     @Test
