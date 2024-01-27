@@ -20,6 +20,7 @@ export const strings = {
     ERROR_CHANGE_USERNAME: "Error changing username",
     ERRIR_CHANGE_EMAIL: "Error changing email",
     BAN_ERROR: "User is banned",
+    MAIL_SETTINGS_ERROR: "Error changing mail settings",
 
     // General
     trending: "Trending",

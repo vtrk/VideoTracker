@@ -44,6 +44,10 @@ export class SettingsComponent implements OnInit{
   wrong_password_error: boolean = false;
   password_error_message: string = strings.wrong_credentials;
 
+
+  mail_settings_error: boolean = false;
+  mail_settings_error_message: string = strings.MAIL_SETTINGS_ERROR;
+
   faUserMinus = faUserMinus;
 
   notificationByEmail: boolean = false;
@@ -183,13 +187,18 @@ export class SettingsComponent implements OnInit{
   }
 
   setNotificationByEmail(){
+    this.mail_settings_error = false;
     this.api.setWantNotification(this.cookieService.get('id_user')).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
-        this.notificationByEmail = !this.notificationByEmail;
+        if(json.response != '1')
+          this.mail_settings_error = true;
+        else
+          this.notificationByEmail = !this.notificationByEmail;
       },
       error: error => {
         console.log(error);
+        this.mail_settings_error = true;
       }
     });
     this.router.navigate(['/settings']);
