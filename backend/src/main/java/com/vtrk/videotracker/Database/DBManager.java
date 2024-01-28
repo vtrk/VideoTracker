@@ -2,6 +2,7 @@ package com.vtrk.videotracker.Database;
 
 import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Dao.Postgres.*;
+import com.vtrk.videotracker.utils.Logger;
 import com.vtrk.videotracker.utils.Properties;
 
 import java.sql.Connection;
@@ -27,7 +28,8 @@ public class DBManager {
             try {
                 con = DriverManager.getConnection("jdbc:postgresql://" + Properties.getInstance().getProperty("DB_HOST"), Properties.getInstance().getProperty("DB_USER"), Properties.getInstance().getProperty("DB_PASSWORD"));
             } catch (SQLException e) {
-                System.out.println("Error in getConnection\n"+e.getErrorCode());
+                //System.out.println("Error in getConnection\n"+e.getErrorCode());
+                Logger.getInstance().log("Error connecting to the database", java.util.logging.Level.SEVERE);
             }
         }
         return con;

@@ -5,6 +5,7 @@ import com.vtrk.videotracker.Database.Dao.*;
 import com.vtrk.videotracker.Database.Dao.Proxy.*;
 import com.vtrk.videotracker.Database.Model.*;
 import com.vtrk.videotracker.VideoTrackerApplication;
+import com.vtrk.videotracker.utils.Cache;
 import com.vtrk.videotracker.utils.Logger;
 import com.vtrk.videotracker.utils.Properties;
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,8 +68,14 @@ public class RESTfulAPI {
     @GetMapping("/trending")
     @CrossOrigin
     public String trending(@RequestParam String type, HttpServletRequest request) throws IOException {
+        if(Cache.getInstance().getTrendingCache() != null) {
+            Logger.getInstance().logREST("Trending content requested. Cache used", java.util.logging.Level.INFO, request);
+            return Cache.getInstance().getTrendingCache();
+        }
         Logger.getInstance().logREST("Trending content requested", java.util.logging.Level.INFO, request);
-        return VideoTrackerApplication.API_MANAGER.getTrending(type);
+        String response = VideoTrackerApplication.API_MANAGER.getTrending(type);
+        Cache.getInstance().setTrendingCache(response);
+        return response;
     }
 
 
@@ -101,13 +108,24 @@ public class RESTfulAPI {
         JSONObject json = new JSONObject(data);
         String type = json.getString("type");
         String query = json.getString("query");
+
+        // Use cached response if available
+        if(Cache.getInstance().getSearchCache().containsKey(json.toString())) {
+            Logger.getInstance().logREST("Using cache to process request", java.util.logging.Level.INFO, request);
+            return Cache.getInstance().getSearchCache().get(json.toString());
+        }
+
         if(!json.has("args")) // No args -> perform normal search query
             return VideoTrackerApplication.API_MANAGER.search(query, type, new HashMap<>());
         JSONObject args = json.getJSONObject("args");
         HashMap<String, String> argsMap = new HashMap<>();
         for(String key : args.keySet())
             argsMap.put(key, args.getString(key));
-        return VideoTrackerApplication.API_MANAGER.search(query, type, argsMap);
+
+        // Add response to cache
+        String response = VideoTrackerApplication.API_MANAGER.search(query, type, argsMap);
+        Cache.getInstance().addSearchCache(json.toString(), response);
+        return response;
     }
     //***** End of endpoints that use data from external APIs *****
 
