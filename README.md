@@ -16,6 +16,7 @@ Requirements
 - Import the [database](https://github.com/vtrk/VideoTracker/blob/main/database.sql)
 - Open the backend folder in intellij
 - For changing settings, check [application.properties](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties) (the default settings work for a locally configured dmbs)
+  - To avoid setting up an email account for sending notifications via email, set [EMAILS_ENABLED](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L8) to ```false```
 - Build and run the server
 
 ### Properties file
@@ -34,8 +35,32 @@ The [application.properties](https://github.com/vtrk/VideoTracker/blob/main/back
 * [DB_PASSWORD](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L6): password of dbms user
    * Default: ```postgres```
 * [LOG_FILE_PATH](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L7): path to the log file, if empty the server does not log to file
-   * Default: ```VideoTracker.log``` 
-
+   * Default: ```VideoTracker.log```
+* [EMAILS_ENABLED](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L8): whether to enable or disable email notifications
+   * Values
+     * ```true``` (Default)
+     * ```false```
+* [TRENDING_CACHE_TIME](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L9): time to keep the trending content in cache (in hours)
+    * Default ```24```
+* [SEARCH_CACHE_TIME](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L10): time to keep the search results in cache (in hours)
+    * Default ```6```
+* [CACHE_SIZE](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L11): amount of search results to cache (the oldest one will be removed after reaching the limit)
+    * Default ```500```
+* [spring.mail.host](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L12): host for the mailing service
+    * Default ```smtp.gmail.com```
+* [spring.mail.host](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L13): port for the mailing service
+    * Default ```587```
+* [spring.mail.username](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L14): email account username (No default value)
+* [spring.mail.password](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L15): email account password (No default value)
+* [spring.mail.properties.mail.smtp.auth](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L16): whether to enable or disable smtp authentication
+   * Values
+     * ```true``` (Default)
+     * ```false```
+* [spring.mail.properties.mail.smtp.starttls.enable](https://github.com/vtrk/VideoTracker/blob/main/backend/src/main/resources/application.properties#L17): whether to enable or disable smtp starttls
+   * Values
+     * ```true``` (Default)
+     * ```false```
+ 
 ### Backend Dashboard
 The dashboard is accessible at ```hostname:port/```
 
