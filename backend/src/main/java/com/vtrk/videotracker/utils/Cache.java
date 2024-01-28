@@ -1,11 +1,21 @@
 package com.vtrk.videotracker.utils;
 
+import org.springframework.beans.factory.annotation.Value;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Class to cache trending and search results
+ * Singleton class to cache trending and search results
  */
 public class Cache {
+
+        /**
+         * Max size of search cache<br>
+         * Uses application.properties to get cache size<br>
+         * Property: CACHE_SIZE; defaults to 250 <br>
+         */
+        private final int MAX_SIZE = Properties.getInstance().getProperty("CACHE_SIZE") == null ? 250 : Integer.parseInt(Properties.getInstance().getProperty("CACHE_SIZE"));
 
         /**
          * Trending cache
@@ -17,12 +27,23 @@ public class Cache {
          * Key: query <br>
          * Value: result
          */
-        private final Map<String, String> searchCache;
+        private final LinkedHashMap<String, String> searchCache;
         private static Cache instance = null;
 
+        /**
+         * Constructor<br>
+         * Search cache is a LinkedHashMap with a custom removeEldestEntry method to limit the size of the cache.<br>
+         * When the size of the cache exceeds MAX_SIZE, the eldest entry is removed.<br>
+         * @see LinkedHashMap
+         */
         private Cache() {
             trendingCache = null;
-            searchCache = new java.util.HashMap<>();
+            searchCache = new java.util.LinkedHashMap<>() {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+                    return size() > MAX_SIZE;
+                }
+            };
         }
 
         public static Cache getInstance() {
