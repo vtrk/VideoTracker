@@ -1,7 +1,6 @@
 package com.vtrk.videotracker.Database.Dao;
 
 import com.vtrk.videotracker.Database.Model.Contains;
-import com.vtrk.videotracker.Database.Model.Content;
 
 import java.util.List;
 

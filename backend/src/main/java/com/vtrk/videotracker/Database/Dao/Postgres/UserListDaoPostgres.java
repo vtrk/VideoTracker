@@ -4,7 +4,10 @@ import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Dao.UserListDao;
 import com.vtrk.videotracker.Database.Model.UserList;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class UserListDaoPostgres implements UserListDao, Subject {
     Connection connection = null;

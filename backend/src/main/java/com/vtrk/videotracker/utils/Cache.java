@@ -1,7 +1,5 @@
 package com.vtrk.videotracker.utils;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

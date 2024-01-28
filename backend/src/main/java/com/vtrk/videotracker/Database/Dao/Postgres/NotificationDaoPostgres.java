@@ -2,14 +2,12 @@ package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.NotificationDao;
 import com.vtrk.videotracker.Database.Dao.Subject;
-import com.vtrk.videotracker.Database.Model.Content;
 import com.vtrk.videotracker.Database.Model.Notification;
-import com.vtrk.videotracker.Database.Model.Review;
-import com.vtrk.videotracker.Database.Model.User;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class NotificationDaoPostgres implements NotificationDao, Subject {
     Connection connection = null;

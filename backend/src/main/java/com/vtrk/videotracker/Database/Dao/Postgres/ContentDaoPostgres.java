@@ -2,13 +2,13 @@ package com.vtrk.videotracker.Database.Dao.Postgres;
 
 import com.vtrk.videotracker.Database.Dao.ContentDao;
 import com.vtrk.videotracker.Database.Dao.Subject;
-import com.vtrk.videotracker.Database.Model.Contains;
 import com.vtrk.videotracker.Database.Model.Content;
-import com.vtrk.videotracker.Database.Model.User;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class ContentDaoPostgres implements ContentDao, Subject {
 

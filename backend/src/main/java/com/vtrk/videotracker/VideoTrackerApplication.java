@@ -7,7 +7,6 @@ import com.vtrk.videotracker.utils.Logger;
 import com.vtrk.videotracker.utils.Properties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class VideoTrackerApplication {
@@ -22,7 +21,7 @@ public class VideoTrackerApplication {
         } else {
             throw new RuntimeException("API not found");
         }
-        ConfigurableApplicationContext context =SpringApplication.run(VideoTrackerApplication.class, args);
+        SpringApplication.run(VideoTrackerApplication.class, args);
         Logger.getInstance().log("Application started", java.util.logging.Level.INFO);
         Logger.getInstance().log("Version: " + Properties.getInstance().getProperty("VERSION"), java.util.logging.Level.INFO);
         Logger.getInstance().log("API: " + Properties.getInstance().getProperty("API"), java.util.logging.Level.INFO);

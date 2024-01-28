@@ -1,4 +1,5 @@
 package com.vtrk.videotracker.Database.Dao;
+
 import com.vtrk.videotracker.Database.Model.Content;
 
 public interface ContentDao {

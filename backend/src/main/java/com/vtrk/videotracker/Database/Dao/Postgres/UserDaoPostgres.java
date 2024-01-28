@@ -4,7 +4,10 @@ import com.vtrk.videotracker.Database.Dao.Subject;
 import com.vtrk.videotracker.Database.Dao.UserDao;
 import com.vtrk.videotracker.Database.Model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
