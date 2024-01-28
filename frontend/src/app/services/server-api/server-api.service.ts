@@ -673,12 +673,12 @@ export class ServerApiService {
   }
 
   /**
-   * Calls the server endpoint to check if the given user wants notification by email.
+   * Calls the server endpoint to check if the given user opted in or out for notification by email.
    * @param id_user
    * @returns an observable of the response from the server
    */
-  wantNotification(id_user: string): Observable<String>{
-    let url = environment.API_URL + '/wantNotification';
+  getMailNotification(id_user: string): Observable<String>{
+    let url = environment.API_URL + '/getMailNotification';
     let options = {
       headers: {
         'Content-Type': 'text/plain',
@@ -689,11 +689,11 @@ export class ServerApiService {
   }
 
   /**
-   * Calls the server endpoint to set the right parameter if the user wants notification by email or not.
+   * Calls the server endpoint to set whether the user opted in or out for notification by email.
    * @param id_user
    */
-  setWantNotification(id_user: string){
-    let url = environment.API_URL + '/setWantNotification';
+  setMailNotification(id_user: string){
+    let url = environment.API_URL + '/setMailNotification';
     let options = {
       headers: {
         'Content-Type': 'text/plain',

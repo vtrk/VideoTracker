@@ -890,7 +890,7 @@ public class RESTfulAPI {
     }
 
     /**
-     * Check if user wants notification by email
+     * Check if user opted in for notification by email
      * @param data JSON user data
      * <br>
      * A valid JSON request looks like this:<br>
@@ -900,20 +900,20 @@ public class RESTfulAPI {
      * <br>
      * <h4>Response</h4>
      * <ul>
-     *     <li>"0" if the user does not want notification by email</li>
-     *     <li>"1" if the user wants notification by email</li>
+     *     <li>"0" if the user opted out for notification by email</li>
+     *     <li>"1" if the user opted in for notification by email</li>
      * </ul>
      * {
      *    "response": "response"
      * }
      */
     @RequestMapping(
-            value = "/wantNotification",
+            value = "/getMailNotification",
             method = RequestMethod.POST,
             consumes = "text/plain"
     )
     @CrossOrigin
-    public String  wantNotification (@RequestBody String data, HttpServletRequest request) {
+    public String  getMailNotification (@RequestBody String data, HttpServletRequest request) {
         JSONObject json = new JSONObject(data);
         int id_user = json.getInt("id_user");
         Logger.getInstance().logREST("Checking if user with id " + id_user + " wants notification by email", java.util.logging.Level.INFO, request);
@@ -928,16 +928,27 @@ public class RESTfulAPI {
     }
 
     /**
-     * Check if user wants notification by email
+     * Set user preference to receive notification by email
      * @param id_user
+     * <br>
+     * A valid JSON request looks like this:<br>
+     * {
+     *    "id_user": "id_user"
+     * }
+     * <br>
+     * <h4>Response</h4>
+     * Request is successfully processed if response is "1"
+     * {
+     *   "response": "response"
+     * }
      */
     @RequestMapping(
-            value = "/setWantNotification",
+            value = "/setMailNotification",
             method = RequestMethod.POST,
             consumes = "text/plain"
     )
     @CrossOrigin
-    public String setWantNotification (@RequestBody String id_user, HttpServletRequest request) {
+    public String setMailNotification (@RequestBody String id_user, HttpServletRequest request) {
         JSONObject json = new JSONObject(id_user);
         int id = json.getInt("id_user");
         Logger.getInstance().logREST("Setting if user with id " + id + " wants notification by email", java.util.logging.Level.INFO, request);

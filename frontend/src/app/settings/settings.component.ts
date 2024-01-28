@@ -57,7 +57,7 @@ export class SettingsComponent implements OnInit{
 
   constructor(private router: Router,private api: ServerApiService,private cookieService: CookieService,private authService: AuthenticationService, public themeService : ThemeService, private title: Title, private passwordValidationService: PasswordValidationService) {
     this.title.setTitle("Settings");
-    this.api.wantNotification(this.cookieService.get('id_user')).subscribe({
+    this.api.getMailNotification(this.cookieService.get('id_user')).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         if(json.response == '1'){
@@ -188,7 +188,7 @@ export class SettingsComponent implements OnInit{
 
   setNotificationByEmail(){
     this.mail_settings_error = false;
-    this.api.setWantNotification(this.cookieService.get('id_user')).subscribe({
+    this.api.setMailNotification(this.cookieService.get('id_user')).subscribe({
       next: data => {
         let json = JSON.parse(JSON.stringify(data));
         if(json.response != '1')
